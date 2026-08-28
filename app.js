@@ -631,6 +631,10 @@ function renderParty() {
       <div class="party-types">
         ${pokemonTypeHtml(name)}
       </div>
+
+      <div class="party-evolution">
+        <strong>Evolution:</strong> ${name ? escapeHtml(pokemonEvolutionText(name)) : "—"}
+      </div>
     `;
 
     const input = slot.querySelector("input");

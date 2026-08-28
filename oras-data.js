@@ -119,19 +119,6 @@ const EXTRA_AREAS = [
 ROUTES.push(...EXTRA_AREAS);
 const ACHIEVEMENTS = ["First DexNav Egg Move", "First DexNav Hidden Ability", "First Trainer Rematch", "First Contest Win", "Create a Super Secret Base", "First Mega Evolution", "First Shiny", "Catch a Legendary", "Complete a Mirage Spot", "Catch the Regi Trio", "Become Champion", "Finish the Delta Episode", "Complete the Hoenn Dex", "Earn the Shiny Charm"];
 
-const defaultState = () => ({
-  version: APP_VERSION,
-  currentBenchmark: 0,
-  completedBenchmarks: [],
-  objectives: {},
-  revisits: {},
-  access:{oldRod:false,goodRod:false,superRod:false,machBike:false,acroBike:false,shoalLowTide:false},
-  caughtSpecies: {},
-  achievements: {},
-  party: Array(6).fill(""),
-  completedAt: {}
-});
-
 const METHOD_LABELS = {
   walk:"Walking",horde:"Horde",surf:"Surf",rock:"Rock Smash",dive:"Dive",waterfall:"Waterfall",
   old:"Old Rod",good:"Good Rod",super:"Super Rod",postdex:"Expanded DexNav",static:"Static",

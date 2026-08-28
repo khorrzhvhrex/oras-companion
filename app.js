@@ -1,9 +1,11 @@
 const APP_KEY = "alphaSapphireCompanionV1";
 const BACKUP_KEY = "alphaSapphireCompanionPreImport";
-const APP_VERSION = 1;
+const APP_VERSION = 2;
 
 const BENCHMARKS = [{"title": "Welcome to Hoenn", "summary": "Littleroot, Oldale, Routes 101, 102 and 103, then reach Petalburg. Establish your catch-everything rhythm and learn DexNav.", "objectives": ["Explore Littleroot and Oldale", "Clear current catches on Route 101", "Clear current catches on Route 102", "Clear current catches on Route 103", "Reach Petalburg City"]}, {"title": "Stone Badge", "summary": "Explore Route 104 and Petalburg Woods, reach Rustboro, then defeat Roxanne.", "objectives": ["Clear current catches on Route 104", "Clear current catches in Petalburg Woods", "Explore Rustboro City", "Defeat Roxanne", "Note Cut-accessible revisits"]}, {"title": "Devon Rescue", "summary": "Handle the Devon trouble on Route 116 and at Rusturf Tunnel before heading south.", "objectives": ["Explore Route 116", "Clear current catches on Route 116", "Visit Rusturf Tunnel", "Complete Devon rescue story"]}, {"title": "Knuckle Badge", "summary": "Travel to Dewford, explore Granite Cave, and defeat Brawly.", "objectives": ["Explore Dewford Town", "Explore Route 106", "Clear current catches in Granite Cave", "Defeat Brawly", "Flag Granite Cave bike revisit"]}, {"title": "Slateport Arrival", "summary": "Make landfall on Route 109, explore Slateport and complete the Oceanic Museum story.", "objectives": ["Explore Route 109", "Explore Slateport City", "Complete Oceanic Museum story", "Try a Contest Spectacular if desired"]}, {"title": "Road to Mauville", "summary": "Push through Route 110, sample the Trick House and reach Mauville.", "objectives": ["Clear current catches on Route 110", "Complete current Trick House challenge", "Reach Mauville City", "Handle rival battle"]}, {"title": "Dynamo Badge", "summary": "Explore Mauville, choose a bike and defeat Wattson.", "objectives": ["Explore Mauville City", "Choose a bicycle", "Defeat Wattson", "Note Rock Smash revisits", "Note Cycling Road access"]}, {"title": "Rusturf Reopened", "summary": "Explore Route 117 and Verdanturf, then use new field access to finish old business.", "objectives": ["Explore Route 117", "Explore Verdanturf Town", "Revisit Route 116", "Revisit Rusturf Tunnel"]}, {"title": "Northern Hoenn", "summary": "Climb north through Routes 111–113 and Fiery Path toward Fallarbor.", "objectives": ["Explore Route 111", "Explore Route 112", "Explore Fiery Path", "Explore Route 113", "Flag desert for later"]}, {"title": "Meteor Trouble", "summary": "Explore Fallarbor, Route 114 and Meteor Falls as Team Aqua's plan unfolds.", "objectives": ["Explore Fallarbor Town", "Explore Route 114", "Explore Meteor Falls", "Flag deeper Meteor Falls for later"]}, {"title": "Heat Badge", "summary": "Resolve Mt. Chimney, descend Jagged Pass and defeat Flannery in Lavaridge.", "objectives": ["Complete Mt. Chimney story", "Explore Jagged Pass", "Explore Lavaridge Town", "Defeat Flannery", "Note Strength revisits"]}, {"title": "Desert Expedition", "summary": "Use your new access to sweep Route 111's desert and claim a fossil.", "objectives": ["Explore Route 111 Desert", "Clear current desert catches", "Choose a fossil"]}, {"title": "Balance Badge", "summary": "Return to Petalburg and defeat Norman. Surf changes the entire map afterward.", "objectives": ["Return to Petalburg Gym", "Defeat Norman", "Obtain Surf access", "Open Surf revisit queue"]}, {"title": "Surf Cleanup I", "summary": "Optional cleanup pass through earlier routes and water before pushing east.", "objectives": ["Review unlocked Surf revisits", "Catch newly available water species", "Collect worthwhile Surf-access items", "Continue when satisfied"]}, {"title": "Southern Island", "summary": "Cross Route 118 and complete the Southern Island story milestone.", "objectives": ["Explore Route 118", "Clear current catches on Route 118", "Complete Southern Island story", "Register Mega Evolution milestone"]}, {"title": "Weather Crisis", "summary": "Climb Route 119, explore the Weather Institute and keep moving toward Fortree.", "objectives": ["Explore Route 119", "Clear current catches on Route 119", "Complete Weather Institute story"]}, {"title": "Feather Badge", "summary": "Explore Fortree and defeat Winona. Fly makes backtracking painless.", "objectives": ["Explore Fortree City", "Defeat Winona", "Unlock Fly convenience", "Review pending revisits"]}, {"title": "Eastern Hoenn", "summary": "Explore Routes 120–123, Safari Zone and Mt. Pyre.", "objectives": ["Explore Route 120", "Explore Route 121", "Visit Safari Zone", "Explore Mt. Pyre", "Explore Route 123"]}, {"title": "Lilycove Crisis", "summary": "Handle Lilycove, the Slateport Harbor event and Team Aqua Hideout.", "objectives": ["Explore Lilycove City", "Complete Slateport Harbor story", "Clear Team Aqua Hideout", "Finish any desired hideout pickups"]}, {"title": "Mind Badge", "summary": "Cross Route 124, explore Mossdeep and defeat Tate & Liza.", "objectives": ["Explore Route 124", "Explore Mossdeep City", "Defeat Tate & Liza", "Unlock Dive access"]}, {"title": "Shoal & Sea", "summary": "Explore Route 125, Shoal Cave and the waters around Routes 126–127.", "objectives": ["Explore Route 125", "Explore Shoal Cave", "Explore Route 126", "Explore Route 127", "Flag tide-dependent Shoal cleanup"]}, {"title": "Beneath Hoenn", "summary": "Use Dive, explore underwater routes and descend into Seafloor Cavern.", "objectives": ["Explore underwater routes", "Explore Route 128", "Clear current underwater catches", "Complete Seafloor Cavern story"]}, {"title": "Primal Kyogre", "summary": "Reach Sootopolis, enter the Cave of Origin and resolve the primal crisis.", "objectives": ["Explore Sootopolis City", "Enter Cave of Origin", "Resolve Kyogre encounter", "Unlock Soaring", "Flag expanded Dex encounters"]}, {"title": "Rain Badge", "summary": "Challenge Wallace and unlock Waterfall for essentially full field mobility.", "objectives": ["Defeat Wallace", "Unlock Waterfall access", "Review final field-move revisits"]}, {"title": "Expanded Hoenn Cleanup", "summary": "Old routes can now contain expanded DexNav encounters. Treat this as bonus completion, not erased progress.", "objectives": ["Review expanded encounter flags", "Catch desired new DexNav species", "Preserve original route-clear status"]}, {"title": "Mauville Secrets", "summary": "Clear late optional content around Mauville and New Mauville.", "objectives": ["Explore Mauville Hills", "Explore New Mauville", "Clear any related optional objectives"]}, {"title": "Western Sea", "summary": "Explore Routes 129–134 and Pacifidlog, including the current-heavy western waters.", "objectives": ["Explore Routes 129–134", "Explore Pacifidlog Town", "Clear current catches", "Note puzzle/legendary requirements"]}, {"title": "Regi Expedition", "summary": "Tackle the Sealed Chamber setup and the Hoenn Regi trio when you're ready.", "objectives": ["Complete Sealed Chamber setup", "Encounter Regirock", "Encounter Regice", "Encounter Registeel"]}, {"title": "Hoenn Sidequest Sweep", "summary": "Sea Mauville, Scorched Slab and unfinished optional areas before the League.", "objectives": ["Explore Sea Mauville", "Explore Scorched Slab", "Clear remaining optional routes/caves", "Review outstanding revisits"]}, {"title": "Victory Road", "summary": "Reach Ever Grande and clear Victory Road.", "objectives": ["Reach Ever Grande City", "Clear Victory Road", "Finish desired pre-League cleanup"]}, {"title": "Champion of Hoenn", "summary": "Take on the Elite Four and become Champion.", "objectives": ["Defeat Elite Four", "Defeat Champion", "Enter Hall of Fame"]}, {"title": "Delta Episode I", "summary": "Begin the postgame story and follow the trail across Hoenn.", "objectives": ["Begin Delta Episode", "Complete early Delta story beats", "Track required revisits"]}, {"title": "Delta Episode II", "summary": "Push through the Space Center, Aqua Hideout and final lead-up to Sky Pillar.", "objectives": ["Complete Space Center events", "Complete Aqua Hideout revisit", "Reach Sky Pillar"]}, {"title": "Delta Finale", "summary": "Finish the Delta Episode with Rayquaza and Deoxys.", "objectives": ["Complete Sky Pillar", "Resolve Rayquaza encounter", "Resolve Deoxys encounter", "Finish Delta Episode"]}, {"title": "Battle Resort", "summary": "Visit the Battle Resort and unlock the dedicated endgame training loop.", "objectives": ["Travel by S.S. Tidal", "Explore Battle Resort", "Register Battle Maison", "Register second Day Care"]}, {"title": "Elite Four Round 2", "summary": "Optional upgraded League rematch.", "objectives": ["Prepare postgame team", "Complete upgraded Elite Four rematch"]}, {"title": "Legendary Hunt", "summary": "Round up remaining static, soaring and Mirage Spot legendaries.", "objectives": ["Track desired legendary targets", "Complete available legendary encounters", "Leave time-gated Mirage targets as ongoing"]}, {"title": "Hoenn Dex", "summary": "Complete the regional Pokédex as a major collection milestone.", "objectives": ["Complete Hoenn Dex", "Claim regional completion reward"]}, {"title": "National Dex", "summary": "Finish the required National Dex entries and earn the Shiny Charm.", "objectives": ["Complete required National Dex entries", "Earn Shiny Charm", "Verify Mythicals separately if desired"]}, {"title": "Endgame Mastery", "summary": "Open-ended victory lap: Contests, Maison, breeding, shiny hunts, Secret Bases and anything else you enjoy.", "objectives": ["Choose personal endgame goals", "Track optional mastery projects", "Declare the save complete when it feels complete"]}];
 const REVISITS = [{"title": "Petalburg Woods / Route 104", "unlock": 1, "trigger": "Cut access", "note": "Check previously blocked Cut paths.", "status": "locked"}, {"title": "Granite Cave", "unlock": 6, "trigger": "Bicycle", "note": "Return for bike-accessible sections.", "status": "locked"}, {"title": "Rusturf Tunnel", "unlock": 6, "trigger": "Rock Smash", "note": "Finish previously blocked tunnel access.", "status": "locked"}, {"title": "Fiery Path / earlier Strength blocks", "unlock": 10, "trigger": "Strength", "note": "Review Strength-accessible side paths.", "status": "locked"}, {"title": "Early-route Surf sweep", "unlock": 12, "trigger": "Surf", "note": "Water encounters, items and optional areas open broadly.", "status": "locked"}, {"title": "Route 115 / western Surf access", "unlock": 12, "trigger": "Surf", "note": "Reach previously inaccessible northern/water sections.", "status": "locked"}, {"title": "Fly convenience sweep", "unlock": 16, "trigger": "Fly", "note": "Optional cleanup is now much faster.", "status": "locked"}, {"title": "Underwater Hoenn", "unlock": 19, "trigger": "Dive", "note": "Dive spots across eastern/southern Hoenn become explorable.", "status": "locked"}, {"title": "Expanded DexNav encounters", "unlock": 22, "trigger": "Primal crisis resolved", "note": "Old routes gain additional non-Hoenn DexNav encounters.", "status": "locked"}, {"title": "Waterfall cleanup", "unlock": 23, "trigger": "Waterfall", "note": "Final field-move gated areas become accessible.", "status": "locked"}];
+const ROUTES = [{"id": "r101", "name": "Route 101", "unlock": 0, "encounters": {"walk": ["Zigzagoon", "Wurmple", "Poochyena"], "postdex": ["Lillipup", "Zorua", "Sewaddle"]}}, {"id": "r102", "name": "Route 102", "unlock": 0, "encounters": {"walk": ["Zigzagoon", "Wurmple", "Poochyena", "Lotad", "Ralts", "Surskit"], "surf": ["Marill", "Azumarill", "Surskit", "Masquerain"], "old": ["Magikarp", "Goldeen"], "good": ["Magikarp", "Goldeen", "Corphish"], "super": ["Corphish"], "postdex": ["Lillipup", "Tympole", "Gothita"]}}, {"id": "r103", "name": "Route 103", "unlock": 0, "encounters": {"walk": ["Poochyena", "Zigzagoon", "Wingull"], "surf": ["Tentacool", "Wingull", "Pelipper"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer"], "postdex": ["Shellos", "Chatot", "Lillipup"]}}, {"id": "r104", "name": "Route 104", "unlock": 1, "encounters": {"walk": ["Zigzagoon", "Wurmple", "Wingull", "Taillow"], "surf": ["Wingull", "Pelipper"], "old": ["Magikarp"], "good": ["Magikarp"], "super": ["Magikarp"], "postdex": ["Chatot", "Pidove", "Sewaddle"]}}, {"id": "r105", "name": "Route 105", "unlock": 13, "encounters": {"surf": ["Tentacool", "Wingull", "Pelipper"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer"], "postdex": ["Krabby", "Frillish", "Clauncher"]}}, {"id": "r106", "name": "Route 106", "unlock": 3, "encounters": {"surf": ["Tentacool", "Wingull", "Pelipper"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer"], "postdex": ["Krabby", "Frillish", "Clauncher"]}}, {"id": "r107", "name": "Route 107", "unlock": 13, "encounters": {"surf": ["Tentacool", "Wingull", "Pelipper"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer"], "dive": ["Chinchou", "Clamperl", "Lanturn", "Relicanth"], "postdex": ["Krabby", "Frillish", "Clauncher"]}}, {"id": "r108", "name": "Route 108", "unlock": 13, "encounters": {"surf": ["Tentacool", "Wingull", "Pelipper"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer"], "postdex": ["Krabby", "Frillish", "Clauncher"]}}, {"id": "r109", "name": "Route 109", "unlock": 4, "encounters": {"surf": ["Tentacool", "Wingull", "Pelipper"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer"], "postdex": ["Krabby", "Frillish", "Clauncher"]}}, {"id": "r110", "name": "Route 110", "unlock": 5, "encounters": {"walk": ["Electrike", "Plusle", "Oddish", "Zigzagoon", "Wingull", "Gulpin", "Voltorb"], "horde": ["Minun", "Magnemite", "Plusle"], "surf": ["Tentacool", "Wingull", "Pelipper"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer"], "postdex": ["Shellos", "Chatot", "Trubbish"]}}, {"id": "r111", "name": "Route 111", "unlock": 8, "encounters": {"surf": ["Marill", "Azumarill", "Surskit", "Masquerain"], "old": ["Magikarp", "Goldeen"], "good": ["Magikarp", "Goldeen", "Barboach"], "super": ["Barboach"]}}, {"id": "r111d", "name": "Route 111 Desert", "unlock": 11, "requires": "goggles", "encounters": {"walk": ["Sandshrew", "Trapinch", "Cacnea", "Baltoy"], "postdex": ["Gible", "Sandile", "Dwebble"]}}, {"id": "r112", "name": "Route 112", "unlock": 8, "encounters": {"walk": ["Numel", "Machop"]}}, {"id": "r113", "name": "Route 113", "unlock": 8, "encounters": {"walk": ["Spinda", "Sandshrew", "Skarmory"], "postdex": ["Scraggy", "Bouffalant", "Klefki"]}}, {"id": "r114", "name": "Route 114", "unlock": 9, "encounters": {"walk": ["Lombre", "Swablu", "Seviper", "Surskit"], "horde": ["Lotad"], "rock": ["Geodude"], "surf": ["Marill", "Azumarill", "Surskit", "Masquerain"], "old": ["Magikarp", "Goldeen"], "good": ["Magikarp", "Goldeen", "Barboach"], "super": ["Barboach"], "postdex": ["Misdreavus", "Skorupi", "Tympole"]}}, {"id": "r115", "name": "Route 115", "unlock": 9, "requires": "surf", "encounters": {"walk": ["Taillow", "Swablu", "Jigglypuff", "Wingull"], "surf": ["Tentacool", "Wingull", "Pelipper"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer"], "postdex": ["Clefairy", "Misdreavus", "Pidove"]}}, {"id": "r116", "name": "Route 116", "unlock": 2, "encounters": {"walk": ["Zigzagoon", "Whismur", "Nincada", "Taillow", "Skitty"], "postdex": ["Eevee", "Pidove", "Joltik"]}}, {"id": "r117", "name": "Route 117", "unlock": 7, "encounters": {"walk": ["Zigzagoon", "Volbeat", "Roselia", "Marill", "Oddish", "Illumise", "Surskit"], "surf": ["Marill", "Azumarill", "Surskit", "Masquerain"], "old": ["Magikarp", "Goldeen"], "good": ["Magikarp", "Goldeen", "Corphish"], "super": ["Corphish", "Crawdaunt"], "postdex": ["Rattata", "Tympole", "Deerling"]}}, {"id": "r118", "name": "Route 118", "unlock": 14, "requires": "surf", "encounters": {"walk": ["Linoone", "Electrike", "Wingull", "Pelipper", "Kecleon"], "surf": ["Tentacool", "Wingull", "Pelipper"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Carvanha"], "super": ["Carvanha", "Sharpedo"], "postdex": ["Raticate", "Aipom", "Luxio"]}}, {"id": "r119", "name": "Route 119", "unlock": 15, "encounters": {"walk": ["Gloom", "Linoone", "Tropius", "Kecleon"], "horde": ["Oddish"], "surf": ["Tentacool", "Wingull", "Pelipper"], "old": ["Magikarp", "Tentacool", "Feebas"], "good": ["Magikarp", "Carvanha", "Feebas"], "super": ["Carvanha", "Sharpedo", "Feebas"]}}, {"id": "r120", "name": "Route 120", "unlock": 17, "encounters": {"walk": ["Gloom", "Linoone", "Tropius", "Kecleon", "Absol"], "horde": ["Oddish", "Marill"], "surf": ["Azumarill", "Surskit", "Masquerain"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Barboach"], "super": ["Barboach"]}}, {"id": "r121", "name": "Route 121", "unlock": 17, "encounters": {"walk": ["Gloom", "Linoone", "Shuppet", "Pelipper", "Kecleon"], "horde": ["Wingull"], "postdex": ["Hypno", "Aipom", "Elgyem"]}}, {"id": "r122", "name": "Route 122", "unlock": 17, "requires": "surf", "encounters": {"surf": ["Tentacool", "Wingull", "Pelipper"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer"], "postdex": ["Finneon", "Frillish", "Alomomola"]}}, {"id": "r123", "name": "Route 123", "unlock": 17, "encounters": {"walk": ["Gloom", "Linoone", "Shuppet", "Pelipper", "Kecleon"], "horde": ["Wingull"], "surf": ["Marill", "Surskit", "Azumarill", "Masquerain"], "old": ["Magikarp", "Goldeen"], "good": ["Magikarp", "Goldeen", "Corphish"], "super": ["Corphish", "Crawdaunt"]}}, {"id": "r124", "name": "Route 124", "unlock": 19, "requires": "surf", "encounters": {"surf": ["Tentacool", "Pelipper", "Tentacruel"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer"], "dive": ["Chinchou", "Clamperl", "Lanturn", "Relicanth"], "postdex": ["Finneon", "Frillish", "Alomomola"]}}, {"id": "r125", "name": "Route 125", "unlock": 20, "requires": "surf", "encounters": {"surf": ["Tentacool", "Pelipper", "Tentacruel"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer"], "postdex": ["Seel", "Finneon", "Frillish"]}}, {"id": "r126", "name": "Route 126", "unlock": 21, "requires": "surf", "encounters": {"surf": ["Tentacool", "Pelipper", "Tentacruel"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer"], "dive": ["Chinchou", "Clamperl", "Lanturn", "Relicanth"], "postdex": ["Finneon", "Frillish", "Alomomola"]}}, {"id": "r127", "name": "Route 127", "unlock": 21, "requires": "surf", "encounters": {"surf": ["Tentacool", "Pelipper", "Tentacruel"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer"], "dive": ["Chinchou", "Clamperl", "Lanturn", "Relicanth"], "postdex": ["Finneon", "Frillish", "Alomomola"]}}, {"id": "r128", "name": "Route 128", "unlock": 21, "requires": "surf", "encounters": {"surf": ["Tentacool", "Pelipper", "Tentacruel"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Luvdisc", "Wailmer"], "super": ["Luvdisc", "Wailmer", "Corsola"], "dive": ["Chinchou", "Clamperl", "Lanturn", "Corsola", "Relicanth"], "postdex": ["Finneon", "Frillish", "Alomomola"]}}, {"id": "r129", "name": "Route 129", "unlock": 26, "requires": "surf", "encounters": {"surf": ["Tentacool", "Pelipper", "Tentacruel"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer"], "dive": ["Chinchou", "Clamperl", "Lanturn", "Relicanth"], "postdex": ["Finneon", "Frillish", "Alomomola"]}}, {"id": "r130", "name": "Route 130", "unlock": 26, "requires": "surf", "encounters": {"surf": ["Tentacool", "Pelipper", "Tentacruel"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer"], "dive": ["Chinchou", "Clamperl", "Lanturn", "Relicanth"], "postdex": ["Finneon", "Frillish", "Alomomola"]}}, {"id": "r131", "name": "Route 131", "unlock": 26, "requires": "surf", "encounters": {"surf": ["Tentacool", "Pelipper", "Tentacruel"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer", "Horsea", "Seadra"], "postdex": ["Finneon", "Frillish", "Alomomola"]}}, {"id": "r132", "name": "Route 132", "unlock": 26, "requires": "surf", "encounters": {"surf": ["Tentacool", "Pelipper", "Tentacruel"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer", "Horsea", "Seadra"], "postdex": ["Finneon", "Frillish", "Alomomola"]}}, {"id": "r133", "name": "Route 133", "unlock": 26, "requires": "surf", "encounters": {"surf": ["Tentacool", "Pelipper", "Tentacruel"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer", "Horsea", "Seadra"], "postdex": ["Finneon", "Frillish", "Alomomola"]}}, {"id": "r134", "name": "Route 134", "unlock": 26, "requires": "surf", "encounters": {"surf": ["Tentacool", "Pelipper", "Tentacruel"], "old": ["Magikarp", "Tentacool"], "good": ["Magikarp", "Tentacool", "Wailmer"], "super": ["Wailmer", "Horsea", "Seadra"], "postdex": ["Finneon", "Frillish", "Alomomola"]}}];
+
 const ACHIEVEMENTS = ["First DexNav Egg Move", "First DexNav Hidden Ability", "First Trainer Rematch", "First Contest Win", "Create a Super Secret Base", "First Mega Evolution", "First Shiny", "Catch a Legendary", "Complete a Mirage Spot", "Catch the Regi Trio", "Become Champion", "Finish the Delta Episode", "Complete the Hoenn Dex", "Earn the Shiny Charm"];
 
 const defaultState = () => ({
@@ -12,13 +14,10 @@ const defaultState = () => ({
   completedBenchmarks: [],
   objectives: {},
   revisits: {},
-  areas: [
-    {id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+"a", name:"Route 101", caught:0, total:0, note:"", revisit:false},
-    {id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+"b", name:"Route 102", caught:0, total:0, note:"", revisit:false},
-    {id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+"c", name:"Route 103", caught:0, total:0, note:"", revisit:false}
-  ],
+  access: {oldRod:false, goodRod:false, superRod:false},
+  caughtSpecies: {},
   achievements: {},
-  party: ["Torchic","Zigzagoon","Lotad","Poochyena","Wurmple","Surskit"],
+  party: [],
   completedAt: {}
 });
 
@@ -54,7 +53,8 @@ function migrate(data) {
     completedBenchmarks: Array.isArray(data.completedBenchmarks) ? data.completedBenchmarks : [],
     objectives: data.objectives || {},
     revisits: data.revisits || {},
-    areas: Array.isArray(data.areas) ? data.areas : base.areas,
+    access: {...base.access, ...(data.access || {})},
+    caughtSpecies: data.caughtSpecies || {},
     achievements: data.achievements || {},
     party: Array.isArray(data.party) ? data.party.slice(0,6).concat(Array(6).fill("")).slice(0,6) : base.party,
     completedAt: data.completedAt || {}
@@ -90,7 +90,7 @@ function render() {
   renderProgress();
   renderJourney();
   renderRevisits();
-  renderAreas();
+  renderRoutes();
   renderParty();
   renderAchievements();
 }
@@ -184,28 +184,113 @@ function renderRevisits() {
   $("#revisitBadge").textContent = available;
 }
 
-function renderAreas() {
-  const list = $("#areaList");
-  list.innerHTML = state.areas.length ? "" : `<div class="empty">No areas tracked yet.</div>`;
-  state.areas.forEach(area => {
-    const total = Math.max(0, Number(area.total)||0);
-    const caught = Math.max(0, Math.min(total || 999, Number(area.caught)||0));
-    const pct = total > 0 ? Math.min(100, Math.round(caught/total*100)) : 0;
-    const card = document.createElement("button");
-    card.type = "button";
-    card.className = "area-card";
+function hasStoryUnlock(key) {
+  const completed = new Set(state.completedBenchmarks);
+  if (key === "surf") return completed.has(12) || state.currentBenchmark > 12;
+  if (key === "rock") return completed.has(6) || state.currentBenchmark > 6;
+  if (key === "dive") return completed.has(19) || state.currentBenchmark > 19;
+  if (key === "goggles") return completed.has(10) || state.currentBenchmark > 10;
+  if (key === "postdex") return completed.has(22) || state.currentBenchmark > 22;
+  return true;
+}
+
+function routeReached(route) {
+  return state.currentBenchmark >= route.unlock || state.completedBenchmarks.some(i => i >= route.unlock);
+}
+
+function routeRequirementMet(route) {
+  if (!route.requires) return true;
+  return hasStoryUnlock(route.requires);
+}
+
+function methodUnlocked(method) {
+  if (method === "walk" || method === "horde") return true;
+  if (method === "surf") return hasStoryUnlock("surf");
+  if (method === "rock") return hasStoryUnlock("rock");
+  if (method === "dive") return hasStoryUnlock("dive");
+  if (method === "postdex") return hasStoryUnlock("postdex");
+  if (method === "old") return !!state.access.oldRod;
+  if (method === "good") return !!state.access.goodRod;
+  if (method === "super") return !!state.access.superRod;
+  return false;
+}
+
+const METHOD_LABELS = {
+  walk:"Grass", horde:"Horde", surf:"Surf", rock:"Rock Smash", dive:"Dive",
+  old:"Old Rod", good:"Good Rod", super:"Super Rod", postdex:"Expanded DexNav"
+};
+
+function visibleRouteSpecies(route) {
+  const map = new Map();
+  Object.entries(route.encounters).forEach(([method, species]) => {
+    if (!methodUnlocked(method)) return;
+    species.forEach(name => {
+      if (!map.has(name)) map.set(name, new Set());
+      map.get(name).add(method);
+    });
+  });
+  return [...map.entries()].map(([name, methods]) => ({name, methods:[...methods]}));
+}
+
+function renderRoutes() {
+  $("#oldRodToggle").checked = !!state.access.oldRod;
+  $("#goodRodToggle").checked = !!state.access.goodRod;
+  $("#superRodToggle").checked = !!state.access.superRod;
+
+  const chips = [
+    ["Surf", hasStoryUnlock("surf")],
+    ["Rock Smash", hasStoryUnlock("rock")],
+    ["Dive", hasStoryUnlock("dive")],
+    ["Expanded DexNav", hasStoryUnlock("postdex")]
+  ];
+  $("#fieldAccessSummary").innerHTML = chips.map(([label,on]) =>
+    `<span class="access-chip ${on ? "on" : ""}">${label}: ${on ? "ON" : "locked"}</span>`
+  ).join("");
+
+  const list = $("#routeList");
+  list.innerHTML = "";
+  const reached = ROUTES.filter(r => routeReached(r) && routeRequirementMet(r));
+
+  reached.forEach(route => {
+    const species = visibleRouteSpecies(route);
+    if (!species.length) return;
+
+    const caught = species.filter(s => !!state.caughtSpecies[`${route.id}:${s.name}`]).length;
+    const complete = caught === species.length && species.length > 0;
+    const methods = [...new Set(species.flatMap(s => s.methods))];
+
+    const card = document.createElement("article");
+    card.className = `route-card ${complete ? "complete" : ""}`;
     card.innerHTML = `
-      <div class="stack-row">
-        <div style="text-align:left">
-          <h3>${escapeHtml(area.name)}</h3>
-          <p class="small muted">${escapeHtml(area.note || (area.revisit ? "Revisit later" : "Tap to edit"))}</p>
+      <div class="route-title-row">
+        <div>
+          <h3>${escapeHtml(route.name)}</h3>
+          <div class="route-methods">${methods.map(m => `<span class="method-chip">${METHOD_LABELS[m]}</span>`).join("")}</div>
         </div>
-        <div class="area-count">${caught} / ${total}</div>
+        <div class="route-progress">${caught} / ${species.length}</div>
       </div>
-      <div class="area-bar"><span style="width:${pct}%"></span></div>`;
-    card.addEventListener("click", () => openAreaDialog(area.id));
+      <div class="species-grid"></div>`;
+
+    const grid = card.querySelector(".species-grid");
+    species.forEach(s => {
+      const key = `${route.id}:${s.name}`;
+      const checked = !!state.caughtSpecies[key];
+      const label = document.createElement("label");
+      label.className = `species-check ${checked ? "caught" : ""}`;
+      label.title = s.methods.map(m => METHOD_LABELS[m]).join(", ");
+      label.innerHTML = `<input type="checkbox" ${checked ? "checked" : ""}><span></span>`;
+      label.querySelector("span").textContent = s.name;
+      label.querySelector("input").addEventListener("change", e => {
+        state.caughtSpecies[key] = e.target.checked;
+        saveState();
+      });
+      grid.appendChild(label);
+    });
+
     list.appendChild(card);
   });
+
+  if (!reached.length) list.innerHTML = `<div class="empty">No routes available at this benchmark yet.</div>`;
 }
 
 function renderParty() {
@@ -277,7 +362,7 @@ function previewImport(file) {
       $("#importPreview").innerHTML = `
         <strong>Current benchmark:</strong> ${escapeHtml(current)}<br>
         <strong>Benchmarks complete:</strong> ${done} / ${BENCHMARKS.length}<br>
-        <strong>Areas tracked:</strong> ${pendingImport.areas.length}<br>
+        <strong>Route catches:</strong> ${Object.values(pendingImport.caughtSpecies || {}).filter(Boolean).length}<br>
         <strong>Champion:</strong> ${pendingImport.completedBenchmarks.includes(30) ? "Yes" : "No"}
       `;
       $("#importDialog").showModal();
@@ -288,18 +373,6 @@ function previewImport(file) {
   reader.readAsText(file);
 }
 
-function openAreaDialog(id=null) {
-  editingAreaId = id;
-  const area = state.areas.find(a => a.id === id);
-  $("#areaDialogTitle").textContent = area ? "Edit Area" : "Add Area";
-  $("#areaName").value = area?.name || "";
-  $("#areaCaught").value = area?.caught ?? 0;
-  $("#areaTotal").value = area?.total ?? 0;
-  $("#areaNote").value = area?.note || "";
-  $("#areaRevisit").checked = !!area?.revisit;
-  $("#deleteAreaBtn").classList.toggle("hidden", !area);
-  $("#areaDialog").showModal();
-}
 
 $$(".tab").forEach(btn => btn.addEventListener("click", () => {
   $$(".tab").forEach(b => b.classList.toggle("active", b === btn));
@@ -358,34 +431,9 @@ $("#resetBtn").addEventListener("click", () => {
   render();
 });
 
-$("#addAreaBtn").addEventListener("click", () => openAreaDialog());
-$("#areaCancelBtn").addEventListener("click", () => $("#areaDialog").close());
-$("#areaForm").addEventListener("submit", e => {
-  e.preventDefault();
-  const name = $("#areaName").value.trim();
-  if (!name) return;
-  const total = Math.max(0, Math.min(999, Number($("#areaTotal").value)||0));
-  const caught = Math.max(0, Math.min(total || 999, Number($("#areaCaught").value)||0));
-  const payload = {
-    id: editingAreaId || safeId(),
-    name,
-    caught,
-    total,
-    note: $("#areaNote").value.trim(),
-    revisit: $("#areaRevisit").checked
-  };
-  const idx = state.areas.findIndex(a => a.id === editingAreaId);
-  if (idx >= 0) state.areas[idx] = payload;
-  else state.areas.push(payload);
-  $("#areaDialog").close();
-  saveState();
-});
-$("#deleteAreaBtn").addEventListener("click", () => {
-  if (!editingAreaId) return;
-  if (!confirm("Delete this area tracker entry?")) return;
-  state.areas = state.areas.filter(a => a.id !== editingAreaId);
-  $("#areaDialog").close();
-  saveState();
-});
+
+$("#oldRodToggle").addEventListener("change", e => { state.access.oldRod = e.target.checked; saveState(); });
+$("#goodRodToggle").addEventListener("change", e => { state.access.goodRod = e.target.checked; saveState(); });
+$("#superRodToggle").addEventListener("change", e => { state.access.superRod = e.target.checked; saveState(); });
 
 render();

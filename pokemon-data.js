@@ -139,6 +139,9 @@ const POKEMON_TYPES_CACHE_KEY = "orasPokemonTypesGen6V1";
 const POKEMON_TYPES_SOURCE =
   "https://raw.githubusercontent.com/lgreski/pokemonData/master/Pokemon.csv";
 
+function pokemonTypes(name) {
+  return POKEMON_TYPES[name] || [];
+}
 
 function parseCsvLine(line) {
   const values = [];

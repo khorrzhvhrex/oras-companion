@@ -132,3 +132,9 @@ const defaultState = () => ({
   completedAt: {}
 });
 
+const METHOD_LABELS = {
+  walk:"Walking",horde:"Horde",surf:"Surf",rock:"Rock Smash",dive:"Dive",waterfall:"Waterfall",
+  old:"Old Rod",good:"Good Rod",super:"Super Rod",postdex:"Expanded DexNav",static:"Static",
+  bike:"Bike Area",mach:"Mach Bike",acro:"Acro Bike",lowtide:"Low Tide",soar:"Soaring",mirage:"Mirage Spot"
+};
+

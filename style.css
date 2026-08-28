@@ -475,3 +475,138 @@ h3{font-size:1.05rem;margin-bottom:0}
   line-height: 1.4;
   opacity: 0.68;
 }
+
+/* =========================================================
+   DEXNAV CHEATSHEET
+   ========================================================= */
+
+.dexnav-guide summary {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  cursor:pointer;
+  list-style:none;
+}
+
+.dexnav-guide summary::-webkit-details-marker {
+  display:none;
+}
+
+.dexnav-guide summary h2 {
+  margin-bottom:0;
+}
+
+.dexnav-guide summary .eyebrow {
+  margin-bottom:4px;
+}
+
+.dexnav-chevron {
+  flex:0 0 auto;
+  display:grid;
+  place-items:center;
+  width:34px;
+  height:34px;
+  border-radius:12px;
+  background:var(--panel-2);
+  border:1px solid var(--line);
+  color:var(--accent);
+  font-size:1.25rem;
+  font-weight:900;
+  transition:transform .2s ease;
+}
+
+.dexnav-guide[open] .dexnav-chevron {
+  transform:rotate(180deg);
+}
+
+.dexnav-content {
+  display:grid;
+  gap:12px;
+  margin-top:16px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
+}
+
+.dexnav-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+
+.dexnav-card,
+.dexnav-tip,
+.dexnav-chain {
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--panel-2);
+  padding:12px;
+}
+
+.dexnav-card h3,
+.dexnav-chain h3 {
+  margin-bottom:9px;
+}
+
+.dexnav-card p,
+.dexnav-tip p {
+  margin:0 0 6px;
+  line-height:1.45;
+}
+
+.dexnav-card p:last-child,
+.dexnav-tip p:last-child {
+  margin-bottom:0;
+}
+
+.dexnav-tip > strong {
+  display:block;
+  margin-bottom:6px;
+  color:var(--accent);
+  font-size:.82rem;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+
+.dexnav-chain {
+  display:grid;
+  gap:7px;
+}
+
+.dexnav-chain h3 {
+  margin-bottom:3px;
+}
+
+.dexnav-chain-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:7px 0;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  font-size:.86rem;
+}
+
+.dexnav-chain-row:last-child {
+  border-bottom:0;
+}
+
+.dexnav-chain-row strong {
+  flex:0 0 auto;
+  font-size:.68rem;
+  letter-spacing:.04em;
+}
+
+.dexnav-good {
+  color:var(--success);
+}
+
+.dexnav-bad {
+  color:var(--danger);
+}
+
+@media(max-width:520px) {
+  .dexnav-grid {
+    grid-template-columns:1fr;
+  }
+}

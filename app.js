@@ -189,6 +189,7 @@ function hasStoryUnlock(key) {
   if (key === "surf") return completed.has(12) || state.currentBenchmark > 12;
   if (key === "rock") return completed.has(6) || state.currentBenchmark > 6;
   if (key === "dive") return completed.has(19) || state.currentBenchmark > 19;
+  if (key === "waterfall") return completed.has(23) || state.currentBenchmark > 23;
   if (key === "goggles") return completed.has(10) || state.currentBenchmark > 10;
   if (key === "postdex") return completed.has(22) || state.currentBenchmark > 22;
   return true;
@@ -204,10 +205,16 @@ function routeRequirementMet(route) {
 }
 
 function methodUnlocked(method) {
-  if (method === "walk" || method === "horde") return true;
+  if (
+    method === "walk" ||
+    method === "horde" ||
+    method === "static" ||
+    method === "gift"
+  ) return true;
   if (method === "surf") return hasStoryUnlock("surf");
   if (method === "rock") return hasStoryUnlock("rock");
   if (method === "dive") return hasStoryUnlock("dive");
+  if (method === "waterfall") return hasStoryUnlock("waterfall");
   if (method === "postdex") return hasStoryUnlock("postdex");
   if (method === "old") return !!state.access.oldRod;
   if (method === "good") return !!state.access.goodRod;
@@ -216,8 +223,18 @@ function methodUnlocked(method) {
 }
 
 const METHOD_LABELS = {
-  walk:"Grass", horde:"Horde", surf:"Surf", rock:"Rock Smash", dive:"Dive",
-  old:"Old Rod", good:"Good Rod", super:"Super Rod", postdex:"Expanded DexNav"
+  walk:"Walking",
+  horde:"Horde",
+  surf:"Surf",
+  rock:"Rock Smash",
+  dive:"Dive",
+  waterfall:"Waterfall",
+  old:"Old Rod",
+  good:"Good Rod",
+  super:"Super Rod",
+  postdex:"Expanded DexNav",
+  static:"Static",
+  gift:"Gift"
 };
 
 function visibleRouteSpecies(route) {

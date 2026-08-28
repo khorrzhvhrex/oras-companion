@@ -389,3 +389,81 @@ h3{font-size:1.05rem;margin-bottom:0}
   font-size:.75rem;
   font-weight:700;
 }
+
+/* =========================================================
+   PARTY TYPE / TEAM ANALYSIS
+   ========================================================= */
+
+.party-types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  min-height: 22px;
+  margin-top: 7px;
+}
+
+.pokemon-type-pill,
+.team-type-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.07);
+}
+
+.team-analysis {
+  margin-top: 20px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.035);
+}
+
+.team-analysis-title {
+  margin-bottom: 14px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.team-grade-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.team-grade-row strong {
+  font-size: 1.05rem;
+}
+
+.team-analysis-row {
+  margin-top: 13px;
+}
+
+.team-analysis-row > strong {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 0.82rem;
+}
+
+.type-readout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  line-height: 1.5;
+}
+
+.weak-row .team-type-chip {
+  font-weight: 800;
+}

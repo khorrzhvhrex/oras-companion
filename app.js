@@ -17,7 +17,7 @@ const defaultState = () => ({
   access: {oldRod:false, goodRod:false, superRod:false},
   caughtSpecies: {},
   achievements: {},
-  party: [],
+  party: Array(6).fill(""),
   completedAt: {}
 });
 

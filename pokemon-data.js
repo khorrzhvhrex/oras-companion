@@ -292,3 +292,5 @@ function defensiveMultiplier(attackingType, defendingTypes) {
 function offensiveTypeCovers(attackingType, defendingType) {
   return typeEffectiveness(attackingType, defendingType) > 1;
 }
+
+const POKEMON_TYPES_READY = loadPokemonTypes();

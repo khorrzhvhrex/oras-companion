@@ -542,10 +542,6 @@ function renderRoutes() {
   }
 }
 
-function pokemonTypes(name) {
-  return POKEMON_TYPES[name] || [];
-}
-
 
 function representedTeamTypes() {
   const represented = new Set();

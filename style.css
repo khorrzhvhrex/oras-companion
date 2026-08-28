@@ -610,3 +610,102 @@ h3{font-size:1.05rem;margin-bottom:0}
     grid-template-columns:1fr;
   }
 }
+
+/* =========================================================
+   EVOLUTION CHEATSHEET
+   ========================================================= */
+
+.evolution-guide summary {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  cursor:pointer;
+  list-style:none;
+}
+
+.evolution-guide summary::-webkit-details-marker {
+  display:none;
+}
+
+.evolution-chevron {
+  flex:0 0 auto;
+  display:grid;
+  place-items:center;
+  width:34px;
+  height:34px;
+  border-radius:12px;
+  background:var(--panel-2);
+  border:1px solid var(--line);
+  color:var(--accent);
+  font-size:1.25rem;
+  font-weight:900;
+  transition:transform .2s ease;
+}
+
+.evolution-guide[open] .evolution-chevron {
+  transform:rotate(180deg);
+}
+
+.evolution-content {
+  display:grid;
+  gap:12px;
+  margin-top:16px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
+}
+
+.evolution-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+
+.evolution-card,
+.evolution-tip {
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--panel-2);
+  padding:12px;
+}
+
+.evolution-card h3 {
+  margin-bottom:9px;
+}
+
+.evolution-card p,
+.evolution-tip p {
+  margin:0 0 6px;
+  line-height:1.45;
+}
+
+.evolution-card p:last-child,
+.evolution-tip p:last-child {
+  margin-bottom:0;
+}
+
+.evolution-tip > strong {
+  display:block;
+  margin-bottom:6px;
+  color:var(--accent);
+  font-size:.82rem;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+
+.party-evolution {
+  margin-top:7px;
+  font-size:.74rem;
+  line-height:1.35;
+  color:var(--muted);
+}
+
+.party-evolution strong {
+  color:var(--text);
+}
+
+@media(max-width:520px) {
+  .evolution-grid {
+    grid-template-columns:1fr;
+  }
+}

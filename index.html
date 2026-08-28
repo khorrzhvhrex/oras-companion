@@ -51,6 +51,12 @@
           <span id="currentNumber" class="quest-number">01</span>
         </div>
         <p id="currentSummary" class="summary"></p>
+
+        <div class="benchmark-area-block">
+          <p class="eyebrow">Areas This Benchmark</p>
+          <div id="benchmarkAreas" class="benchmark-area-list"></div>
+        </div>
+        
         <div id="objectiveList" class="checklist"></div>
         <div class="hero-actions">
           <button id="completeBenchmarkBtn" class="primary-btn" type="button">Complete Benchmark</button>
@@ -105,13 +111,39 @@
         <div class="section-head compact">
           <div>
             <p class="eyebrow">Equipment</p>
-            <h3>Fishing Rods</h3>
+            <h3>Current Access</h3>
           </div>
         </div>
         <div class="access-grid">
-          <label class="form-check"><input id="oldRodToggle" type="checkbox"><span>Old Rod</span></label>
-          <label class="form-check"><input id="goodRodToggle" type="checkbox"><span>Good Rod</span></label>
-          <label class="form-check"><input id="superRodToggle" type="checkbox"><span>Super Rod</span></label>
+          <label class="form-check">
+            <input id="oldRodToggle" type="checkbox">
+            <span>Old Rod</span>
+          </label>
+        
+          <label class="form-check">
+            <input id="goodRodToggle" type="checkbox">
+            <span>Good Rod</span>
+          </label>
+        
+          <label class="form-check">
+            <input id="superRodToggle" type="checkbox">
+            <span>Super Rod</span>
+          </label>
+        
+          <label class="form-check">
+            <input id="machBikeToggle" type="checkbox">
+            <span>Mach Bike</span>
+          </label>
+        
+          <label class="form-check">
+            <input id="acroBikeToggle" type="checkbox">
+            <span>Acro Bike</span>
+          </label>
+        
+          <label class="form-check">
+            <input id="shoalLowTideToggle" type="checkbox">
+            <span>Shoal Cave: Low Tide</span>
+          </label>
         </div>
         <div id="fieldAccessSummary" class="access-summary"></div>
       </section>

@@ -308,23 +308,32 @@ function setSpeciesCaught(name, caught) {
   state.caughtSpecies[name] = caught;
 }
 
-function autoCompleteCatchObjective(route) {
-  const species = visibleRouteSpecies(route);
-  if (!species.length || !species.every(s => isSpeciesCaught(s.name))) return;
+function areaCurrentCatchesComplete(areaId) {
+  const area = ROUTES.find(route => route.id === areaId);
 
-  const areaName = route.name.toLowerCase();
+  if (!area) return false;
+  if (!routeReached(area) || !routeRequirementMet(area)) return false;
 
-  BENCHMARKS.forEach((benchmark, bi) => {
-    benchmark.objectives.forEach((text, oi) => {
-      const objective = text.toLowerCase();
+  const species = visibleRouteSpecies(area);
 
-      if (
-        objective.includes("clear current catches") &&
-        objective.includes(areaName)
-      ) {
-        state.objectives[currentObjectiveKey(bi, oi)] = true;
-      }
-    });
+  return (
+    species.length > 0 &&
+    species.every(s => isSpeciesCaught(s.name))
+  );
+}
+
+
+function autoCompleteCatchObjectives() {
+  CATCH_OBJECTIVES.forEach(entry => {
+    const complete = entry.areas.every(areaId =>
+      areaCurrentCatchesComplete(areaId)
+    );
+
+    if (!complete) return;
+
+    state.objectives[
+      currentObjectiveKey(entry.benchmark, entry.objective)
+    ] = true;
   });
 }
 

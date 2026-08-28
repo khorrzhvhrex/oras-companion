@@ -25,191 +25,603 @@ const POKEMON_LOOKUP = new Map(
   POKEMON_721.map(name => [name.toLowerCase(), name])
 );
 
+// =========================================================
+// ORAS / GENERATION VI EVOLUTION DATA
+// Every Pokémon #001–721 that can evolve under Gen VI rules.
+// Later evolutions introduced in Gen VII+ are intentionally
+// excluded because they do not exist in Alpha Sapphire.
+// =========================================================
+
 const ORAS_EVOLUTIONS = {
+
+  // =======================================================
+  // GENERATION I / KANTO SPECIES
+  // =======================================================
+
+  Bulbasaur:"Ivysaur — Lv. 16",
+  Ivysaur:"Venusaur — Lv. 32",
+
+  Charmander:"Charmeleon — Lv. 16",
+  Charmeleon:"Charizard — Lv. 36",
+
+  Squirtle:"Wartortle — Lv. 16",
+  Wartortle:"Blastoise — Lv. 36",
+
+  Caterpie:"Metapod — Lv. 7",
+  Metapod:"Butterfree — Lv. 10",
+
+  Weedle:"Kakuna — Lv. 7",
+  Kakuna:"Beedrill — Lv. 10",
+
+  Pidgey:"Pidgeotto — Lv. 18",
+  Pidgeotto:"Pidgeot — Lv. 36",
+
+  Rattata:"Raticate — Lv. 20",
+  Spearow:"Fearow — Lv. 20",
+  Ekans:"Arbok — Lv. 22",
+
+  Pikachu:"Raichu — Thunder Stone",
+
+  Sandshrew:"Sandslash — Lv. 22",
+
+  "Nidoran♀":"Nidorina — Lv. 16",
+  Nidorina:"Nidoqueen — Moon Stone",
+
+  "Nidoran♂":"Nidorino — Lv. 16",
+  Nidorino:"Nidoking — Moon Stone",
+
+  Clefairy:"Clefable — Moon Stone",
+  Vulpix:"Ninetales — Fire Stone",
+  Jigglypuff:"Wigglytuff — Moon Stone",
+
+  Zubat:"Golbat — Lv. 22",
+  Golbat:"Crobat — high friendship",
+
+  Oddish:"Gloom — Lv. 21",
+  Gloom:"Vileplume — Leaf Stone; or Bellossom — Sun Stone",
+
+  Paras:"Parasect — Lv. 24",
+  Venonat:"Venomoth — Lv. 31",
+  Diglett:"Dugtrio — Lv. 26",
+  Meowth:"Persian — Lv. 28",
+  Psyduck:"Golduck — Lv. 33",
+  Mankey:"Primeape — Lv. 28",
+
+  Growlithe:"Arcanine — Fire Stone",
+
+  Poliwag:"Poliwhirl — Lv. 25",
+  Poliwhirl:"Poliwrath — Water Stone; or Politoed — trade holding King's Rock",
+
+  Abra:"Kadabra — Lv. 16",
+  Kadabra:"Alakazam — trade",
+
+  Machop:"Machoke — Lv. 28",
+  Machoke:"Machamp — trade",
+
+  Bellsprout:"Weepinbell — Lv. 21",
+  Weepinbell:"Victreebel — Leaf Stone",
+
+  Tentacool:"Tentacruel — Lv. 30",
+
+  Geodude:"Graveler — Lv. 25",
+  Graveler:"Golem — trade",
+
+  Ponyta:"Rapidash — Lv. 40",
+
+  Slowpoke:"Slowbro — Lv. 37; or Slowking — trade holding King's Rock",
+
+  Magnemite:"Magneton — Lv. 30",
+  Magneton:"Magnezone — level up in New Mauville",
+
+  Doduo:"Dodrio — Lv. 31",
+  Seel:"Dewgong — Lv. 34",
+  Grimer:"Muk — Lv. 38",
+  Shellder:"Cloyster — Water Stone",
+
+  Gastly:"Haunter — Lv. 25",
+  Haunter:"Gengar — trade",
+
+  Onix:"Steelix — trade holding Metal Coat",
+
+  Drowzee:"Hypno — Lv. 26",
+  Krabby:"Kingler — Lv. 28",
+  Voltorb:"Electrode — Lv. 30",
+  Exeggcute:"Exeggutor — Leaf Stone",
+  Cubone:"Marowak — Lv. 28",
+
+  Lickitung:"Lickilicky — level up knowing Rollout",
+
+  Koffing:"Weezing — Lv. 35",
+
+  Rhyhorn:"Rhydon — Lv. 42",
+  Rhydon:"Rhyperior — trade holding Protector",
+
+  Chansey:"Blissey — high friendship",
+
+  Tangela:"Tangrowth — level up knowing Ancient Power",
+
+  Horsea:"Seadra — Lv. 32",
+  Seadra:"Kingdra — trade holding Dragon Scale",
+
+  Goldeen:"Seaking — Lv. 33",
+  Staryu:"Starmie — Water Stone",
+
+  Scyther:"Scizor — trade holding Metal Coat",
+
+  Electabuzz:"Electivire — trade holding Electirizer",
+  Magmar:"Magmortar — trade holding Magmarizer",
+
+  Magikarp:"Gyarados — Lv. 20",
+
+  Eevee:"Vaporeon — Water Stone; Jolteon — Thunder Stone; Flareon — Fire Stone; Espeon — high friendship during day; Umbreon — high friendship at night; Leafeon — level near Moss Rock in Petalburg Woods; Glaceon — level near Ice Rock in Shoal Cave; Sylveon — level knowing a Fairy-type move with at least 2 Pokémon-Amie affection hearts",
+
+  Porygon:"Porygon2 — trade holding Upgrade",
+  Porygon2:"Porygon-Z — trade holding Dubious Disc",
+
+  Omanyte:"Omastar — Lv. 40",
+  Kabuto:"Kabutops — Lv. 40",
+
+  Dratini:"Dragonair — Lv. 30",
+  Dragonair:"Dragonite — Lv. 55",
+
+
+  // =======================================================
+  // GENERATION II / JOHTO SPECIES
+  // =======================================================
+
+  Chikorita:"Bayleef — Lv. 16",
+  Bayleef:"Meganium — Lv. 32",
+
+  Cyndaquil:"Quilava — Lv. 14",
+  Quilava:"Typhlosion — Lv. 36",
+
+  Totodile:"Croconaw — Lv. 18",
+  Croconaw:"Feraligatr — Lv. 30",
+
+  Sentret:"Furret — Lv. 15",
+  Hoothoot:"Noctowl — Lv. 20",
+  Ledyba:"Ledian — Lv. 18",
+  Spinarak:"Ariados — Lv. 22",
+
+  Chinchou:"Lanturn — Lv. 27",
+
+  Pichu:"Pikachu — high friendship",
+  Cleffa:"Clefairy — high friendship",
+  Igglybuff:"Jigglypuff — high friendship",
+
+  Togepi:"Togetic — high friendship",
+  Togetic:"Togekiss — Shiny Stone",
+
+  Natu:"Xatu — Lv. 25",
+
+  Mareep:"Flaaffy — Lv. 15",
+  Flaaffy:"Ampharos — Lv. 30",
+
+  Marill:"Azumarill — Lv. 18",
+
+  Hoppip:"Skiploom — Lv. 18",
+  Skiploom:"Jumpluff — Lv. 27",
+
+  Aipom:"Ambipom — level up knowing Double Hit",
+
+  Sunkern:"Sunflora — Sun Stone",
+
+  Yanma:"Yanmega — level up knowing Ancient Power",
+
+  Wooper:"Quagsire — Lv. 20",
+
+  Murkrow:"Honchkrow — Dusk Stone",
+  Misdreavus:"Mismagius — Dusk Stone",
+
+  Pineco:"Forretress — Lv. 31",
+
+  Gligar:"Gliscor — level up holding Razor Fang at night",
+
+  Snubbull:"Granbull — Lv. 23",
+
+  Sneasel:"Weavile — level up holding Razor Claw at night",
+
+  Teddiursa:"Ursaring — Lv. 30",
+
+  Slugma:"Magcargo — Lv. 38",
+
+  Swinub:"Piloswine — Lv. 33",
+  Piloswine:"Mamoswine — level up knowing Ancient Power",
+
+  Remoraid:"Octillery — Lv. 25",
+
+  Houndour:"Houndoom — Lv. 24",
+
+  Phanpy:"Donphan — Lv. 25",
+
+  Tyrogue:"Hitmonlee — Lv. 20 if Attack > Defense; Hitmonchan — Lv. 20 if Attack < Defense; Hitmontop — Lv. 20 if Attack = Defense",
+
+  Smoochum:"Jynx — Lv. 30",
+  Elekid:"Electabuzz — Lv. 30",
+  Magby:"Magmar — Lv. 30",
+
+  Larvitar:"Pupitar — Lv. 30",
+  Pupitar:"Tyranitar — Lv. 55",
+
+
+  // =======================================================
+  // GENERATION III / HOENN SPECIES
+  // =======================================================
+
   Treecko:"Grovyle — Lv. 16",
   Grovyle:"Sceptile — Lv. 36",
-  Sceptile:"Final form",
 
   Torchic:"Combusken — Lv. 16",
   Combusken:"Blaziken — Lv. 36",
-  Blaziken:"Final form",
 
   Mudkip:"Marshtomp — Lv. 16",
   Marshtomp:"Swampert — Lv. 36",
-  Swampert:"Final form",
 
   Poochyena:"Mightyena — Lv. 18",
-  Mightyena:"Final form",
-
   Zigzagoon:"Linoone — Lv. 20",
-  Linoone:"Final form",
 
-  Wurmple:"Silcoon or Cascoon — Lv. 7",
+  Wurmple:"Silcoon or Cascoon — Lv. 7; result is determined by Wurmple's hidden personality value",
   Silcoon:"Beautifly — Lv. 10",
-  Beautifly:"Final form",
   Cascoon:"Dustox — Lv. 10",
-  Dustox:"Final form",
 
   Lotad:"Lombre — Lv. 14",
   Lombre:"Ludicolo — Water Stone",
-  Ludicolo:"Final form",
 
   Seedot:"Nuzleaf — Lv. 14",
   Nuzleaf:"Shiftry — Leaf Stone",
-  Shiftry:"Final form",
 
   Taillow:"Swellow — Lv. 22",
-  Swellow:"Final form",
-
   Wingull:"Pelipper — Lv. 25",
-  Pelipper:"Final form",
 
   Ralts:"Kirlia — Lv. 20",
   Kirlia:"Gardevoir — Lv. 30; or Gallade — Dawn Stone if male",
-  Gardevoir:"Final form",
-  Gallade:"Final form",
 
   Surskit:"Masquerain — Lv. 22",
-  Masquerain:"Final form",
 
   Shroomish:"Breloom — Lv. 23",
-  Breloom:"Final form",
 
   Slakoth:"Vigoroth — Lv. 18",
   Vigoroth:"Slaking — Lv. 36",
-  Slaking:"Final form",
 
-  Nincada:"Ninjask — Lv. 20; Shedinja also appears with empty party slot + spare Poké Ball",
-  Ninjask:"Final form",
-  Shedinja:"Final form",
+  Nincada:"Ninjask — Lv. 20; Shedinja also appears if the party has an empty slot and you have a spare Poké Ball",
 
   Whismur:"Loudred — Lv. 20",
   Loudred:"Exploud — Lv. 40",
-  Exploud:"Final form",
 
   Makuhita:"Hariyama — Lv. 24",
-  Hariyama:"Final form",
 
   Azurill:"Marill — high friendship",
-  Marill:"Azumarill — Lv. 18",
-  Azumarill:"Final form",
+
+  Nosepass:"Probopass — level up in New Mauville",
 
   Skitty:"Delcatty — Moon Stone",
-  Delcatty:"Final form",
 
   Aron:"Lairon — Lv. 32",
   Lairon:"Aggron — Lv. 42",
-  Aggron:"Final form",
 
   Meditite:"Medicham — Lv. 37",
-  Medicham:"Final form",
 
   Electrike:"Manectric — Lv. 26",
-  Manectric:"Final form",
+
+  Roselia:"Roserade — Shiny Stone",
 
   Gulpin:"Swalot — Lv. 26",
-  Swalot:"Final form",
 
   Carvanha:"Sharpedo — Lv. 30",
-  Sharpedo:"Final form",
 
   Wailmer:"Wailord — Lv. 40",
-  Wailord:"Final form",
 
   Numel:"Camerupt — Lv. 33",
-  Camerupt:"Final form",
 
   Spoink:"Grumpig — Lv. 32",
-  Grumpig:"Final form",
 
   Trapinch:"Vibrava — Lv. 35",
   Vibrava:"Flygon — Lv. 45",
-  Flygon:"Final form",
 
   Cacnea:"Cacturne — Lv. 32",
-  Cacturne:"Final form",
 
   Swablu:"Altaria — Lv. 35",
-  Altaria:"Final form",
 
   Barboach:"Whiscash — Lv. 30",
-  Whiscash:"Final form",
 
   Corphish:"Crawdaunt — Lv. 30",
-  Crawdaunt:"Final form",
 
   Baltoy:"Claydol — Lv. 36",
-  Claydol:"Final form",
 
   Lileep:"Cradily — Lv. 40",
-  Cradily:"Final form",
-
   Anorith:"Armaldo — Lv. 40",
-  Armaldo:"Final form",
 
-  Feebas:"Milotic — high Beauty + level, or trade holding Prism Scale",
-  Milotic:"Final form",
+  Feebas:"Milotic — level up with Beauty at 170+; or trade holding Prism Scale",
 
   Shuppet:"Banette — Lv. 37",
-  Banette:"Final form",
 
   Duskull:"Dusclops — Lv. 37",
   Dusclops:"Dusknoir — trade holding Reaper Cloth",
-  Dusknoir:"Final form",
+
+  Wynaut:"Wobbuffet — Lv. 15",
 
   Snorunt:"Glalie — Lv. 42; or Froslass — Dawn Stone if female",
-  Glalie:"Final form",
-  Froslass:"Final form",
 
   Spheal:"Sealeo — Lv. 32",
   Sealeo:"Walrein — Lv. 44",
-  Walrein:"Final form",
 
   Clamperl:"Huntail — trade holding Deep Sea Tooth; or Gorebyss — trade holding Deep Sea Scale",
-  Huntail:"Final form",
-  Gorebyss:"Final form",
 
   Bagon:"Shelgon — Lv. 30",
   Shelgon:"Salamence — Lv. 50",
-  Salamence:"Final form",
 
   Beldum:"Metang — Lv. 20",
   Metang:"Metagross — Lv. 45",
-  Metagross:"Final form",
 
-  Golbat:"Crobat — high friendship",
-  Crobat:"Final form",
 
-  Magneton:"Magnezone — level up in New Mauville",
-  Magnezone:"Final form",
+  // =======================================================
+  // GENERATION IV / SINNOH SPECIES
+  // =======================================================
 
-  Nosepass:"Probopass — level up in New Mauville",
-  Probopass:"Final form",
+  Turtwig:"Grotle — Lv. 18",
+  Grotle:"Torterra — Lv. 32",
 
-  Eevee:"Vaporeon — Water Stone; Jolteon — Thunder Stone; Flareon — Fire Stone; Espeon — friendship/day; Umbreon — friendship/night; Leafeon — Moss Rock; Glaceon — Ice Rock; Sylveon — Fairy move + 2 Pokémon-Amie affection hearts",
-  Vaporeon:"Final form",
-  Jolteon:"Final form",
-  Flareon:"Final form",
-  Espeon:"Final form",
-  Umbreon:"Final form",
-  Leafeon:"Final form",
-  Glaceon:"Final form",
-  Sylveon:"Final form",
+  Chimchar:"Monferno — Lv. 14",
+  Monferno:"Infernape — Lv. 36",
 
-  Inkay:"Malamar — Lv. 30+ while system is upside down",
-  Malamar:"Final form",
+  Piplup:"Prinplup — Lv. 16",
+  Prinplup:"Empoleon — Lv. 36",
 
-  Pancham:"Pangoro — Lv. 32+ with Dark-type Pokémon in party",
-  Pangoro:"Final form",
+  Starly:"Staravia — Lv. 14",
+  Staravia:"Staraptor — Lv. 34",
 
-  Sliggoo:"Goodra — Lv. 50+ while raining",
-  Goodra:"Final form",
+  Bidoof:"Bibarel — Lv. 15",
 
-  Tyrunt:"Tyrantrum — Lv. 39+ during daytime",
-  Tyrantrum:"Final form",
+  Kricketot:"Kricketune — Lv. 10",
+
+  Shinx:"Luxio — Lv. 15",
+  Luxio:"Luxray — Lv. 30",
+
+  Budew:"Roselia — high friendship during day",
+
+  Cranidos:"Rampardos — Lv. 30",
+  Shieldon:"Bastiodon — Lv. 30",
+
+  Burmy:"Wormadam — Lv. 20 if female; or Mothim — Lv. 20 if male",
+
+  Combee:"Vespiquen — Lv. 21 if female",
+
+  Buizel:"Floatzel — Lv. 26",
+
+  Cherubi:"Cherrim — Lv. 25",
+
+  Shellos:"Gastrodon — Lv. 30",
+
+  Drifloon:"Drifblim — Lv. 28",
+
+  Buneary:"Lopunny — high friendship",
+
+  Glameow:"Purugly — Lv. 38",
+
+  Chingling:"Chimecho — high friendship at night",
+
+  Stunky:"Skuntank — Lv. 34",
+
+  Bronzor:"Bronzong — Lv. 33",
+
+  Bonsly:"Sudowoodo — level up knowing Mimic",
+
+  "Mime Jr.":"Mr. Mime — level up knowing Mimic",
+
+  Happiny:"Chansey — level up holding Oval Stone during day",
+
+  Gible:"Gabite — Lv. 24",
+  Gabite:"Garchomp — Lv. 48",
+
+  Munchlax:"Snorlax — high friendship",
+
+  Riolu:"Lucario — high friendship during day",
+
+  Hippopotas:"Hippowdon — Lv. 34",
+
+  Skorupi:"Drapion — Lv. 40",
+
+  Croagunk:"Toxicroak — Lv. 37",
+
+  Finneon:"Lumineon — Lv. 31",
+
+  Mantyke:"Mantine — level up with Remoraid in party",
+
+  Snover:"Abomasnow — Lv. 40",
+
+
+  // =======================================================
+  // GENERATION V / UNOVA SPECIES
+  // =======================================================
+
+  Snivy:"Servine — Lv. 17",
+  Servine:"Serperior — Lv. 36",
+
+  Tepig:"Pignite — Lv. 17",
+  Pignite:"Emboar — Lv. 36",
+
+  Oshawott:"Dewott — Lv. 17",
+  Dewott:"Samurott — Lv. 36",
+
+  Patrat:"Watchog — Lv. 20",
+
+  Lillipup:"Herdier — Lv. 16",
+  Herdier:"Stoutland — Lv. 32",
+
+  Purrloin:"Liepard — Lv. 20",
+
+  Pansage:"Simisage — Leaf Stone",
+  Pansear:"Simisear — Fire Stone",
+  Panpour:"Simipour — Water Stone",
+
+  Munna:"Musharna — Moon Stone",
+
+  Pidove:"Tranquill — Lv. 21",
+  Tranquill:"Unfezant — Lv. 32",
+
+  Blitzle:"Zebstrika — Lv. 27",
+
+  Roggenrola:"Boldore — Lv. 25",
+  Boldore:"Gigalith — trade",
+
+  Woobat:"Swoobat — high friendship",
+
+  Drilbur:"Excadrill — Lv. 31",
+
+  Timburr:"Gurdurr — Lv. 25",
+  Gurdurr:"Conkeldurr — trade",
+
+  Tympole:"Palpitoad — Lv. 25",
+  Palpitoad:"Seismitoad — Lv. 36",
+
+  Sewaddle:"Swadloon — Lv. 20",
+  Swadloon:"Leavanny — high friendship",
+
+  Venipede:"Whirlipede — Lv. 22",
+  Whirlipede:"Scolipede — Lv. 30",
+
+  Cottonee:"Whimsicott — Sun Stone",
+  Petilil:"Lilligant — Sun Stone",
+
+  Sandile:"Krokorok — Lv. 29",
+  Krokorok:"Krookodile — Lv. 40",
+
+  Darumaka:"Darmanitan — Lv. 35",
+
+  Dwebble:"Crustle — Lv. 34",
+
+  Scraggy:"Scrafty — Lv. 39",
+
+  Yamask:"Cofagrigus — Lv. 34",
+
+  Tirtouga:"Carracosta — Lv. 37",
+  Archen:"Archeops — Lv. 37",
+
+  Trubbish:"Garbodor — Lv. 36",
+
+  Zorua:"Zoroark — Lv. 30",
+
+  Minccino:"Cinccino — Shiny Stone",
+
+  Gothita:"Gothorita — Lv. 32",
+  Gothorita:"Gothitelle — Lv. 41",
+
+  Solosis:"Duosion — Lv. 32",
+  Duosion:"Reuniclus — Lv. 41",
+
+  Ducklett:"Swanna — Lv. 35",
+
+  Vanillite:"Vanillish — Lv. 35",
+  Vanillish:"Vanilluxe — Lv. 47",
+
+  Deerling:"Sawsbuck — Lv. 34",
+
+  Karrablast:"Escavalier — trade specifically for Shelmet",
+
+  Foongus:"Amoonguss — Lv. 39",
+
+  Frillish:"Jellicent — Lv. 40",
+
+  Joltik:"Galvantula — Lv. 36",
+
+  Ferroseed:"Ferrothorn — Lv. 40",
+
+  Klink:"Klang — Lv. 38",
+  Klang:"Klinklang — Lv. 49",
+
+  Tynamo:"Eelektrik — Lv. 39",
+  Eelektrik:"Eelektross — Thunder Stone",
+
+  Elgyem:"Beheeyem — Lv. 42",
+
+  Litwick:"Lampent — Lv. 41",
+  Lampent:"Chandelure — Dusk Stone",
+
+  Axew:"Fraxure — Lv. 38",
+  Fraxure:"Haxorus — Lv. 48",
+
+  Cubchoo:"Beartic — Lv. 37",
+
+  Shelmet:"Accelgor — trade specifically for Karrablast",
+
+  Mienfoo:"Mienshao — Lv. 50",
+
+  Golett:"Golurk — Lv. 43",
+
+  Pawniard:"Bisharp — Lv. 52",
+
+  Rufflet:"Braviary — Lv. 54",
+  Vullaby:"Mandibuzz — Lv. 54",
+
+  Deino:"Zweilous — Lv. 50",
+  Zweilous:"Hydreigon — Lv. 64",
+
+  Larvesta:"Volcarona — Lv. 59",
+
+
+  // =======================================================
+  // GENERATION VI / KALOS SPECIES
+  // =======================================================
+
+  Chespin:"Quilladin — Lv. 16",
+  Quilladin:"Chesnaught — Lv. 36",
+
+  Fennekin:"Braixen — Lv. 16",
+  Braixen:"Delphox — Lv. 36",
+
+  Froakie:"Frogadier — Lv. 16",
+  Frogadier:"Greninja — Lv. 36",
+
+  Bunnelby:"Diggersby — Lv. 20",
+
+  Fletchling:"Fletchinder — Lv. 17",
+  Fletchinder:"Talonflame — Lv. 35",
+
+  Scatterbug:"Spewpa — Lv. 9",
+  Spewpa:"Vivillon — Lv. 12",
+
+  Litleo:"Pyroar — Lv. 35",
+
+  "Flabébé":"Floette — Lv. 19",
+  Floette:"Florges — Shiny Stone",
+
+  Skiddo:"Gogoat — Lv. 32",
+
+  Pancham:"Pangoro — Lv. 32+ with a Dark-type Pokémon in party",
+
+  Espurr:"Meowstic — Lv. 25",
+
+  Honedge:"Doublade — Lv. 35",
+  Doublade:"Aegislash — Dusk Stone",
+
+  Spritzee:"Aromatisse — trade holding Sachet",
+
+  Swirlix:"Slurpuff — trade holding Whipped Dream",
+
+  Inkay:"Malamar — Lv. 30+ while the Nintendo 3DS is held upside down",
+
+  Binacle:"Barbaracle — Lv. 39",
+
+  Skrelp:"Dragalge — Lv. 48",
+
+  Clauncher:"Clawitzer — Lv. 37",
+
+  Helioptile:"Heliolisk — Sun Stone",
+
+  Tyrunt:"Tyrantrum — Lv. 39+ during day",
 
   Amaura:"Aurorus — Lv. 39+ at night",
-  Aurorus:"Final form"
+
+  Goomy:"Sliggoo — Lv. 40",
+  Sliggoo:"Goodra — Lv. 50+ while it is raining in the overworld",
+
+  Phantump:"Trevenant — trade",
+
+  Pumpkaboo:"Gourgeist — trade",
+
+  Bergmite:"Avalugg — Lv. 37",
+
+  Noibat:"Noivern — Lv. 48"
 };
 
 /*

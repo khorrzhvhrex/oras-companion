@@ -96,12 +96,27 @@
       <div class="section-head">
         <div>
           <p class="eyebrow">Catch Everything</p>
-          <h2>Area Tracker</h2>
+          <h2>Route Tracker</h2>
         </div>
       </div>
-      <p class="muted">Keep this lightweight: enter how many unique species are currently available and how many you've caught.</p>
-      <div id="areaList" class="stack-list"></div>
-      <button id="addAreaBtn" class="primary-btn full" type="button">Add Area</button>
+      <p class="muted">Only Pokémon you can currently obtain are shown. Future rod, Surf, Dive and story-gated encounters stay hidden until they become available.</p>
+
+      <section class="access-panel">
+        <div class="section-head compact">
+          <div>
+            <p class="eyebrow">Equipment</p>
+            <h3>Fishing Rods</h3>
+          </div>
+        </div>
+        <div class="access-grid">
+          <label class="form-check"><input id="oldRodToggle" type="checkbox"><span>Old Rod</span></label>
+          <label class="form-check"><input id="goodRodToggle" type="checkbox"><span>Good Rod</span></label>
+          <label class="form-check"><input id="superRodToggle" type="checkbox"><span>Super Rod</span></label>
+        </div>
+        <div id="fieldAccessSummary" class="access-summary"></div>
+      </section>
+
+      <div id="routeList" class="route-list"></div>
     </section>
 
     <section id="extras" class="tab-panel">
@@ -165,45 +180,6 @@
       </div>
     </form>
   </dialog>
-
-  <dialog id="areaDialog" class="modal">
-    <form id="areaForm" class="modal-card">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Area Tracker</p>
-          <h2 id="areaDialogTitle">Add Area</h2>
-        </div>
-        <button id="areaCancelBtn" class="icon-btn" type="button" aria-label="Close">×</button>
-      </div>
-      <label class="field">
-        <span>Name</span>
-        <input id="areaName" required maxlength="60" placeholder="Route 102">
-      </label>
-      <div class="field-row">
-        <label class="field">
-          <span>Caught</span>
-          <input id="areaCaught" type="number" min="0" max="999" value="0">
-        </label>
-        <label class="field">
-          <span>Available</span>
-          <input id="areaTotal" type="number" min="0" max="999" value="0">
-        </label>
-      </div>
-      <label class="field">
-        <span>Note</span>
-        <input id="areaNote" maxlength="100" placeholder="Surf encounters later">
-      </label>
-      <label class="form-check">
-        <input id="areaRevisit" type="checkbox">
-        <span>Known revisit needed later</span>
-      </label>
-      <div class="modal-actions row">
-        <button class="primary-btn" type="submit">Save Area</button>
-        <button id="deleteAreaBtn" class="danger-btn hidden" type="button">Delete</button>
-      </div>
-    </form>
-  </dialog>
-
-  <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

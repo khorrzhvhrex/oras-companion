@@ -17,14 +17,9 @@ const defaultState = () => ({
 
 let state = loadState();
 let pendingImport = null;
-let editingAreaId = null;
 
 const $ = sel => document.querySelector(sel);
 const $$ = sel => [...document.querySelectorAll(sel)];
-
-function safeId() {
-  return (crypto.randomUUID && crypto.randomUUID()) || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-}
 
 function loadState() {
   try {

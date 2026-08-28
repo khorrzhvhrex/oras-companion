@@ -176,3 +176,41 @@ h3{font-size:1.05rem;margin-bottom:0}
   .hero-actions>*{flex:1 1 100%}
   .field-row{align-items:stretch}
 }
+
+
+.access-panel{
+  margin:14px 0;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px;
+}
+.section-head.compact{margin-bottom:4px}
+.access-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.access-grid .form-check{
+  margin:0;border:1px solid var(--line);border-radius:12px;padding:10px;background:#fbfdfe;
+}
+.access-summary{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.access-chip{
+  font-size:.72rem;font-weight:800;padding:6px 8px;border-radius:999px;background:#edf0f3;color:#708091;
+}
+.access-chip.on{background:var(--success-soft);color:var(--success)}
+.route-list{display:grid;gap:12px}
+.route-card{
+  background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:14px;box-shadow:var(--shadow);
+}
+.route-card.complete{border-color:#cfe7d9;background:linear-gradient(180deg,#fff,#f8fcfa)}
+.route-title-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.route-progress{font-weight:900;white-space:nowrap}
+.route-methods{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.method-chip{
+  font-size:.68rem;font-weight:800;padding:4px 7px;border-radius:999px;background:var(--accent-soft);color:var(--accent);
+}
+.species-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:12px}
+.species-check{
+  display:flex;align-items:center;gap:8px;min-height:42px;border:1px solid var(--line);border-radius:12px;padding:8px 9px;background:#fbfdfe;
+}
+.species-check input{width:19px;height:19px;accent-color:var(--accent);flex:0 0 auto}
+.species-check.caught{background:var(--success-soft);border-color:#cfe7d9}
+.species-check span{font-size:.88rem;font-weight:700;min-width:0}
+.route-empty{color:var(--muted);font-size:.85rem;margin:10px 0 0}
+@media(max-width:380px){
+  .access-grid{grid-template-columns:1fr}
+  .species-grid{grid-template-columns:1fr}
+}

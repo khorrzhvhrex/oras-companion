@@ -482,17 +482,17 @@ function renderRoutes() {
   $("#shoalLowTideToggle").checked = !!state.access.shoalLowTide;
 
   const chips = [
-    ["Surf", hasStoryUnlock("surf")],
-    ["Rock Smash", hasStoryUnlock("rock")],
-    ["Dive", hasStoryUnlock("dive")],
-    ["Waterfall", hasStoryUnlock("waterfall")],
-    ["Soaring", hasStoryUnlock("soar")],
-    ["Expanded DexNav", hasStoryUnlock("postdex")]
+    ["Rock Smash", hasStoryUnlock("rock"), "Dynamo Badge"],
+    ["Surf", hasStoryUnlock("surf"), "Balance Badge"],
+    ["Dive", hasStoryUnlock("dive"), "Mind Badge"],
+    ["Waterfall", hasStoryUnlock("waterfall"), "Rain Badge"],
+    ["Soaring", hasStoryUnlock("soar"), "Primal Kyogre"],
+    ["Expanded DexNav", hasStoryUnlock("postdex"), "Primal Kyogre"]
   ];
-
-  $("#fieldAccessSummary").innerHTML = chips.map(([label,on]) =>
+  
+  $("#fieldAccessSummary").innerHTML = chips.map(([label,on,source]) =>
     `<span class="access-chip ${on ? "on" : ""}">
-      ${label}: ${on ? "ON" : "locked"}
+      ${on ? `${label}: ON` : `${label}: locked until ${source}`}
     </span>`
   ).join("");
 

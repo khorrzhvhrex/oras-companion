@@ -198,29 +198,29 @@ function renderRevisits() {
 function hasStoryUnlock(key) {
   const completed = new Set(state.completedBenchmarks);
 
-  if (key === "surf")
-    return completed.has(12) || state.currentBenchmark > 12;
-
   if (key === "rock")
-    return completed.has(6) || state.currentBenchmark > 6;
-
-  if (key === "dive")
-    return completed.has(19) || state.currentBenchmark > 19;
+    return completed.has(6);
 
   if (key === "goggles")
-    return completed.has(10) || state.currentBenchmark > 10;
+    return completed.has(10);
 
-  if (key === "waterfall")
-    return completed.has(23) || state.currentBenchmark > 23;
+  if (key === "surf")
+    return completed.has(12);
+
+  if (key === "dive")
+    return completed.has(19);
 
   if (key === "soar")
-    return completed.has(22) || state.currentBenchmark > 22;
+    return completed.has(22);
 
   if (key === "postdex")
-    return completed.has(22) || state.currentBenchmark > 22;
+    return completed.has(22);
+
+  if (key === "waterfall")
+    return completed.has(23);
 
   if (key === "postdelta")
-    return completed.has(33) || state.currentBenchmark > 33;
+    return completed.has(33);
 
   return true;
 }
@@ -406,13 +406,7 @@ function renderRoutes() {
       label.querySelector("span").textContent = s.name;
       label.querySelector("input").addEventListener("change", e => {
         setSpeciesCaught(s.name, e.target.checked);
-      
-        ROUTES.forEach(area => {
-          if (routeReached(area) && routeRequirementMet(area)) {
-            autoCompleteCatchObjective(area);
-          }
-        });
-      
+        autoCompleteCatchObjectives();
         saveState();
       });
       grid.appendChild(label);

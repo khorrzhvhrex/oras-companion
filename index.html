@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#18304f">
+  <title>Alpha Sapphire Companion</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Pokémon Alpha Sapphire</p>
+        <h1>Hoenn Companion</h1>
+      </div>
+      <button id="menuBtn" class="icon-btn" type="button" aria-label="Open save tools">•••</button>
+    </header>
+
+    <section class="progress-card">
+      <div class="progress-meta">
+        <div>
+          <span class="label">Journey Progress</span>
+          <strong id="progressPct">0%</strong>
+        </div>
+        <div class="trainer-level">
+          <span class="label">Trainer Level</span>
+          <strong id="trainerLevel">1</strong>
+        </div>
+      </div>
+      <div class="progress-track" aria-hidden="true">
+        <div id="progressBar" class="progress-fill"></div>
+      </div>
+      <p id="progressText" class="muted">0 of 40 benchmarks complete</p>
+    </section>
+
+    <nav class="tabs" aria-label="Primary">
+      <button class="tab active" data-tab="journey" type="button">Journey</button>
+      <button class="tab" data-tab="revisits" type="button">Revisits <span id="revisitBadge" class="badge">0</span></button>
+      <button class="tab" data-tab="areas" type="button">Areas</button>
+      <button class="tab" data-tab="extras" type="button">Extras</button>
+    </nav>
+
+    <section id="journey" class="tab-panel active">
+      <article class="hero-card">
+        <div class="hero-head">
+          <div>
+            <p class="eyebrow">Current Quest</p>
+            <h2 id="currentTitle">Welcome to Hoenn</h2>
+          </div>
+          <span id="currentNumber" class="quest-number">01</span>
+        </div>
+        <p id="currentSummary" class="summary"></p>
+        <div id="objectiveList" class="checklist"></div>
+        <div class="hero-actions">
+          <button id="completeBenchmarkBtn" class="primary-btn" type="button">Complete Benchmark</button>
+          <button id="prevBenchmarkBtn" class="secondary-btn" type="button">Previous</button>
+          <button id="nextBenchmarkBtn" class="secondary-btn" type="button">Next</button>
+        </div>
+      </article>
+
+      <section class="section-block">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Up Next</p>
+            <h3 id="nextTitle">Stone Badge</h3>
+          </div>
+          <span id="nextStatus" class="status-pill">Locked</span>
+        </div>
+        <p id="nextSummary" class="muted"></p>
+      </section>
+
+      <section class="section-block">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Recent Wins</p>
+            <h3>Benchmark History</h3>
+          </div>
+        </div>
+        <div id="historyList" class="history-list"></div>
+      </section>
+    </section>
+
+    <section id="revisits" class="tab-panel">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Backtracking</p>
+          <h2>Revisit Queue</h2>
+        </div>
+      </div>
+      <p class="muted">New field abilities and story milestones will surface earlier locations here.</p>
+      <div id="revisitList" class="stack-list"></div>
+    </section>
+
+    <section id="areas" class="tab-panel">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Catch Everything</p>
+          <h2>Area Tracker</h2>
+        </div>
+      </div>
+      <p class="muted">Keep this lightweight: enter how many unique species are currently available and how many you've caught.</p>
+      <div id="areaList" class="stack-list"></div>
+      <button id="addAreaBtn" class="primary-btn full" type="button">Add Area</button>
+    </section>
+
+    <section id="extras" class="tab-panel">
+      <section class="section-block">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Party</p>
+            <h2>Current Team</h2>
+          </div>
+        </div>
+        <div id="partyGrid" class="party-grid"></div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Optional</p>
+            <h2>Achievements</h2>
+          </div>
+        </div>
+        <div id="achievementList" class="achievement-grid"></div>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="toolsDialog" class="modal">
+    <form method="dialog" class="modal-card">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Save Tools</p>
+          <h2>Run Data</h2>
+        </div>
+        <button class="icon-btn" value="cancel" aria-label="Close">×</button>
+      </div>
+      <p class="muted">Progress autosaves on this device. Export periodically if you want a portable backup.</p>
+      <div class="modal-actions">
+        <button id="exportBtn" class="primary-btn" type="button">Export Save</button>
+        <label class="secondary-btn file-label">
+          Import Save
+          <input id="importInput" type="file" accept=".json,application/json" hidden>
+        </label>
+        <button id="restoreBackupBtn" class="secondary-btn" type="button">Restore Pre-Import Backup</button>
+        <button id="resetBtn" class="danger-btn" type="button">Reset Run</button>
+      </div>
+      <p id="saveStatus" class="muted small"></p>
+    </form>
+  </dialog>
+
+  <dialog id="importDialog" class="modal">
+    <form method="dialog" class="modal-card">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Import Preview</p>
+          <h2>Replace current progress?</h2>
+        </div>
+      </div>
+      <div id="importPreview" class="preview-card"></div>
+      <div class="modal-actions row">
+        <button id="confirmImportBtn" class="primary-btn" type="button">Import</button>
+        <button class="secondary-btn" value="cancel">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="areaDialog" class="modal">
+    <form id="areaForm" class="modal-card">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Area Tracker</p>
+          <h2 id="areaDialogTitle">Add Area</h2>
+        </div>
+        <button id="areaCancelBtn" class="icon-btn" type="button" aria-label="Close">×</button>
+      </div>
+      <label class="field">
+        <span>Name</span>
+        <input id="areaName" required maxlength="60" placeholder="Route 102">
+      </label>
+      <div class="field-row">
+        <label class="field">
+          <span>Caught</span>
+          <input id="areaCaught" type="number" min="0" max="999" value="0">
+        </label>
+        <label class="field">
+          <span>Available</span>
+          <input id="areaTotal" type="number" min="0" max="999" value="0">
+        </label>
+      </div>
+      <label class="field">
+        <span>Note</span>
+        <input id="areaNote" maxlength="100" placeholder="Surf encounters later">
+      </label>
+      <label class="form-check">
+        <input id="areaRevisit" type="checkbox">
+        <span>Known revisit needed later</span>
+      </label>
+      <div class="modal-actions row">
+        <button class="primary-btn" type="submit">Save Area</button>
+        <button id="deleteAreaBtn" class="danger-btn hidden" type="button">Delete</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>

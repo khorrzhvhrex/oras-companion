@@ -25,6 +25,193 @@ const POKEMON_LOOKUP = new Map(
   POKEMON_721.map(name => [name.toLowerCase(), name])
 );
 
+const ORAS_EVOLUTIONS = {
+  Treecko:"Grovyle — Lv. 16",
+  Grovyle:"Sceptile — Lv. 36",
+  Sceptile:"Final form",
+
+  Torchic:"Combusken — Lv. 16",
+  Combusken:"Blaziken — Lv. 36",
+  Blaziken:"Final form",
+
+  Mudkip:"Marshtomp — Lv. 16",
+  Marshtomp:"Swampert — Lv. 36",
+  Swampert:"Final form",
+
+  Poochyena:"Mightyena — Lv. 18",
+  Mightyena:"Final form",
+
+  Zigzagoon:"Linoone — Lv. 20",
+  Linoone:"Final form",
+
+  Wurmple:"Silcoon or Cascoon — Lv. 7",
+  Silcoon:"Beautifly — Lv. 10",
+  Beautifly:"Final form",
+  Cascoon:"Dustox — Lv. 10",
+  Dustox:"Final form",
+
+  Lotad:"Lombre — Lv. 14",
+  Lombre:"Ludicolo — Water Stone",
+  Ludicolo:"Final form",
+
+  Seedot:"Nuzleaf — Lv. 14",
+  Nuzleaf:"Shiftry — Leaf Stone",
+  Shiftry:"Final form",
+
+  Taillow:"Swellow — Lv. 22",
+  Swellow:"Final form",
+
+  Wingull:"Pelipper — Lv. 25",
+  Pelipper:"Final form",
+
+  Ralts:"Kirlia — Lv. 20",
+  Kirlia:"Gardevoir — Lv. 30; or Gallade — Dawn Stone if male",
+  Gardevoir:"Final form",
+  Gallade:"Final form",
+
+  Surskit:"Masquerain — Lv. 22",
+  Masquerain:"Final form",
+
+  Shroomish:"Breloom — Lv. 23",
+  Breloom:"Final form",
+
+  Slakoth:"Vigoroth — Lv. 18",
+  Vigoroth:"Slaking — Lv. 36",
+  Slaking:"Final form",
+
+  Nincada:"Ninjask — Lv. 20; Shedinja also appears with empty party slot + spare Poké Ball",
+  Ninjask:"Final form",
+  Shedinja:"Final form",
+
+  Whismur:"Loudred — Lv. 20",
+  Loudred:"Exploud — Lv. 40",
+  Exploud:"Final form",
+
+  Makuhita:"Hariyama — Lv. 24",
+  Hariyama:"Final form",
+
+  Azurill:"Marill — high friendship",
+  Marill:"Azumarill — Lv. 18",
+  Azumarill:"Final form",
+
+  Skitty:"Delcatty — Moon Stone",
+  Delcatty:"Final form",
+
+  Aron:"Lairon — Lv. 32",
+  Lairon:"Aggron — Lv. 42",
+  Aggron:"Final form",
+
+  Meditite:"Medicham — Lv. 37",
+  Medicham:"Final form",
+
+  Electrike:"Manectric — Lv. 26",
+  Manectric:"Final form",
+
+  Gulpin:"Swalot — Lv. 26",
+  Swalot:"Final form",
+
+  Carvanha:"Sharpedo — Lv. 30",
+  Sharpedo:"Final form",
+
+  Wailmer:"Wailord — Lv. 40",
+  Wailord:"Final form",
+
+  Numel:"Camerupt — Lv. 33",
+  Camerupt:"Final form",
+
+  Spoink:"Grumpig — Lv. 32",
+  Grumpig:"Final form",
+
+  Trapinch:"Vibrava — Lv. 35",
+  Vibrava:"Flygon — Lv. 45",
+  Flygon:"Final form",
+
+  Cacnea:"Cacturne — Lv. 32",
+  Cacturne:"Final form",
+
+  Swablu:"Altaria — Lv. 35",
+  Altaria:"Final form",
+
+  Barboach:"Whiscash — Lv. 30",
+  Whiscash:"Final form",
+
+  Corphish:"Crawdaunt — Lv. 30",
+  Crawdaunt:"Final form",
+
+  Baltoy:"Claydol — Lv. 36",
+  Claydol:"Final form",
+
+  Lileep:"Cradily — Lv. 40",
+  Cradily:"Final form",
+
+  Anorith:"Armaldo — Lv. 40",
+  Armaldo:"Final form",
+
+  Feebas:"Milotic — high Beauty + level, or trade holding Prism Scale",
+  Milotic:"Final form",
+
+  Shuppet:"Banette — Lv. 37",
+  Banette:"Final form",
+
+  Duskull:"Dusclops — Lv. 37",
+  Dusclops:"Dusknoir — trade holding Reaper Cloth",
+  Dusknoir:"Final form",
+
+  Snorunt:"Glalie — Lv. 42; or Froslass — Dawn Stone if female",
+  Glalie:"Final form",
+  Froslass:"Final form",
+
+  Spheal:"Sealeo — Lv. 32",
+  Sealeo:"Walrein — Lv. 44",
+  Walrein:"Final form",
+
+  Clamperl:"Huntail — trade holding Deep Sea Tooth; or Gorebyss — trade holding Deep Sea Scale",
+  Huntail:"Final form",
+  Gorebyss:"Final form",
+
+  Bagon:"Shelgon — Lv. 30",
+  Shelgon:"Salamence — Lv. 50",
+  Salamence:"Final form",
+
+  Beldum:"Metang — Lv. 20",
+  Metang:"Metagross — Lv. 45",
+  Metagross:"Final form",
+
+  Golbat:"Crobat — high friendship",
+  Crobat:"Final form",
+
+  Magneton:"Magnezone — level up in New Mauville",
+  Magnezone:"Final form",
+
+  Nosepass:"Probopass — level up in New Mauville",
+  Probopass:"Final form",
+
+  Eevee:"Vaporeon — Water Stone; Jolteon — Thunder Stone; Flareon — Fire Stone; Espeon — friendship/day; Umbreon — friendship/night; Leafeon — Moss Rock; Glaceon — Ice Rock; Sylveon — Fairy move + 2 Pokémon-Amie affection hearts",
+  Vaporeon:"Final form",
+  Jolteon:"Final form",
+  Flareon:"Final form",
+  Espeon:"Final form",
+  Umbreon:"Final form",
+  Leafeon:"Final form",
+  Glaceon:"Final form",
+  Sylveon:"Final form",
+
+  Inkay:"Malamar — Lv. 30+ while system is upside down",
+  Malamar:"Final form",
+
+  Pancham:"Pangoro — Lv. 32+ with Dark-type Pokémon in party",
+  Pangoro:"Final form",
+
+  Sliggoo:"Goodra — Lv. 50+ while raining",
+  Goodra:"Final form",
+
+  Tyrunt:"Tyrantrum — Lv. 39+ during daytime",
+  Tyrantrum:"Final form",
+
+  Amaura:"Aurorus — Lv. 39+ at night",
+  Aurorus:"Final form"
+};
+
 /*
   Generation VI type chart.
 
@@ -141,6 +328,10 @@ const POKEMON_TYPES_SOURCE =
 
 function pokemonTypes(name) {
   return POKEMON_TYPES[name] || [];
+}
+
+function pokemonEvolutionText(name) {
+  return ORAS_EVOLUTIONS[name] || "Final form / no ORAS evolution listed";
 }
 
 function parseCsvLine(line) {

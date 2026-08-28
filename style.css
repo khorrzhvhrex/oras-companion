@@ -176,10 +176,3 @@ h3{font-size:1.05rem;margin-bottom:0}
   .hero-actions>*{flex:1 1 100%}
   .field-row{align-items:stretch}
 }
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #121212;
-    color: #ffffff;
-  }
-}
-

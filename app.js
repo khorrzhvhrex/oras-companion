@@ -221,6 +221,7 @@ function render() {
   renderRevisits();
   renderRoutes();
   renderParty();
+  renderTeamAnalysis();
   renderAchievements();
 }
 
@@ -551,13 +552,206 @@ function renderRoutes() {
   }
 }
 
+function pokemonTypes(name) {
+  return POKEMON_TYPES[name] || [];
+}
+
+
+function representedTeamTypes() {
+  const represented = new Set();
+
+  state.party.forEach(name => {
+    pokemonTypes(name).forEach(type => represented.add(type));
+  });
+
+  return [...represented];
+}
+
+
+function teamPokemonData() {
+  return state.party
+    .filter(Boolean)
+    .map(name => ({
+      name,
+      types: pokemonTypes(name)
+    }))
+    .filter(pokemon => pokemon.types.length);
+}
+
+
+function analyzeTeam() {
+  const team = teamPokemonData();
+
+  if (!team.length) {
+    return {
+      grade:"—",
+      covered:[],
+      lacking:[],
+      weak:[],
+      weakCounts:{},
+      coverageCount:0
+    };
+  }
+
+  const attackingTypes = representedTeamTypes();
+
+  const covered = ALL_TYPES.filter(defendingType =>
+    attackingTypes.some(attackingType =>
+      offensiveTypeCovers(attackingType, defendingType)
+    )
+  );
+
+  const uncovered = ALL_TYPES.filter(
+    type => !covered.includes(type)
+  );
+
+  const weakCounts = {};
+
+  ALL_TYPES.forEach(attackingType => {
+    weakCounts[attackingType] = team.filter(pokemon =>
+      defensiveMultiplier(
+        attackingType,
+        pokemon.types
+      ) > 1
+    ).length;
+  });
+
+  /*
+    Major weakness:
+    - team has NO offensive typing that covers the type
+    - 3 or more current party Pokémon are weak to that type
+  */
+  const weak = uncovered.filter(
+    type => weakCounts[type] >= 3
+  );
+
+  /*
+    Lacking:
+    - team has no super-effective typing against the type
+    - but fewer than 3 party members are vulnerable to it
+
+    This makes sure every uncovered type appears somewhere:
+    either Lacking or Weak.
+  */
+  const lacking = uncovered.filter(
+    type => weakCounts[type] < 3
+  );
+
+  const coverageCount = covered.length;
+
+  let grade;
+
+  if (coverageCount >= 15) {
+    grade = "Excellent";
+  } else if (coverageCount >= 12) {
+    grade = "Great";
+  } else if (coverageCount >= 8) {
+    grade = "Good";
+  } else {
+    grade = "Poor";
+  }
+
+  /*
+    One-grade penalty for a major uncovered weakness.
+  */
+  if (weak.length) {
+    const grades = ["Poor","Good","Great","Excellent"];
+    const index = grades.indexOf(grade);
+
+    grade = grades[Math.max(0, index - 1)];
+  }
+
+  return {
+    grade,
+    covered,
+    lacking,
+    weak,
+    weakCounts,
+    coverageCount
+  };
+}
+
+
+function typeListHtml(types) {
+  if (!types.length) {
+    return `<span class="muted">None</span>`;
+  }
+
+  return types
+    .map(type =>
+      `<span class="team-type-chip type-${type.toLowerCase()}">${type}</span>`
+    )
+    .join("");
+}
+
+
+function pokemonTypeHtml(name) {
+  const types = pokemonTypes(name);
+
+  if (!name) return "";
+
+  if (!types.length) {
+    return `<span class="small muted">Loading type data…</span>`;
+  }
+
+  return types
+    .map(type =>
+      `<span class="pokemon-type-pill type-${type.toLowerCase()}">${type}</span>`
+    )
+    .join("");
+}
+
+
+function renderTeamAnalysis() {
+  const analysis = analyzeTeam();
+
+  $("#teamCoverageGrade").textContent = analysis.grade;
+
+  const partyCount = state.party.filter(Boolean).length;
+
+  if (!partyCount) {
+    $("#coverageAgainst").innerHTML =
+      `<span class="muted">Add Pokémon to your party.</span>`;
+
+    $("#lackingAgainst").innerHTML = "—";
+    $("#weakAgainst").innerHTML = "—";
+
+    return;
+  }
+
+  if (!Object.keys(POKEMON_TYPES).length) {
+    $("#coverageAgainst").innerHTML =
+      `<span class="muted">Loading Pokémon type data…</span>`;
+
+    $("#lackingAgainst").innerHTML = "—";
+    $("#weakAgainst").innerHTML = "—";
+
+    return;
+  }
+
+  $("#coverageAgainst").innerHTML =
+    typeListHtml(analysis.covered);
+
+  $("#lackingAgainst").innerHTML =
+    typeListHtml(analysis.lacking);
+
+  $("#weakAgainst").innerHTML =
+    typeListHtml(analysis.weak);
+}
+
 function renderParty() {
   let datalist = $("#pokemonSpeciesList");
 
   if (!datalist) {
     datalist = document.createElement("datalist");
     datalist.id = "pokemonSpeciesList";
-    datalist.innerHTML = POKEMON_721.map(name => `<option value="${escapeAttr(name)}"></option>`).join("");
+
+    datalist.innerHTML = POKEMON_721
+      .map(name =>
+        `<option value="${escapeAttr(name)}"></option>`
+      )
+      .join("");
+
     document.body.appendChild(datalist);
   }
 
@@ -566,10 +760,12 @@ function renderParty() {
 
   state.party.forEach((name, i) => {
     const slot = document.createElement("div");
+
     slot.className = "party-slot";
 
     slot.innerHTML = `
       <label>Slot ${i + 1}</label>
+
       <input
         class="pokemon-party-input"
         list="pokemonSpeciesList"
@@ -577,17 +773,53 @@ function renderParty() {
         value="${escapeAttr(name)}"
         placeholder="Choose Pokémon"
       >
+
+      <div class="party-types">
+        ${pokemonTypeHtml(name)}
+      </div>
     `;
 
     const input = slot.querySelector("input");
+    const typeDisplay = slot.querySelector(".party-types");
 
     input.addEventListener("input", e => {
-      const exact = POKEMON_LOOKUP.get(e.target.value.trim().toLowerCase());
+      const typed = e.target.value.trim();
 
-      if (exact) {
-        state.party[i] = exact;
-        localStorage.setItem(APP_KEY, JSON.stringify(state));
+      if (!typed) {
+        state.party[i] = "";
+
+        localStorage.setItem(
+          APP_KEY,
+          JSON.stringify(state)
+        );
+
+        typeDisplay.innerHTML = "";
+        renderTeamAnalysis();
+
+        return;
       }
+
+      const exact = POKEMON_LOOKUP.get(
+        typed.toLowerCase()
+      );
+
+      /*
+        Only save recognized Pokémon.
+        Partial text like "Tor" is not stored.
+      */
+      if (!exact) return;
+
+      state.party[i] = exact;
+
+      localStorage.setItem(
+        APP_KEY,
+        JSON.stringify(state)
+      );
+
+      typeDisplay.innerHTML =
+        pokemonTypeHtml(exact);
+
+      renderTeamAnalysis();
     });
 
     input.addEventListener("change", e => {
@@ -596,26 +828,45 @@ function renderParty() {
       if (!typed) {
         state.party[i] = "";
         e.target.value = "";
-        localStorage.setItem(APP_KEY, JSON.stringify(state));
+
+        localStorage.setItem(
+          APP_KEY,
+          JSON.stringify(state)
+        );
+
+        renderParty();
+        renderTeamAnalysis();
+
         return;
       }
 
-      const exact = POKEMON_LOOKUP.get(typed.toLowerCase());
+      const exact = POKEMON_LOOKUP.get(
+        typed.toLowerCase()
+      );
 
       if (exact) {
         state.party[i] = exact;
         e.target.value = exact;
       } else {
+        /*
+          Reject garbage / partial names.
+          Restore the last valid Pokémon.
+        */
         e.target.value = state.party[i] || "";
       }
 
-      localStorage.setItem(APP_KEY, JSON.stringify(state));
+      localStorage.setItem(
+        APP_KEY,
+        JSON.stringify(state)
+      );
+
+      renderParty();
+      renderTeamAnalysis();
     });
 
     grid.appendChild(slot);
   });
 }
-
 function renderAchievements() {
   const list = $("#achievementList");
   list.innerHTML = "";
@@ -759,3 +1010,8 @@ $("#shoalLowTideToggle").addEventListener("change", e => {
 });
 
 render();
+
+POKEMON_TYPES_READY.then(() => {
+  renderParty();
+  renderTeamAnalysis();
+});

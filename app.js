@@ -116,7 +116,6 @@ const EXTRA_AREAS = [
 ROUTES.push(...EXTRA_AREAS);
 const ACHIEVEMENTS = ["First DexNav Egg Move", "First DexNav Hidden Ability", "First Trainer Rematch", "First Contest Win", "Create a Super Secret Base", "First Mega Evolution", "First Shiny", "Catch a Legendary", "Complete a Mirage Spot", "Catch the Regi Trio", "Become Champion", "Finish the Delta Episode", "Complete the Hoenn Dex", "Earn the Shiny Charm"];
 
-const POKEMON_LOOKUP = new Map(POKEMON_721.map(name => [name.toLowerCase(), name]));
 const POKEMON_TYPES_READY = loadPokemonTypes(POKEMON_721);
 
 const defaultState = () => ({

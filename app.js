@@ -154,6 +154,17 @@ function loadState() {
 function migrate(data) {
   const base = defaultState();
   if (!data || typeof data !== "object") return base;
+  const migratedCaught = {};
+
+  Object.entries(data.caughtSpecies || {}).forEach(([key, caught]) => {
+    if (!caught) return;
+  
+    const species = key.includes(":")
+      ? key.slice(key.indexOf(":") + 1)
+      : key;
+  
+    migratedCaught[species] = true;
+  });
   return {
     ...base,
     ...data,
@@ -162,7 +173,7 @@ function migrate(data) {
     objectives: data.objectives || {},
     revisits: data.revisits || {},
     access: {...base.access, ...(data.access || {})},
-    caughtSpecies: data.caughtSpecies || {},
+    caughtSpecies: migratedCaught,
     achievements: data.achievements || {},
     party: Array.isArray(data.party) ? data.party.slice(0,6).concat(Array(6).fill("")).slice(0,6) : base.party,
     completedAt: data.completedAt || {}
@@ -413,6 +424,34 @@ const METHOD_LABELS = {
   bike:"Bike Area",mach:"Mach Bike",acro:"Acro Bike",lowtide:"Low Tide",soar:"Soaring",mirage:"Mirage Spot"
 };
 
+function isSpeciesCaught(name) {
+  return !!state.caughtSpecies[name];
+}
+
+function setSpeciesCaught(name, caught) {
+  state.caughtSpecies[name] = caught;
+}
+
+function autoCompleteCatchObjective(route) {
+  const species = visibleRouteSpecies(route);
+  if (!species.length || !species.every(s => isSpeciesCaught(s.name))) return;
+
+  const areaName = route.name.toLowerCase();
+
+  BENCHMARKS.forEach((benchmark, bi) => {
+    benchmark.objectives.forEach((text, oi) => {
+      const objective = text.toLowerCase();
+
+      if (
+        objective.includes("clear current catches") &&
+        objective.includes(areaName)
+      ) {
+        state.objectives[currentObjectiveKey(bi, oi)] = true;
+      }
+    });
+  });
+}
+
 function visibleRouteSpecies(route) {
   const map = new Map();
   Object.entries(route.encounters).forEach(([method, species]) => {
@@ -456,7 +495,7 @@ function renderRoutes() {
     const species = visibleRouteSpecies(route);
     if (!species.length) return;
 
-    const caught = species.filter(s => !!state.caughtSpecies[`${route.id}:${s.name}`]).length;
+    const caught = species.filter(s => isSpeciesCaught(s.name)).length;
     const complete = caught === species.length && species.length > 0;
     const methods = [...new Set(species.flatMap(s => s.methods))];
 
@@ -474,15 +513,21 @@ function renderRoutes() {
 
     const grid = card.querySelector(".species-grid");
     species.forEach(s => {
-      const key = `${route.id}:${s.name}`;
-      const checked = !!state.caughtSpecies[key];
+      const checked = isSpeciesCaught(s.name);
       const label = document.createElement("label");
       label.className = `species-check ${checked ? "caught" : ""}`;
       label.title = s.methods.map(m => METHOD_LABELS[m]).join(", ");
       label.innerHTML = `<input type="checkbox" ${checked ? "checked" : ""}><span></span>`;
       label.querySelector("span").textContent = s.name;
       label.querySelector("input").addEventListener("change", e => {
-        state.caughtSpecies[key] = e.target.checked;
+        setSpeciesCaught(s.name, e.target.checked);
+      
+        ROUTES.forEach(area => {
+          if (routeReached(area) && routeRequirementMet(area)) {
+            autoCompleteCatchObjective(area);
+          }
+        });
+      
         saveState();
       });
       grid.appendChild(label);

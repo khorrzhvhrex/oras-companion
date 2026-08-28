@@ -651,16 +651,6 @@ function analyzeTeam() {
     grade = "Poor";
   }
 
-  /*
-    One-grade penalty for a major uncovered weakness.
-  */
-  if (weak.length) {
-    const grades = ["Poor","Good","Great","Excellent"];
-    const index = grades.indexOf(grade);
-
-    grade = grades[Math.max(0, index - 1)];
-  }
-
   return {
     grade,
     covered,

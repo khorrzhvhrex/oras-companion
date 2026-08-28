@@ -119,6 +119,43 @@ const EXTRA_AREAS = [
 ROUTES.push(...EXTRA_AREAS);
 const ACHIEVEMENTS = ["First DexNav Egg Move", "First DexNav Hidden Ability", "First Trainer Rematch", "First Contest Win", "Create a Super Secret Base", "First Mega Evolution", "First Shiny", "Catch a Legendary", "Complete a Mirage Spot", "Catch the Regi Trio", "Become Champion", "Finish the Delta Episode", "Complete the Hoenn Dex", "Earn the Shiny Charm"];
 
+// =========================================================
+// AUTO-COMPLETE CATCH OBJECTIVES
+// =========================================================
+
+const CATCH_OBJECTIVES = [
+  {benchmark:0, objective:1, areas:["r101"]},
+  {benchmark:0, objective:2, areas:["r102"]},
+  {benchmark:0, objective:3, areas:["r103"]},
+
+  {benchmark:1, objective:0, areas:["r104"]},
+  {benchmark:1, objective:1, areas:["petalburg-woods"]},
+
+  {benchmark:2, objective:1, areas:["r116"]},
+
+  {benchmark:3, objective:2, areas:["granite-cave"]},
+
+  {benchmark:5, objective:0, areas:["r110"]},
+
+  {benchmark:11, objective:1, areas:["r111d"]},
+
+  {benchmark:14, objective:1, areas:["r118"]},
+
+  {benchmark:15, objective:1, areas:["r119"]},
+
+  {
+    benchmark:21,
+    objective:2,
+    areas:["r107","r124","r126","r127","r128"]
+  },
+
+  {
+    benchmark:26,
+    objective:2,
+    areas:["r129","r130","r131","r132","r133","r134"]
+  }
+];
+
 const METHOD_LABELS = {
   walk:"Walking",horde:"Horde",surf:"Surf",rock:"Rock Smash",dive:"Dive",waterfall:"Waterfall",
   old:"Old Rod",good:"Good Rod",super:"Super Rod",postdex:"Expanded DexNav",static:"Static",

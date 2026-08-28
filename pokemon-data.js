@@ -21,6 +21,10 @@ const POKEMON_721 = [
   "Chespin","Quilladin","Chesnaught","Fennekin","Braixen","Delphox","Froakie","Frogadier","Greninja","Bunnelby","Diggersby","Fletchling","Fletchinder","Talonflame","Scatterbug","Spewpa","Vivillon","Litleo","Pyroar","Flabébé","Floette","Florges","Skiddo","Gogoat","Pancham","Pangoro","Furfrou","Espurr","Meowstic","Honedge","Doublade","Aegislash","Spritzee","Aromatisse","Swirlix","Slurpuff","Inkay","Malamar","Binacle","Barbaracle","Skrelp","Dragalge","Clauncher","Clawitzer","Helioptile","Heliolisk","Tyrunt","Tyrantrum","Amaura","Aurorus","Sylveon","Hawlucha","Dedenne","Carbink","Goomy","Sliggoo","Goodra","Klefki","Phantump","Trevenant","Pumpkaboo","Gourgeist","Bergmite","Avalugg","Noibat","Noivern","Xerneas","Yveltal","Zygarde","Diancie","Hoopa","Volcanion"
 ];
 
+const POKEMON_LOOKUP = new Map(
+  POKEMON_721.map(name => [name.toLowerCase(), name])
+);
+
 /*
   Generation VI type chart.
 
@@ -194,7 +198,7 @@ function restoreCachedPokemonTypes() {
 }
 
 
-async function loadPokemonTypes(speciesList) {
+async function loadPokemonTypes() {
   if (restoreCachedPokemonTypes()) {
     return POKEMON_TYPES;
   }
@@ -229,7 +233,7 @@ async function loadPokemonTypes(speciesList) {
       */
       if (seenIds.has(id)) continue;
 
-      const canonicalName = speciesList[id - 1];
+      const canonicalName = POKEMON_721[id - 1];
 
       if (!canonicalName) continue;
 

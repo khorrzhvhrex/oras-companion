@@ -2,6 +2,19 @@ const APP_KEY = "alphaSapphireCompanionV1";
 const BACKUP_KEY = "alphaSapphireCompanionPreImport";
 const APP_VERSION = 2;
 
+const defaultState = () => ({
+  version: APP_VERSION,
+  currentBenchmark: 0,
+  completedBenchmarks: [],
+  objectives: {},
+  revisits: {},
+  access:{oldRod:false,goodRod:false,superRod:false,machBike:false,acroBike:false,shoalLowTide:false},
+  caughtSpecies: {},
+  achievements: {},
+  party: Array(6).fill(""),
+  completedAt: {}
+});
+
 let state = loadState();
 let pendingImport = null;
 let editingAreaId = null;

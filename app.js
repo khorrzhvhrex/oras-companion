@@ -1,6 +1,6 @@
 const APP_KEY = "alphaSapphireCompanionV1";
 const BACKUP_KEY = "alphaSapphireCompanionPreImport";
-const APP_VERSION = 3;
+const APP_VERSION = 4;
 
 const defaultState = () => ({
   version: APP_VERSION,
@@ -10,6 +10,8 @@ const defaultState = () => ({
   revisits: {},
   access:{oldRod:false,goodRod:false,superRod:false,machBike:false,acroBike:false,shoalLowTide:false},
   obtainedSpecies: {},
+  specialAcquisitions: {},
+  gameVersion: "AS",
   achievements: {},
   party: Array(6).fill(""),
   completedAt: {}
@@ -135,7 +137,15 @@ function migrate(data) {
 
     obtainedSpecies:
       migratedObtained,
-
+    
+    specialAcquisitions:
+      data.specialAcquisitions || {},
+    
+    gameVersion:
+      data.gameVersion === "OR"
+        ? "OR"
+        : "AS",
+    
     achievements:
       data.achievements || {},
 

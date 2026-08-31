@@ -162,6 +162,203 @@ const NATIONAL_DEX_REQUIRED = POKEMON_721.filter(name =>
 );
 
 // =========================================================
+// ORAS VERSION / ACQUISITION DATA
+// =========================================================
+
+const ORAS_VERSIONS = ["OR","AS"];
+
+const ORAS_VERSION_EXCLUSIVES = {
+  OR:[
+    "Kabuto","Kabutops","Ho-Oh",
+    "Seedot","Nuzleaf","Shiftry","Mawile","Zangoose","Solrock","Groudon",
+    "Shieldon","Bastiodon","Palkia","Throh","Archen","Archeops",
+    "Tornadus","Reshiram","Skrelp","Dragalge"
+  ],
+  AS:[
+    "Omanyte","Omastar","Lugia",
+    "Lotad","Lombre","Ludicolo","Sableye","Seviper","Lunatone","Kyogre",
+    "Cranidos","Rampardos","Dialga","Sawk","Tirtouga","Carracosta",
+    "Thundurus","Zekrom","Clauncher","Clawitzer"
+  ]
+};
+
+const ORAS_FORM_EXCLUSIVES = {
+  OR:[
+    {species:"Shellos",form:"West Sea"},
+    {species:"Gastrodon",form:"West Sea"}
+  ],
+  AS:[
+    {species:"Shellos",form:"East Sea"},
+    {species:"Gastrodon",form:"East Sea"}
+  ]
+};
+
+const ORAS_NO_NATIVE_SOURCE = [
+  "Bulbasaur","Ivysaur","Venusaur","Charmander","Charmeleon","Charizard","Squirtle","Wartortle","Blastoise",
+  "Caterpie","Metapod","Butterfree","Spearow","Fearow","Ekans","Arbok",
+  "Nidoran♀","Nidorina","Nidoqueen","Nidoran♂","Nidorino","Nidoking",
+  "Poliwag","Poliwhirl","Poliwrath","Bellsprout","Weepinbell","Victreebel","Farfetch'd",
+  "Shellder","Cloyster","Gastly","Haunter","Gengar","Exeggcute","Exeggutor","Cubone","Marowak",
+  "Lickitung","Kangaskhan","Mr. Mime","Scyther","Jynx","Tauros","Lapras","Snorlax",
+  "Articuno","Zapdos","Moltres","Dratini","Dragonair","Dragonite","Mewtwo","Mew",
+
+  "Sentret","Furret","Hoothoot","Noctowl","Ledyba","Ledian","Mareep","Flaaffy","Ampharos",
+  "Sudowoodo","Politoed","Hoppip","Skiploom","Jumpluff","Yanma","Wooper","Quagsire",
+  "Dunsparce","Gligar","Snubbull","Granbull","Qwilfish","Scizor","Shuckle","Sneasel",
+  "Teddiursa","Ursaring","Swinub","Piloswine","Houndour","Houndoom","Smeargle","Smoochum",
+  "Miltank","Larvitar","Pupitar","Tyranitar","Celebi",
+
+  "Jirachi",
+
+  "Starly","Staravia","Staraptor","Bidoof","Bibarel","Burmy","Wormadam","Mothim",
+  "Combee","Vespiquen","Pachirisu","Buizel","Floatzel","Stunky","Skuntank",
+  "Bonsly","Mime Jr.","Munchlax","Riolu","Lucario","Hippopotas","Hippowdon",
+  "Croagunk","Toxicroak","Carnivine","Snover","Abomasnow","Weavile","Lickilicky",
+  "Yanmega","Gliscor","Mamoswine","Rotom",
+  "Phione","Manaphy","Darkrai","Shaymin","Arceus",
+
+  "Victini","Patrat","Watchog","Purrloin","Liepard","Pansage","Simisage","Pansear","Simisear","Panpour","Simipour",
+  "Woobat","Swoobat","Venipede","Whirlipede","Scolipede","Basculin","Sigilyph",
+  "Solosis","Duosion","Reuniclus","Ducklett","Swanna","Vanillite","Vanillish","Vanilluxe",
+  "Emolga","Karrablast","Escavalier","Foongus","Amoonguss","Ferroseed","Ferrothorn",
+  "Litwick","Lampent","Chandelure","Cryogonal","Shelmet","Accelgor","Stunfisk","Mienfoo","Mienshao",
+  "Golett","Golurk","Pawniard","Bisharp","Heatmor","Durant",
+  "Keldeo","Meloetta","Genesect",
+
+  "Chespin","Quilladin","Chesnaught","Fennekin","Braixen","Delphox","Froakie","Frogadier","Greninja",
+  "Bunnelby","Diggersby","Fletchling","Fletchinder","Talonflame","Scatterbug","Spewpa","Vivillon",
+  "Litleo","Pyroar","Flabébé","Floette","Florges","Skiddo","Gogoat","Pancham","Pangoro",
+  "Furfrou","Espurr","Meowstic","Honedge","Doublade","Aegislash","Spritzee","Aromatisse",
+  "Swirlix","Slurpuff","Inkay","Malamar","Helioptile","Heliolisk","Tyrunt","Tyrantrum",
+  "Amaura","Aurorus","Hawlucha","Dedenne","Carbink","Goomy","Sliggoo","Goodra",
+  "Pumpkaboo","Gourgeist","Bergmite","Avalugg","Noibat","Noivern",
+  "Xerneas","Yveltal","Zygarde","Diancie","Hoopa","Volcanion"
+];
+
+const SPECIAL_ACQUISITIONS = [
+
+  // ----- HOENN STARTER -----
+  {id:"starter-hoenn-treecko",group:"gift",species:"Treecko",versions:["OR","AS"],choiceGroup:"starter-hoenn",location:"Route 101",condition:"Choose Treecko from Professor Birch."},
+  {id:"starter-hoenn-torchic",group:"gift",species:"Torchic",versions:["OR","AS"],choiceGroup:"starter-hoenn",location:"Route 101",condition:"Choose Torchic from Professor Birch."},
+  {id:"starter-hoenn-mudkip",group:"gift",species:"Mudkip",versions:["OR","AS"],choiceGroup:"starter-hoenn",location:"Route 101",condition:"Choose Mudkip from Professor Birch."},
+
+  // ----- OTHER GIFTS -----
+  {id:"gift-cosplay-pikachu",group:"gift",species:"Pikachu",versions:["OR","AS"],location:"Contest Hall",condition:"Participate in the first Pokémon Contest Spectacular; receive Cosplay Pikachu."},
+  {id:"gift-wynaut",group:"gift",species:"Wynaut",versions:["OR","AS"],location:"Lavaridge Town",condition:"Receive the Wynaut Egg from the old woman by the hot springs."},
+  {id:"gift-latios-or",group:"gift",species:"Latios",versions:["OR"],location:"Southern Island",condition:"Story gift after the Southern Island Team Magma encounter."},
+  {id:"gift-latias-as",group:"gift",species:"Latias",versions:["AS"],location:"Southern Island",condition:"Story gift after the Southern Island Team Aqua encounter."},
+  {id:"gift-castform",group:"gift",species:"Castform",versions:["OR","AS"],location:"Weather Institute",condition:"Rescue the Weather Institute and receive Castform."},
+  {id:"gift-togepi",group:"gift",species:"Togepi",versions:["OR","AS"],location:"Lavaridge Town",condition:"After resolving the Primal crisis, receive the Togepi Egg from the hot-springs NPC."},
+  {id:"gift-beldum",group:"gift",species:"Beldum",versions:["OR","AS"],location:"Steven's house — Mossdeep City",condition:"After completing the Delta Episode, take Steven's Beldum."},
+  {id:"gift-camerupt",group:"gift",species:"Camerupt",versions:["OR","AS"],location:"Battle Resort",condition:"After the Delta Episode, receive Camerupt from the former Team Magma grunt."},
+  {id:"gift-sharpedo",group:"gift",species:"Sharpedo",versions:["OR","AS"],location:"Battle Resort",condition:"After the Delta Episode, receive Sharpedo from the former Team Aqua grunt."},
+
+  // ----- JOHTO STARTER -----
+  {id:"starter-johto-chikorita",group:"gift",species:"Chikorita",versions:["OR","AS"],choiceGroup:"starter-johto",location:"Route 101",condition:"After the first Elite Four victory, choose Chikorita from Professor Birch."},
+  {id:"starter-johto-cyndaquil",group:"gift",species:"Cyndaquil",versions:["OR","AS"],choiceGroup:"starter-johto",location:"Route 101",condition:"After the first Elite Four victory, choose Cyndaquil from Professor Birch."},
+  {id:"starter-johto-totodile",group:"gift",species:"Totodile",versions:["OR","AS"],choiceGroup:"starter-johto",location:"Route 101",condition:"After the first Elite Four victory, choose Totodile from Professor Birch."},
+
+  // ----- UNOVA STARTER -----
+  {id:"starter-unova-snivy",group:"gift",species:"Snivy",versions:["OR","AS"],choiceGroup:"starter-unova",location:"Route 101",condition:"After completing the Delta Episode, choose Snivy from Professor Birch."},
+  {id:"starter-unova-tepig",group:"gift",species:"Tepig",versions:["OR","AS"],choiceGroup:"starter-unova",location:"Route 101",condition:"After completing the Delta Episode, choose Tepig from Professor Birch."},
+  {id:"starter-unova-oshawott",group:"gift",species:"Oshawott",versions:["OR","AS"],choiceGroup:"starter-unova",location:"Route 101",condition:"After completing the Delta Episode, choose Oshawott from Professor Birch."},
+
+  // ----- SINNOH STARTER -----
+  {id:"starter-sinnoh-turtwig",group:"gift",species:"Turtwig",versions:["OR","AS"],choiceGroup:"starter-sinnoh",location:"Route 101",condition:"After the later Elite Four rematch requirement, choose Turtwig from Professor Birch."},
+  {id:"starter-sinnoh-chimchar",group:"gift",species:"Chimchar",versions:["OR","AS"],choiceGroup:"starter-sinnoh",location:"Route 101",condition:"After the later Elite Four rematch requirement, choose Chimchar from Professor Birch."},
+  {id:"starter-sinnoh-piplup",group:"gift",species:"Piplup",versions:["OR","AS"],choiceGroup:"starter-sinnoh",location:"Route 101",condition:"After the later Elite Four rematch requirement, choose Piplup from Professor Birch."},
+
+  // ----- NPC TRADES -----
+  {id:"trade-makuhita",group:"trade",species:"Makuhita",versions:["OR","AS"],location:"Rustboro City",condition:"Trade Slakoth to the NPC and receive Makuhita.",give:"Slakoth"},
+  {id:"trade-skitty",group:"trade",species:"Skitty",versions:["OR","AS"],location:"Fortree City",condition:"Trade Spinda to the NPC and receive Skitty.",give:"Spinda"},
+  {id:"trade-corsola",group:"trade",species:"Corsola",versions:["OR","AS"],location:"Pacifidlog Town",condition:"Trade Bellossom to the NPC and receive Corsola.",give:"Bellossom"},
+
+  // ----- ROUTE 111 FOSSIL CHOICE -----
+  {id:"fossil-root",group:"fossil",species:"Lileep",versions:["OR","AS"],choiceGroup:"route111-fossil",location:"Route 111 Desert / Devon Corp.",condition:"Choose the Root Fossil and revive it at Devon Corp."},
+  {id:"fossil-claw",group:"fossil",species:"Anorith",versions:["OR","AS"],choiceGroup:"route111-fossil",location:"Route 111 Desert / Devon Corp.",condition:"Choose the Claw Fossil and revive it at Devon Corp."},
+
+  // ----- MIRAGE FOSSILS -----
+  {id:"fossil-old-amber",group:"fossil",species:"Aerodactyl",versions:["OR","AS"],location:"Mirage Spots / Devon Corp.",condition:"Find Old Amber through Mirage Spot Rock Smash and revive it."},
+  {id:"fossil-dome-or",group:"fossil",species:"Kabuto",versions:["OR"],location:"Mirage Spots / Devon Corp.",condition:"Find the Omega Ruby-exclusive Dome Fossil and revive it."},
+  {id:"fossil-armor-or",group:"fossil",species:"Shieldon",versions:["OR"],location:"Mirage Spots / Devon Corp.",condition:"Find the Omega Ruby-exclusive Armor Fossil and revive it."},
+  {id:"fossil-plume-or",group:"fossil",species:"Archen",versions:["OR"],location:"Mirage Spots / Devon Corp.",condition:"Find the Omega Ruby-exclusive Plume Fossil and revive it."},
+  {id:"fossil-helix-as",group:"fossil",species:"Omanyte",versions:["AS"],location:"Mirage Spots / Devon Corp.",condition:"Find the Alpha Sapphire-exclusive Helix Fossil and revive it."},
+  {id:"fossil-skull-as",group:"fossil",species:"Cranidos",versions:["AS"],location:"Mirage Spots / Devon Corp.",condition:"Find the Alpha Sapphire-exclusive Skull Fossil and revive it."},
+  {id:"fossil-cover-as",group:"fossil",species:"Tirtouga",versions:["AS"],location:"Mirage Spots / Devon Corp.",condition:"Find the Alpha Sapphire-exclusive Cover Fossil and revive it."},
+
+  // ----- NON-LEGENDARY STATIC / INTERACTABLE -----
+  {id:"static-voltorb-new-mauville",group:"static",species:"Voltorb",versions:["OR","AS"],location:"New Mauville",condition:"Trigger one of the fake-item Voltorb encounters."},
+  {id:"static-electrode-magma",group:"static",species:"Electrode",versions:["OR"],location:"Team Magma Hideout",condition:"Trigger one of the fake-item Electrode encounters."},
+  {id:"static-electrode-aqua",group:"static",species:"Electrode",versions:["AS"],location:"Team Aqua Hideout",condition:"Trigger one of the fake-item Electrode encounters."},
+  {id:"static-kecleon-devon-scope",group:"static",species:"Kecleon",versions:["OR","AS"],location:"Routes 119 / 120",condition:"Use the Devon Scope on the invisible Kecleon encounters."},
+  {id:"static-kecleon-lavaridge",group:"static",species:"Kecleon",versions:["OR","AS"],location:"Lavaridge Town",condition:"Post-Primal special Kecleon encounter."},
+  {id:"static-kecleon-mossdeep",group:"static",species:"Kecleon",versions:["OR","AS"],location:"Mossdeep Space Center",condition:"Post-Delta special Kecleon encounter; this one has its Hidden Ability Protean."},
+  {id:"static-spiritomb",group:"static",species:"Spiritomb",versions:["OR","AS"],location:"Sea Mauville",condition:"After the Primal crisis, trigger the once-only Spiritomb encounter."},
+
+  // ----- MAIN STORY / DELTA LEGENDARIES -----
+  {id:"legend-groudon",group:"legendary",species:"Groudon",versions:["OR"],location:"Cave of Origin",condition:"Omega Ruby story encounter; battle Primal Groudon."},
+  {id:"legend-kyogre",group:"legendary",species:"Kyogre",versions:["AS"],location:"Cave of Origin",condition:"Alpha Sapphire story encounter; battle Primal Kyogre."},
+  {id:"legend-rayquaza",group:"legendary",species:"Rayquaza",versions:["OR","AS"],location:"Sky Pillar",condition:"Delta Episode mandatory capture."},
+  {id:"legend-deoxys",group:"legendary",species:"Deoxys",versions:["OR","AS"],location:"Space / Sky Pillar",condition:"Fight Deoxys immediately after Rayquaza during the Delta Episode; if missed, it can be encountered again after another Hall of Fame entry."},
+
+  // ----- REGIS -----
+  {id:"legend-regirock",group:"legendary",species:"Regirock",versions:["OR","AS"],location:"Desert Ruins — Route 111",condition:"Complete the Sealed Chamber setup; in Desert Ruins move right twice, down twice, then use Strength."},
+  {id:"legend-regice",group:"legendary",species:"Regice",versions:["OR","AS"],location:"Island Cave — Route 105",condition:"Complete the Sealed Chamber setup; enter Island Cave and wait without moving for about two minutes."},
+  {id:"legend-registeel",group:"legendary",species:"Registeel",versions:["OR","AS"],location:"Ancient Tomb — Route 120",condition:"Complete the Sealed Chamber setup; stand in the center and use Fly."},
+  {id:"legend-regigigas",group:"legendary",species:"Regigigas",versions:["OR","AS"],location:"Island Cave — Route 105",condition:"Bring Regirock, Registeel, and a nicknamed Regice holding a cold item; encounter during daytime."},
+
+  // ----- SEA MAUVILLE / SCORCHED SLAB -----
+  {id:"legend-hooh",group:"legendary",species:"Ho-Oh",versions:["OR"],location:"Sea Mauville",condition:"After the Primal crisis, recover the Scanner, exchange it for the Clear Bell, then encounter Ho-Oh on the deck."},
+  {id:"legend-lugia",group:"legendary",species:"Lugia",versions:["AS"],location:"Sea Mauville",condition:"After the Primal crisis, recover the Scanner, exchange it for the Tidal Bell, then encounter Lugia underwater."},
+  {id:"legend-heatran",group:"legendary",species:"Heatran",versions:["OR","AS"],location:"Scorched Slab",condition:"After the Primal crisis, reach the deepest room and interact with the portal."},
+
+  // ----- EON TICKET: OPPOSITE EON -----
+  {id:"legend-latias-eon-or",group:"legendary",species:"Latias",versions:["OR"],location:"Southern Island",condition:"Use the Eon Ticket to return to Southern Island and catch the opposite-version Eon Pokémon."},
+  {id:"legend-latios-eon-as",group:"legendary",species:"Latios",versions:["AS"],location:"Southern Island",condition:"Use the Eon Ticket to return to Southern Island and catch the opposite-version Eon Pokémon."},
+
+  // ----- NAMELESS CAVERN -----
+  {id:"legend-uxie",group:"legendary",species:"Uxie",versions:["OR","AS"],location:"Nameless Cavern",condition:"Have three Pokémon with maximum friendship; Uxie appears 8:00 PM–8:59 PM."},
+  {id:"legend-mesprit",group:"legendary",species:"Mesprit",versions:["OR","AS"],location:"Nameless Cavern",condition:"Have three Pokémon with maximum friendship; Mesprit appears 4:00 AM–7:59 PM."},
+  {id:"legend-azelf",group:"legendary",species:"Azelf",versions:["OR","AS"],location:"Nameless Cavern",condition:"Have three Pokémon with maximum friendship; Azelf appears 9:00 PM–3:59 AM."},
+
+  // ----- DIMENSIONAL RIFT -----
+  {id:"legend-palkia",group:"legendary",species:"Palkia",versions:["OR"],location:"Dimensional Rift — near Dewford",condition:"Have Uxie, Mesprit, and Azelf in the party while soaring."},
+  {id:"legend-dialga",group:"legendary",species:"Dialga",versions:["AS"],location:"Dimensional Rift — near Dewford",condition:"Have Uxie, Mesprit, and Azelf in the party while soaring."},
+  {id:"legend-giratina",group:"legendary",species:"Giratina",versions:["OR","AS"],location:"Dimensional Rift — near Dewford",condition:"Have both Dialga and Palkia in the party while soaring."},
+
+  // ----- PATHLESS PLAIN -----
+  {id:"legend-cobalion",group:"legendary",species:"Cobalion",versions:["OR","AS"],location:"Pathless Plain",condition:"Have three Pokémon with maximum EVs; appears Sunday, Wednesday, and Friday."},
+  {id:"legend-terrakion",group:"legendary",species:"Terrakion",versions:["OR","AS"],location:"Pathless Plain",condition:"Have three Pokémon with maximum EVs; appears Tuesday and Saturday."},
+  {id:"legend-virizion",group:"legendary",species:"Virizion",versions:["OR","AS"],location:"Pathless Plain",condition:"Have three Pokémon with maximum EVs; appears Monday and Thursday."},
+
+  // ----- FABLED CAVE / GNARLED DEN -----
+  {id:"legend-reshiram",group:"legendary",species:"Reshiram",versions:["OR"],location:"Fabled Cave",condition:"Have a Level 100 Pokémon in the party, then soar to Fabled Cave."},
+  {id:"legend-zekrom",group:"legendary",species:"Zekrom",versions:["AS"],location:"Fabled Cave",condition:"Have a Level 100 Pokémon in the party, then soar to Fabled Cave."},
+  {id:"legend-kyurem",group:"legendary",species:"Kyurem",versions:["OR","AS"],location:"Gnarled Den",condition:"Have both Reshiram and Zekrom in the party while soaring."},
+
+  // ----- TRACKLESS FOREST -----
+  {id:"legend-raikou",group:"legendary",species:"Raikou",versions:["OR","AS"],location:"Trackless Forest",condition:"Have Lugia or Ho-Oh in the party; appears during minutes 00–19 of each hour."},
+  {id:"legend-entei",group:"legendary",species:"Entei",versions:["OR","AS"],location:"Trackless Forest",condition:"Have Lugia or Ho-Oh in the party; appears during minutes 20–39 of each hour."},
+  {id:"legend-suicune",group:"legendary",species:"Suicune",versions:["OR","AS"],location:"Trackless Forest",condition:"Have Lugia or Ho-Oh in the party; appears during minutes 40–59 of each hour."},
+
+  // ----- STORM CLOUD -----
+  {id:"legend-tornadus",group:"legendary",species:"Tornadus",versions:["OR"],location:"Storm Cloud — near Fortree",condition:"Have Castform in the party while soaring."},
+  {id:"legend-thundurus",group:"legendary",species:"Thundurus",versions:["AS"],location:"Storm Cloud — near Fortree",condition:"Have Castform in the party while soaring."},
+  {id:"legend-landorus",group:"legendary",species:"Landorus",versions:["OR","AS"],location:"Storm Cloud — near Fortree",condition:"Have both Tornadus and Thundurus in the party while soaring."},
+
+  // ----- CRESCENT ISLE -----
+  {id:"legend-cresselia",group:"legendary",species:"Cresselia",versions:["OR","AS"],location:"Crescent Isle",condition:"Encounter when the rare Crescent Isle Mirage Spot is present."}
+];
+
+const SPECIAL_ACQUISITION_GROUPS = {
+  gift:"Gifts & Starters",
+  trade:"NPC Trades",
+  fossil:"Fossils",
+  static:"Static / Interactable",
+  legendary:"Legendary & Story Encounters"
+};
+
+// =========================================================
 // AUTO-COMPLETE CATCH OBJECTIVES
 // =========================================================
 

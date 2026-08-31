@@ -1647,3 +1647,46 @@ h3{font-size:1.05rem;margin-bottom:0}
 .evolution-choice-btn:hover {
   border-color:var(--accent);
 }
+
+/* =========================================================
+   NINCADA / SHEDINJA EVOLUTION
+   ========================================================= */
+
+.shedinja-option {
+  display:grid;
+  grid-template-columns:auto 1fr;
+  align-items:start;
+  gap:10px;
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:var(--panel-2);
+}
+
+.shedinja-option input {
+  width:20px;
+  height:20px;
+  margin-top:2px;
+  accent-color:var(--accent);
+}
+
+.shedinja-option div {
+  display:grid;
+  gap:4px;
+}
+
+.shedinja-option strong {
+  color:var(--text);
+  font-size:.9rem;
+}
+
+.shedinja-option span {
+  color:var(--muted);
+  font-size:.78rem;
+  line-height:1.4;
+}
+
+.evolution-confirm-btn {
+  margin-top:2px;
+  border-color:#956fd2;
+}

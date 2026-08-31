@@ -44,7 +44,9 @@
       <button class="tab active" data-tab="journey" type="button">Journey</button>
       <button class="tab" data-tab="revisits" type="button">Revisits <span id="revisitBadge" class="badge">0</span></button>
       <button class="tab" data-tab="areas" type="button">Areas</button>
-      <button class="tab" data-tab="extras" type="button">Extras</button>
+      <button class="tab" data-tab="party" type="button">Party</button>
+      <button class="tab" data-tab="dex" type="button">Dex</button>
+      <button class="tab" data-tab="achievements" type="button">Achievements</button>
     </nav>
 
     <section id="journey" class="tab-panel active">
@@ -157,7 +159,7 @@
       <div id="routeList" class="route-list"></div>
     </section>
 
-    <section id="extras" class="tab-panel">
+    <section id="party" class="tab-panel">
       <section class="section-block">
         <div class="section-head">
           <div>
@@ -197,6 +199,64 @@
         </div>
       </section>
 
+                </section>
+
+                  <section id="dex" class="tab-panel">
+                    <section class="section-block">
+                      <div class="section-head">
+                        <div>
+                          <p class="eyebrow">Collection</p>
+                          <h2>Pokédex</h2>
+                        </div>
+                      </div>
+              
+                      <div class="dex-summary-grid">
+                        <div class="dex-summary-card">
+                          <span>Hoenn Dex</span>
+                          <strong id="hoennDexCount">0 / 211</strong>
+                          <div class="dex-progress-track">
+                            <div id="hoennDexBar" class="dex-progress-fill"></div>
+                          </div>
+                          <small id="hoennDexRequired">0 / 208 required</small>
+                        </div>
+              
+                        <div class="dex-summary-card">
+                          <span>National Dex</span>
+                          <strong id="nationalDexCount">0 / 721</strong>
+                          <div class="dex-progress-track">
+                            <div id="nationalDexBar" class="dex-progress-fill"></div>
+                          </div>
+                          <small id="nationalDexRequired">0 / 706 for Shiny Charm</small>
+                        </div>
+                      </div>
+              
+                      <div class="dex-mode-switch">
+                        <button type="button" class="dex-mode-btn active" data-dex-mode="hoenn">
+                          Hoenn Dex
+                        </button>
+                        <button type="button" class="dex-mode-btn" data-dex-mode="national">
+                          National Dex
+                        </button>
+                      </div>
+              
+                      <input
+                        id="dexSearch"
+                        class="dex-search"
+                        type="search"
+                        autocomplete="off"
+                        placeholder="Search name or number"
+                      >
+              
+                      <div class="dex-filter-row">
+                        <button type="button" class="dex-filter-btn active" data-dex-filter="all">All</button>
+                        <button type="button" class="dex-filter-btn" data-dex-filter="obtained">Obtained</button>
+                        <button type="button" class="dex-filter-btn" data-dex-filter="missing">Missing</button>
+                      </div>
+              
+                      <div id="dexVisibleCount" class="small muted"></div>
+                      <div id="dexList" class="dex-list"></div>
+                    </section>
+            
             <section class="section-block">
               <details class="dexnav-guide">
                 <summary>
@@ -375,6 +435,10 @@
         </details>
       </section>
 
+          </section>
+
+          <section id="achievements" class="tab-panel">
+                    
       <section class="section-block">
         <div class="section-head">
           <div>

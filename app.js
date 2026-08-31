@@ -525,6 +525,26 @@ function analyzeTeam() {
   };
 }
 
+function typeChipHtml(type, className="team-type-chip") {
+  const background =
+    TYPE_COLORS[type] || "#777777";
+
+  const textColor =
+    TYPE_TEXT_COLORS[type] || "#ffffff";
+
+  return `
+    <span
+      class="${className}"
+      style="
+        background:${background};
+        color:${textColor};
+        border-color:${background};
+      "
+    >
+      ${escapeHtml(type)}
+    </span>
+  `;
+}
 
 function typeListHtml(types) {
   if (!types.length) {
@@ -533,28 +553,27 @@ function typeListHtml(types) {
 
   return types
     .map(type =>
-      `<span class="team-type-chip type-${type.toLowerCase()}">${type}</span>`
+      typeChipHtml(type, "team-type-chip")
     )
     .join("");
 }
 
 
 function pokemonTypeHtml(name) {
-  const types = pokemonTypes(name);
-
   if (!name) return "";
 
+  const types = pokemonTypes(name);
+
   if (!types.length) {
-    return `<span class="small muted">Loading type data…</span>`;
+    return `<span class="muted small">Typing loading…</span>`;
   }
 
   return types
     .map(type =>
-      `<span class="pokemon-type-pill type-${type.toLowerCase()}">${type}</span>`
+      typeChipHtml(type, "pokemon-type-pill")
     )
     .join("");
 }
-
 
 function renderTeamAnalysis() {
   const analysis = analyzeTeam();

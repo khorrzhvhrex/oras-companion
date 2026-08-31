@@ -548,7 +548,6 @@ function dexNavCategorySpecies(
   Object.entries(route.encounters)
     .forEach(([method, names]) => {
       if (!methodSet.has(method)) return;
-      if (!methodUnlocked(method)) return;
 
       names.forEach(name =>
         species.add(name)

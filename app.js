@@ -1,6 +1,6 @@
 const APP_KEY = "alphaSapphireCompanionV1";
 const BACKUP_KEY = "alphaSapphireCompanionPreImport";
-const APP_VERSION = 2;
+const APP_VERSION = 3;
 
 const defaultState = () => ({
   version: APP_VERSION,
@@ -9,7 +9,7 @@ const defaultState = () => ({
   objectives: {},
   revisits: {},
   access:{oldRod:false,goodRod:false,superRod:false,machBike:false,acroBike:false,shoalLowTide:false},
-  caughtSpecies: {},
+  obtainedSpecies: {},
   achievements: {},
   party: Array(6).fill(""),
   completedAt: {}
@@ -17,6 +17,7 @@ const defaultState = () => ({
 
 let state = loadState();
 let pendingImport = null;
+const manuallyExpandedAreas = new Set();
 
 const $ = sel => document.querySelector(sel);
 const $$ = sel => [...document.querySelectorAll(sel)];
@@ -34,31 +35,116 @@ function loadState() {
 
 function migrate(data) {
   const base = defaultState();
-  if (!data || typeof data !== "object") return base;
-  const migratedCaught = {};
 
-  Object.entries(data.caughtSpecies || {}).forEach(([key, caught]) => {
-    if (!caught) return;
-  
+  if (!data || typeof data !== "object") {
+    return base;
+  }
+
+  const migratedObtained = {};
+
+  Object.entries(
+    data.obtainedSpecies || {}
+  ).forEach(([key, obtained]) => {
+    if (!obtained) return;
+
     const species = key.includes(":")
       ? key.slice(key.indexOf(":") + 1)
       : key;
-  
-    migratedCaught[species] = true;
+
+    const canonical =
+      POKEMON_LOOKUP.get(species.toLowerCase());
+
+    if (canonical) {
+      migratedObtained[canonical] = true;
+    }
   });
-  return {
+
+  /*
+    v1/v2 migration:
+    caughtSpecies becomes obtainedSpecies.
+  */
+  Object.entries(
+    data.caughtSpecies || {}
+  ).forEach(([key, caught]) => {
+    if (!caught) return;
+
+    const species = key.includes(":")
+      ? key.slice(key.indexOf(":") + 1)
+      : key;
+
+    const canonical =
+      POKEMON_LOOKUP.get(species.toLowerCase());
+
+    if (canonical) {
+      migratedObtained[canonical] = true;
+    }
+  });
+
+  const migratedParty =
+    Array.isArray(data.party)
+      ? data.party
+          .slice(0,6)
+          .concat(Array(6).fill(""))
+          .slice(0,6)
+          .map(name => {
+            if (!name) return "";
+
+            return (
+              POKEMON_LOOKUP.get(
+                String(name).toLowerCase()
+              ) || ""
+            );
+          })
+      : base.party;
+
+  /*
+    Anything already in the Party must have
+    been obtained on the old save.
+  */
+  migratedParty.forEach(name => {
+    if (name) {
+      migratedObtained[name] = true;
+    }
+  });
+
+  const migrated = {
     ...base,
     ...data,
-    version: APP_VERSION,
-    completedBenchmarks: Array.isArray(data.completedBenchmarks) ? data.completedBenchmarks : [],
-    objectives: data.objectives || {},
-    revisits: data.revisits || {},
-    access: {...base.access, ...(data.access || {})},
-    caughtSpecies: migratedCaught,
-    achievements: data.achievements || {},
-    party: Array.isArray(data.party) ? data.party.slice(0,6).concat(Array(6).fill("")).slice(0,6) : base.party,
-    completedAt: data.completedAt || {}
+
+    version:APP_VERSION,
+
+    completedBenchmarks:
+      Array.isArray(data.completedBenchmarks)
+        ? data.completedBenchmarks
+        : [],
+
+    objectives:
+      data.objectives || {},
+
+    revisits:
+      data.revisits || {},
+
+    access:{
+      ...base.access,
+      ...(data.access || {})
+    },
+
+    obtainedSpecies:
+      migratedObtained,
+
+    achievements:
+      data.achievements || {},
+
+    party:
+      migratedParty,
+
+    completedAt:
+      data.completedAt || {}
   };
+
+  delete migrated.caughtSpecies;
+
+  return migrated;
 }
 
 function saveState(message="Saved") {
@@ -349,6 +435,182 @@ function visibleRouteSpecies(route) {
   return [...map.entries()].map(([name, methods]) => ({name, methods:[...methods]}));
 }
 
+// =========================================================
+// DEXNAV AREA CROWNS
+// =========================================================
+
+const DEXNAV_LAND_METHODS = new Set([
+  "walk",
+  "horde",
+  "bike",
+  "mach",
+  "acro",
+  "lowtide",
+  "dive"
+]);
+
+const DEXNAV_FISH_METHODS = new Set([
+  "old",
+  "good",
+  "super"
+]);
+
+const DEXNAV_SURF_METHODS = new Set([
+  "surf"
+]);
+
+
+function dexNavCategorySpecies(
+  route,
+  methodSet
+) {
+  const species = new Set();
+
+  Object.entries(route.encounters)
+    .forEach(([method, names]) => {
+      if (!methodSet.has(method)) return;
+      if (!methodUnlocked(method)) return;
+
+      names.forEach(name =>
+        species.add(name)
+      );
+    });
+
+  return [...species];
+}
+
+
+function dexNavCategoryComplete(
+  route,
+  methodSet
+) {
+  const species =
+    dexNavCategorySpecies(
+      route,
+      methodSet
+    );
+
+  if (!species.length) {
+    return null;
+  }
+
+  return species.every(name =>
+    isSpeciesObtained(name)
+  );
+}
+
+
+function dexNavHiddenSpecies(route) {
+  if (!hasStoryUnlock("postdex")) {
+    return [];
+  }
+
+  return [
+    ...new Set(
+      route.encounters.postdex || []
+    )
+  ];
+}
+
+
+function dexNavCrown(route) {
+  const categories = [
+    dexNavCategoryComplete(
+      route,
+      DEXNAV_LAND_METHODS
+    ),
+
+    dexNavCategoryComplete(
+      route,
+      DEXNAV_FISH_METHODS
+    ),
+
+    dexNavCategoryComplete(
+      route,
+      DEXNAV_SURF_METHODS
+    )
+  ].filter(value => value !== null);
+
+  /*
+    No normal DexNav-recognized category.
+    Rock Smash/static encounters alone do not
+    produce a DexNav crown.
+  */
+  if (!categories.length) {
+    return null;
+  }
+
+  const incomplete =
+    categories.filter(done => !done).length;
+
+  let rank = null;
+
+  if (incomplete >= 2) {
+    /*
+      A crown isn't awarded until at least
+      one applicable category is complete.
+    */
+    if (!categories.some(Boolean)) {
+      return null;
+    }
+
+    rank = "bronze";
+  } else if (incomplete === 1) {
+    rank = "silver";
+  } else {
+    rank = "gold";
+  }
+
+  /*
+    Platinum:
+    all normal encounter categories complete
+    AND all post-Primal hidden-only Pokémon
+    for this area obtained.
+  */
+  if (
+    rank === "gold" &&
+    hasStoryUnlock("postdex")
+  ) {
+    const hidden =
+      dexNavHiddenSpecies(route);
+
+    if (
+      hidden.length &&
+      hidden.every(name =>
+        isSpeciesObtained(name)
+      )
+    ) {
+      rank = "platinum";
+    }
+  }
+
+  return rank;
+}
+
+
+function dexNavCrownHtml(route) {
+  const crown = dexNavCrown(route);
+
+  if (!crown) return "";
+
+  const labels = {
+    bronze:"Bronze Crown",
+    silver:"Silver Crown",
+    gold:"Gold Crown",
+    platinum:"Platinum Crown"
+  };
+
+  return `
+    <span
+      class="dexnav-crown crown-${crown}"
+      title="${labels[crown]}"
+      aria-label="${labels[crown]}"
+    >
+      ♛
+    </span>
+  `;
+}
+
 function renderRoutes() {
   $("#oldRodToggle").checked = !!state.access.oldRod;
   $("#goodRodToggle").checked = !!state.access.goodRod;
@@ -384,17 +646,74 @@ function renderRoutes() {
     const complete = caught === species.length && species.length > 0;
     const methods = [...new Set(species.flatMap(s => s.methods))];
 
-    const card = document.createElement("article");
-    card.className = `route-card ${complete ? "complete" : ""}`;
+    const card =
+      document.createElement("article");
+    
+    const manuallyExpanded =
+      manuallyExpandedAreas.has(route.id);
+    
+    const collapsed =
+      complete && !manuallyExpanded;
+    
+    card.className =
+      `route-card ${complete ? "complete" : ""} ${collapsed ? "collapsed" : ""}`;
+    
     card.innerHTML = `
-      <div class="route-title-row">
-        <div>
-          <h3>${escapeHtml(route.name)}</h3>
-          <div class="route-methods">${methods.map(m => `<span class="method-chip">${METHOD_LABELS[m]}</span>`).join("")}</div>
+      <button
+        type="button"
+        class="route-title-button"
+        aria-expanded="${!collapsed}"
+      >
+        <div class="route-title-row">
+          <div class="route-title-main">
+            <div class="route-name-row">
+              <h3>${escapeHtml(route.name)}</h3>
+              ${dexNavCrownHtml(route)}
+            </div>
+    
+            <div class="route-methods">
+              ${methods
+                .map(m =>
+                  `<span class="method-chip">${METHOD_LABELS[m]}</span>`
+                )
+                .join("")}
+            </div>
+          </div>
+    
+          <div class="route-title-status">
+            <div class="route-progress">
+              ${caught} / ${species.length}
+            </div>
+    
+            <span class="route-chevron">
+              ${collapsed ? "⌄" : "⌃"}
+            </span>
+          </div>
         </div>
-        <div class="route-progress">${caught} / ${species.length}</div>
+      </button>
+    
+      <div class="route-card-body">
+        <div class="species-grid"></div>
       </div>
-      <div class="species-grid"></div>`;
+    `;
+
+    const titleButton =
+      card.querySelector(".route-title-button");
+    
+    titleButton.addEventListener(
+      "click",
+      () => {
+        if (
+          manuallyExpandedAreas.has(route.id)
+        ) {
+          manuallyExpandedAreas.delete(route.id);
+        } else {
+          manuallyExpandedAreas.add(route.id);
+        }
+    
+        renderRoutes();
+      }
+    );
 
     const grid = card.querySelector(".species-grid");
     species.forEach(s => {
@@ -616,17 +935,22 @@ function renderParty() {
   let datalist = $("#pokemonSpeciesList");
 
   if (!datalist) {
-    datalist = document.createElement("datalist");
+    datalist =
+      document.createElement("datalist");
+  
     datalist.id = "pokemonSpeciesList";
-
-    datalist.innerHTML = POKEMON_721
-      .map(name =>
-        `<option value="${escapeAttr(name)}"></option>`
-      )
-      .join("");
-
+  
     document.body.appendChild(datalist);
   }
+  
+  const eligibleSpecies =
+    eligiblePartySpecies();
+  
+  datalist.innerHTML = eligibleSpecies
+    .map(name =>
+      `<option value="${escapeAttr(name)}"></option>`
+    )
+    .join("");
 
   const grid = $("#partyGrid");
   grid.innerHTML = "";
@@ -679,12 +1003,13 @@ function renderParty() {
       const exact = POKEMON_LOOKUP.get(
         typed.toLowerCase()
       );
-
-      /*
-        Only save recognized Pokémon.
-        Partial text like "Tor" is not stored.
-      */
-      if (!exact) return;
+      
+      if (
+        !exact ||
+        !isPartySpeciesEligible(exact)
+      ) {
+        return;
+      }
 
       state.party[i] = exact;
 
@@ -721,7 +1046,10 @@ function renderParty() {
         typed.toLowerCase()
       );
 
-      if (exact) {
+      if (
+        exact &&
+        isPartySpeciesEligible(exact)
+      ) {
         state.party[i] = exact;
         e.target.value = exact;
       } else {
@@ -798,7 +1126,7 @@ function previewImport(file) {
       $("#importPreview").innerHTML = `
         <strong>Current benchmark:</strong> ${escapeHtml(current)}<br>
         <strong>Benchmarks complete:</strong> ${done} / ${BENCHMARKS.length}<br>
-        <strong>Area catches:</strong> ${Object.values(pendingImport.caughtSpecies || {}).filter(Boolean).length}<br>
+        <strong>Pokémon obtained:</strong> ${Object.values(pendingImport.obtainedSpecies || {}).filter(Boolean).length}<br>
         <strong>Champion:</strong> ${pendingImport.completedBenchmarks.includes(30) ? "Yes" : "No"}
       `;
       $("#importDialog").showModal();

@@ -893,6 +893,80 @@ function pokemonTypes(name) {
   return POKEMON_TYPES[name] || [];
 }
 
+function pokemonEvolutionOptions(name) {
+  const description =
+    ORAS_EVOLUTIONS[name];
+
+  if (!description) return [];
+
+  const options = [];
+
+  description
+    .split(";")
+    .forEach(rawClause => {
+      const clause =
+        rawClause.trim();
+
+      if (!clause) return;
+
+      /*
+        Normal branch:
+        "Gardevoir — Lv. 30"
+        "or Gallade — Dawn Stone if male"
+      */
+      if (clause.includes("—")) {
+        const parts =
+          clause.split("—");
+
+        const targetText =
+          parts.shift()
+            .trim()
+            .replace(/^or\s+/i, "");
+
+        const condition =
+          parts.join("—").trim();
+
+        targetText
+          .split(/\s+or\s+/i)
+          .map(value => value.trim())
+          .forEach(target => {
+            const canonical =
+              POKEMON_LOOKUP.get(
+                target.toLowerCase()
+              );
+
+            if (!canonical) return;
+
+            options.push({
+              species:canonical,
+              condition
+            });
+          });
+
+        return;
+      }
+
+
+      /*
+        Nincada's Shedinja branch is written as
+        descriptive text instead of Target — Condition.
+      */
+      if (
+        name === "Nincada" &&
+        clause.toLowerCase()
+          .startsWith("shedinja also appears")
+      ) {
+        options.push({
+          species:"Shedinja",
+          condition:
+            "Evolve Nincada at Lv. 20 with an empty party slot and a spare Poké Ball"
+        });
+      }
+    });
+
+  return options;
+}
+
 function pokemonEvolutionText(name) {
   return ORAS_EVOLUTIONS[name] || "Final form / no ORAS evolution listed";
 }

@@ -386,12 +386,91 @@ function methodUnlocked(method) {
   return false;
 }
 
-function isSpeciesCaught(name) {
-  return !!state.caughtSpecies[name];
+function isSpeciesObtained(name) {
+  return !!state.obtainedSpecies[name];
 }
 
+
+function obtainedSpeciesNames() {
+  return POKEMON_721.filter(name =>
+    isSpeciesObtained(name)
+  );
+}
+
+
+function obtainedSpeciesCount() {
+  return obtainedSpeciesNames().length;
+}
+
+
+function eligiblePartySpecies() {
+  const eligible = new Set();
+
+  obtainedSpeciesNames().forEach(name => {
+    pokemonEvolutionFamily(name)
+      .forEach(familyMember => {
+        eligible.add(familyMember);
+      });
+  });
+
+  return POKEMON_721.filter(name =>
+    eligible.has(name)
+  );
+}
+
+
+function isPartySpeciesEligible(name) {
+  if (!name) return false;
+
+  return eligiblePartySpecies()
+    .includes(name);
+}
+
+
+function pruneIneligiblePartySpecies() {
+  state.party = state.party.map(name => {
+    if (!name) return "";
+
+    return isPartySpeciesEligible(name)
+      ? name
+      : "";
+  });
+}
+
+
+function setSpeciesObtained(
+  name,
+  obtained=true
+) {
+  const canonical =
+    POKEMON_LOOKUP.get(
+      String(name || "").toLowerCase()
+    );
+
+  if (!canonical) return false;
+
+  if (obtained) {
+    state.obtainedSpecies[canonical] = true;
+  } else {
+    delete state.obtainedSpecies[canonical];
+    pruneIneligiblePartySpecies();
+  }
+
+  return true;
+}
+
+
+/*
+  Compatibility wrappers for the existing
+  Area tracker.
+*/
+function isSpeciesCaught(name) {
+  return isSpeciesObtained(name);
+}
+
+
 function setSpeciesCaught(name, caught) {
-  state.caughtSpecies[name] = caught;
+  return setSpeciesObtained(name, caught);
 }
 
 function areaCurrentCatchesComplete(areaId) {

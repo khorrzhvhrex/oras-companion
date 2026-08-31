@@ -120,6 +120,48 @@ ROUTES.push(...EXTRA_AREAS);
 const ACHIEVEMENTS = ["First DexNav Egg Move", "First DexNav Hidden Ability", "First Trainer Rematch", "First Contest Win", "Create a Super Secret Base", "First Mega Evolution", "First Shiny", "Catch a Legendary", "Complete a Mirage Spot", "Catch the Regi Trio", "Become Champion", "Finish the Delta Episode", "Complete the Hoenn Dex", "Earn the Shiny Charm"];
 
 // =========================================================
+// ORAS POKEDEX
+// =========================================================
+
+const HOENN_DEX = [
+  "Treecko","Grovyle","Sceptile","Torchic","Combusken","Blaziken","Mudkip","Marshtomp","Swampert","Poochyena",
+  "Mightyena","Zigzagoon","Linoone","Wurmple","Silcoon","Beautifly","Cascoon","Dustox","Lotad","Lombre",
+  "Ludicolo","Seedot","Nuzleaf","Shiftry","Taillow","Swellow","Wingull","Pelipper","Ralts","Kirlia",
+  "Gardevoir","Gallade","Surskit","Masquerain","Shroomish","Breloom","Slakoth","Vigoroth","Slaking","Abra",
+  "Kadabra","Alakazam","Nincada","Ninjask","Shedinja","Whismur","Loudred","Exploud","Makuhita","Hariyama",
+  "Goldeen","Seaking","Magikarp","Gyarados","Azurill","Marill","Azumarill","Geodude","Graveler","Golem",
+  "Nosepass","Probopass","Skitty","Delcatty","Zubat","Golbat","Crobat","Tentacool","Tentacruel","Sableye",
+  "Mawile","Aron","Lairon","Aggron","Machop","Machoke","Machamp","Meditite","Medicham","Electrike",
+  "Manectric","Plusle","Minun","Magnemite","Magneton","Magnezone","Voltorb","Electrode","Volbeat","Illumise",
+  "Oddish","Gloom","Vileplume","Bellossom","Doduo","Dodrio","Budew","Roselia","Roserade","Gulpin",
+  "Swalot","Carvanha","Sharpedo","Wailmer","Wailord","Numel","Camerupt","Slugma","Magcargo","Torkoal",
+  "Grimer","Muk","Koffing","Weezing","Spoink","Grumpig","Sandshrew","Sandslash","Spinda","Skarmory",
+  "Trapinch","Vibrava","Flygon","Cacnea","Cacturne","Swablu","Altaria","Zangoose","Seviper","Lunatone",
+  "Solrock","Barboach","Whiscash","Corphish","Crawdaunt","Baltoy","Claydol","Lileep","Cradily","Anorith",
+  "Armaldo","Igglybuff","Jigglypuff","Wigglytuff","Feebas","Milotic","Castform","Staryu","Starmie","Kecleon",
+  "Shuppet","Banette","Duskull","Dusclops","Dusknoir","Tropius","Chingling","Chimecho","Absol","Vulpix",
+  "Ninetales","Pichu","Pikachu","Raichu","Psyduck","Golduck","Wynaut","Wobbuffet","Natu","Xatu",
+  "Girafarig","Phanpy","Donphan","Pinsir","Heracross","Rhyhorn","Rhydon","Rhyperior","Snorunt","Glalie",
+  "Froslass","Spheal","Sealeo","Walrein","Clamperl","Huntail","Gorebyss","Relicanth","Corsola","Chinchou",
+  "Lanturn","Luvdisc","Horsea","Seadra","Kingdra","Bagon","Shelgon","Salamence","Beldum","Metang",
+  "Metagross","Regirock","Regice","Registeel","Latias","Latios","Kyogre","Groudon","Rayquaza","Jirachi","Deoxys"
+];
+
+const HOENN_DEX_REQUIRED = HOENN_DEX.filter(name =>
+  !["Rayquaza","Jirachi","Deoxys"].includes(name)
+);
+
+const NATIONAL_DEX_NOT_REQUIRED = [
+  "Mew","Celebi","Jirachi","Phione","Manaphy",
+  "Darkrai","Shaymin","Arceus","Victini","Keldeo",
+  "Meloetta","Genesect","Diancie","Hoopa","Volcanion"
+];
+
+const NATIONAL_DEX_REQUIRED = POKEMON_721.filter(name =>
+  !NATIONAL_DEX_NOT_REQUIRED.includes(name)
+);
+
+// =========================================================
 // AUTO-COMPLETE CATCH OBJECTIVES
 // =========================================================
 

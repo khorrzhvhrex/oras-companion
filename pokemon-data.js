@@ -945,23 +945,6 @@ function pokemonEvolutionOptions(name) {
 
         return;
       }
-
-
-      /*
-        Nincada's Shedinja branch is written as
-        descriptive text instead of Target — Condition.
-      */
-      if (
-        name === "Nincada" &&
-        clause.toLowerCase()
-          .startsWith("shedinja also appears")
-      ) {
-        options.push({
-          species:"Shedinja",
-          condition:
-            "Evolve Nincada at Lv. 20 with an empty party slot and a spare Poké Ball"
-        });
-      }
     });
 
   return options;

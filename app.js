@@ -1098,19 +1098,125 @@ function openEvolutionDialog(
 
 
   /*
-    No branch:
+    Normal single-target evolution:
     evolve immediately.
+  
+    Nincada is handled separately because
+    Shedinja may be obtained alongside Ninjask.
   */
-  if (options.length === 1) {
+  if (
+    options.length === 1 &&
+    current !== "Nincada"
+  ) {
     evolvePartyMember(
       slotIndex,
       options[0].species
     );
-
+  
     return;
   }
 
-
+  /*
+    Nincada:
+    always evolves into Ninjask.
+  
+    Shedinja may also be obtained if the
+    in-game conditions were met.
+  */
+  if (current === "Nincada") {
+    evolvingPartySlot =
+      slotIndex;
+  
+    $("#evolutionDialogSource")
+      .textContent =
+        "Nincada evolves into Ninjask. Mark Shedinja too if you had an empty party slot and a spare Poké Ball.";
+  
+    const list =
+      $("#evolutionChoiceList");
+  
+    list.innerHTML = `
+      <label class="shedinja-option">
+        <input
+          id="shedinjaObtainedToggle"
+          type="checkbox"
+        >
+  
+        <div>
+          <strong>
+            Shedinja also obtained
+          </strong>
+  
+          <span>
+            Requires an empty party slot and a spare Poké Ball when Nincada evolves at Lv. 20.
+          </span>
+        </div>
+      </label>
+  
+      <button
+        id="confirmNincadaEvolutionBtn"
+        type="button"
+        class="evolution-choice-btn evolution-confirm-btn"
+      >
+        <strong>
+          Evolve into Ninjask
+        </strong>
+  
+        <span>
+          Lv. 20
+        </span>
+      </button>
+    `;
+  
+    $("#confirmNincadaEvolutionBtn")
+      .addEventListener(
+        "click",
+        () => {
+          const shedinjaObtained =
+            $("#shedinjaObtainedToggle")
+              .checked;
+  
+          /*
+            First mark Ninjask obtained and
+            move the Party slot forward.
+          */
+          setSpeciesObtained(
+            "Ninjask",
+            true
+          );
+  
+          state.party[slotIndex] =
+            "Ninjask";
+  
+          /*
+            Shedinja is an additional result,
+            not a replacement Party evolution.
+          */
+          if (shedinjaObtained) {
+            setSpeciesObtained(
+              "Shedinja",
+              true
+            );
+          }
+  
+          evolvingPartySlot = null;
+  
+          $("#evolutionDialog")
+            .close();
+  
+          saveState(
+            shedinjaObtained
+              ? "Nincada evolved into Ninjask — Shedinja also obtained!"
+              : "Nincada evolved into Ninjask!"
+          );
+        }
+      );
+  
+    $("#evolutionDialog")
+      .showModal();
+  
+    return;
+  }
+  
   /*
     Branch:
     let the player choose.

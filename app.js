@@ -1661,81 +1661,112 @@ function renderAvailabilityReference() {
     ORAS_FORM_EXCLUSIVES[otherVersion];
 
 
+  const speciesCards = species =>
+    species
+      .map(name => `
+        <span class="availability-species">
+          ${escapeHtml(name)}
+        </span>
+      `)
+      .join("");
+
+
   root.innerHTML = `
-    <div class="availability-block">
-      <h3>${version} Native Exclusives</h3>
+    <details class="availability-category" open>
+      <summary>
+        <span>${version} Native Exclusives</span>
+        <span class="availability-category-chevron">⌄</span>
+      </summary>
 
-      <div class="availability-species-list">
-        ${availabilitySpeciesHtml(
-          ORAS_VERSION_EXCLUSIVES[
-            version
-          ]
-        )}
+      <div class="availability-category-body">
+        <div class="availability-species-list">
+          ${speciesCards(
+            ORAS_VERSION_EXCLUSIVES[
+              version
+            ]
+          )}
+        </div>
       </div>
-    </div>
+    </details>
 
 
-    <div class="availability-block">
-      <h3>${otherVersion} Native Exclusives</h3>
+    <details class="availability-category">
+      <summary>
+        <span>${otherVersion} Native Exclusives</span>
+        <span class="availability-category-chevron">⌄</span>
+      </summary>
 
-      <p class="small muted">
-        Requires trade or another save when playing ${version}.
-      </p>
+      <div class="availability-category-body">
+        <p class="small muted">
+          Requires trade or another save
+          when playing ${version}.
+        </p>
 
-      <div class="availability-species-list">
-        ${availabilitySpeciesHtml(
-          ORAS_VERSION_EXCLUSIVES[
-            otherVersion
-          ]
-        )}
+        <div class="availability-species-list">
+          ${speciesCards(
+            ORAS_VERSION_EXCLUSIVES[
+              otherVersion
+            ]
+          )}
+        </div>
       </div>
-    </div>
+    </details>
 
 
-    <div class="availability-block">
-      <h3>Form Exclusives</h3>
+    <details class="availability-category">
+      <summary>
+        <span>Form Exclusives</span>
+        <span class="availability-category-chevron">⌄</span>
+      </summary>
 
-      <div class="availability-form-list">
-        ${currentForms.map(item =>
-          `
+      <div class="availability-category-body">
+        <div class="availability-form-list">
+
+          ${currentForms.map(item => `
             <span class="availability-species">
               ${escapeHtml(item.species)}
               — ${escapeHtml(item.form)}
               (${version})
             </span>
-          `
-        ).join("")}
+          `).join("")}
 
-        ${otherForms.map(item =>
-          `
+          ${otherForms.map(item => `
             <span class="availability-species">
               ${escapeHtml(item.species)}
               — ${escapeHtml(item.form)}
               (${otherVersion})
             </span>
-          `
-        ).join("")}
+          `).join("")}
+
+        </div>
       </div>
-    </div>
+    </details>
 
 
-    <div class="availability-block">
-      <h3>No Native ORAS Source</h3>
+    <details class="availability-category no-native-category">
+      <summary>
+        <span>No Native ORAS Source</span>
+        <span class="availability-category-chevron">⌄</span>
+      </summary>
 
-      <p class="small muted">
-        These Pokémon require an external trade,
-        transfer or applicable event source.
-      </p>
+      <div class="availability-category-body">
 
-      <div class="availability-species-list">
-        ${availabilitySpeciesHtml(
-          ORAS_NO_NATIVE_SOURCE
-        )}
+        <p class="small muted">
+          These Pokémon require an external
+          trade, transfer, or applicable
+          event source.
+        </p>
+
+        <div class="availability-species-list">
+          ${speciesCards(
+            ORAS_NO_NATIVE_SOURCE
+          )}
+        </div>
+
       </div>
-    </div>
+    </details>
   `;
 }
-
 function renderAchievements() {
   const list = $("#achievementList");
   list.innerHTML = "";

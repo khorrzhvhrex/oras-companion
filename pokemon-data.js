@@ -667,6 +667,114 @@ const ORAS_EVOLUTIONS = {
   Noibat:"Noivern — Lv. 48"
 };
 
+// =========================================================
+// ORAS / EVOLUTION FAMILY GRAPH
+// =========================================================
+
+function extractEvolutionTargets(description) {
+  if (!description) return [];
+
+  const targets = [];
+
+  description.split(";").forEach(rawClause => {
+    const clause = rawClause.trim();
+
+    if (!clause.includes("—")) return;
+
+    const targetText = clause
+      .split("—")[0]
+      .trim()
+      .replace(/^or\s+/i, "");
+
+    targetText
+      .split(/\s+or\s+/i)
+      .map(name => name.trim())
+      .forEach(name => {
+        const canonical =
+          POKEMON_LOOKUP.get(name.toLowerCase());
+
+        if (canonical) {
+          targets.push(canonical);
+        }
+      });
+  });
+
+  return [...new Set(targets)];
+}
+
+
+function buildEvolutionGraph() {
+  const graph = new Map();
+
+  POKEMON_721.forEach(name => {
+    graph.set(name, new Set());
+  });
+
+  Object.entries(ORAS_EVOLUTIONS)
+    .forEach(([source, description]) => {
+      if (!graph.has(source)) return;
+
+      const targets =
+        extractEvolutionTargets(description);
+
+      targets.forEach(target => {
+        if (!graph.has(target)) return;
+
+        graph.get(source).add(target);
+        graph.get(target).add(source);
+      });
+    });
+
+  /*
+    Shedinja is a special branch from Nincada and
+    isn't cleanly represented by the human-readable
+    evolution text.
+  */
+  graph.get("Nincada")?.add("Shedinja");
+  graph.get("Shedinja")?.add("Nincada");
+
+  return graph;
+}
+
+
+const ORAS_EVOLUTION_GRAPH =
+  buildEvolutionGraph();
+
+
+function pokemonEvolutionFamily(name) {
+  const canonical =
+    POKEMON_LOOKUP.get(
+      String(name || "").toLowerCase()
+    );
+
+  if (!canonical) return [];
+
+  const family = new Set();
+  const queue = [canonical];
+
+  while (queue.length) {
+    const current = queue.shift();
+
+    if (family.has(current)) continue;
+
+    family.add(current);
+
+    const relatives =
+      ORAS_EVOLUTION_GRAPH.get(current)
+      || new Set();
+
+    relatives.forEach(relative => {
+      if (!family.has(relative)) {
+        queue.push(relative);
+      }
+    });
+  }
+
+  return POKEMON_721.filter(species =>
+    family.has(species)
+  );
+}
+
 /*
   Generation VI type chart.
 

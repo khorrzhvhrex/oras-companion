@@ -24,6 +24,7 @@ const manuallyExpandedAreas = new Set();
 let dexMode = "hoenn";
 let dexFilter = "all";
 let dexSearch = "";
+let evolvingPartySlot = null;
 
 const $ = sel => document.querySelector(sel);
 const $$ = sel => [...document.querySelectorAll(sel)];
@@ -1041,6 +1042,127 @@ function renderTeamAnalysis() {
     typeListHtml(analysis.weak);
 }
 
+function evolvePartyMember(
+  slotIndex,
+  species
+) {
+  const current =
+    state.party[slotIndex];
+
+  if (!current) return;
+
+  const options =
+    pokemonEvolutionOptions(current);
+
+  const valid =
+    options.some(option =>
+      option.species === species
+    );
+
+  if (!valid) return;
+
+  /*
+    The evolved species has now genuinely
+    been obtained.
+  */
+  setSpeciesObtained(
+    species,
+    true
+  );
+
+  state.party[slotIndex] =
+    species;
+
+  evolvingPartySlot = null;
+
+  $("#evolutionDialog")?.close();
+
+  saveState(
+    `${current} evolved into ${species}!`
+  );
+}
+
+
+function openEvolutionDialog(
+  slotIndex
+) {
+  const current =
+    state.party[slotIndex];
+
+  if (!current) return;
+
+  const options =
+    pokemonEvolutionOptions(current);
+
+  if (!options.length) return;
+
+
+  /*
+    No branch:
+    evolve immediately.
+  */
+  if (options.length === 1) {
+    evolvePartyMember(
+      slotIndex,
+      options[0].species
+    );
+
+    return;
+  }
+
+
+  /*
+    Branch:
+    let the player choose.
+  */
+  evolvingPartySlot =
+    slotIndex;
+
+  $("#evolutionDialogSource")
+    .textContent =
+      `Choose how ${current} evolves.`;
+
+  const list =
+    $("#evolutionChoiceList");
+
+  list.innerHTML = "";
+
+  options.forEach(option => {
+    const button =
+      document.createElement("button");
+
+    button.type = "button";
+
+    button.className =
+      "evolution-choice-btn";
+
+    button.innerHTML = `
+      <strong>
+        ${escapeHtml(option.species)}
+      </strong>
+
+      <span>
+        ${escapeHtml(option.condition)}
+      </span>
+    `;
+
+    button.addEventListener(
+      "click",
+      () => {
+        evolvePartyMember(
+          slotIndex,
+          option.species
+        );
+      }
+    );
+
+    list.appendChild(button);
+  });
+
+  $("#evolutionDialog")
+    .showModal();
+}
+
 function renderParty() {
   let datalist = $("#pokemonSpeciesList");
 
@@ -1086,12 +1208,44 @@ function renderParty() {
       </div>
 
       <div class="party-evolution">
-        <strong>Evolution:</strong> ${name ? escapeHtml(pokemonEvolutionText(name)) : "—"}
+        <strong>Evolution:</strong>
+        ${name
+          ? escapeHtml(
+              pokemonEvolutionText(name)
+            )
+          : "—"}
       </div>
+      
+      ${
+        name &&
+        pokemonEvolutionOptions(name).length
+          ? `
+            <button
+              type="button"
+              class="party-evolve-btn"
+            >
+              Evolve
+            </button>
+          `
+          : ""
+      }
     `;
 
     const input = slot.querySelector("input");
     const typeDisplay = slot.querySelector(".party-types");
+    const evolveBtn =
+      slot.querySelector(
+        ".party-evolve-btn"
+      );
+    
+    if (evolveBtn) {
+      evolveBtn.addEventListener(
+        "click",
+        () => {
+          openEvolutionDialog(i);
+        }
+      );
+    }
 
     input.addEventListener("input", e => {
       const typed = e.target.value.trim();
@@ -1867,6 +2021,16 @@ $("#nextBenchmarkBtn").addEventListener("click", () => {
   saveState();
 });
 
+$("#closeEvolutionDialogBtn")
+  ?.addEventListener(
+    "click",
+    () => {
+      evolvingPartySlot = null;
+
+      $("#evolutionDialog")
+        ?.close();
+    }
+  );
 $("#menuBtn").addEventListener("click", () => $("#toolsDialog").showModal());
 $("#exportBtn").addEventListener("click", exportSave);
 $("#importInput").addEventListener("change", e => {

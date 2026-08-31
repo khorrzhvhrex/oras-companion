@@ -184,11 +184,26 @@ function render() {
 
 function renderProgress() {
   const done = state.completedBenchmarks.length;
-  const pct = Math.round(done / BENCHMARKS.length * 100);
-  $("#progressPct").textContent = `${pct}%`;
-  $("#progressBar").style.width = `${pct}%`;
-  $("#progressText").textContent = `${done} of ${BENCHMARKS.length} benchmarks complete`;
-  $("#trainerLevel").textContent = String(1 + Math.floor(done / 4));
+
+  const xpPerBenchmark = 100;
+  const totalXp = done * xpPerBenchmark;
+  const maxXp = BENCHMARKS.length * xpPerBenchmark;
+
+  const pct = Math.round(
+    totalXp / maxXp * 100
+  );
+
+  $("#progressPct").textContent =
+    `${totalXp.toLocaleString()} XP`;
+
+  $("#progressBar").style.width =
+    `${pct}%`;
+
+  $("#progressText").textContent =
+    `${totalXp.toLocaleString()} / ${maxXp.toLocaleString()} XP`;
+
+  $("#trainerLevel").textContent =
+    String(1 + Math.floor(done / 4));
 }
 
 function renderJourney() {

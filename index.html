@@ -15,6 +15,11 @@
 </head>
 <body>
   <main class="app-shell">
+
+    <!-- ======================================================
+       APP HEADER / PROGRESS
+       ====================================================== -->
+    
     <header class="topbar">
       <div>
         <p class="eyebrow">Pokémon ORAS</p>
@@ -40,6 +45,10 @@
       <p id="progressText" class="muted">0 of 40 benchmarks complete</p>
     </section>
 
+    <!-- ======================================================
+         PRIMARY NAVIGATION
+         ====================================================== -->
+    
     <nav class="tabs" aria-label="Primary">
       <button class="tab active" data-tab="journey" type="button">Journey</button>
       <button class="tab" data-tab="revisits" type="button">Revisits <span id="revisitBadge" class="badge">0</span></button>
@@ -49,6 +58,10 @@
       <button class="tab" data-tab="achievements" type="button">Achievements</button>
     </nav>
 
+    <!-- ======================================================
+         JOURNEY TAB
+         ====================================================== -->
+    
     <section id="journey" class="tab-panel active">
       <article class="hero-card">
         <div class="hero-head">
@@ -95,6 +108,10 @@
       </section>
     </section>
 
+    <!-- ======================================================
+         REVISITS TAB
+         ====================================================== -->
+    
     <section id="revisits" class="tab-panel">
       <div class="section-head">
         <div>
@@ -106,6 +123,10 @@
       <div id="revisitList" class="stack-list"></div>
     </section>
 
+    <!-- ======================================================
+         AREAS TAB
+         ====================================================== -->
+    
     <section id="areas" class="tab-panel">
       <div class="section-head">
         <div>
@@ -159,6 +180,10 @@
       <div id="routeList" class="route-list"></div>
     </section>
 
+    <!-- ======================================================
+         PARTY TAB
+         ====================================================== -->
+    
     <section id="party" class="tab-panel">
       <section class="section-block">
         <div class="section-head">
@@ -201,6 +226,10 @@
 
                 </section>
 
+                  <!-- ======================================================
+                       POKEDEX TAB
+                       ====================================================== -->
+    
                   <section id="dex" class="tab-panel">
                     <section class="section-block">
                       <div class="section-head">
@@ -255,6 +284,9 @@
               
                       <div id="dexVisibleCount" class="small muted"></div>
                       <div id="dexList" class="dex-list"></div>
+
+                      <!-- Special Acquisitions -->
+                      
                       <div class="dex-subsection">
                         <div class="section-head">
                           <div>
@@ -272,6 +304,9 @@
                       </div>
                       
                       <div class="dex-subsection">
+
+                        <!-- ORAS Availability Reference -->
+                        
                         <details class="availability-guide">
                           <summary>
                             <div>
@@ -287,6 +322,9 @@
                     </section>
             
             <section class="section-block">
+
+              <!-- DexNav Cheatsheet -->
+              
               <details class="dexnav-guide">
                 <summary>
                   <div>
@@ -388,6 +426,9 @@
             </section>
 
       <section class="section-block">
+
+        <!-- Evolution Cheatsheet -->
+        
         <details class="evolution-guide">
           <summary>
             <div>
@@ -466,6 +507,10 @@
 
           </section>
 
+          <!-- ======================================================
+               ACHIEVEMENTS TAB
+               ====================================================== -->
+
           <section id="achievements" class="tab-panel">
                     
       <section class="section-block">
@@ -480,6 +525,10 @@
     </section>
   </main>
 
+  <!-- ======================================================
+       PARTY EVOLUTION MODAL
+       ====================================================== -->
+  
   <dialog id="evolutionDialog" class="modal">
   <div class="modal-card">
     <div class="section-head">
@@ -510,6 +559,10 @@
   </div>
 </dialog>
 
+  <!-- ======================================================
+       SAVE TOOLS MODAL
+       ====================================================== -->
+  
   <dialog id="toolsDialog" class="modal">
     <form method="dialog" class="modal-card">
       <div class="section-head">
@@ -533,6 +586,10 @@
     </form>
   </dialog>
 
+  <!-- ======================================================
+       IMPORT PREVIEW MODAL
+       ====================================================== -->
+  
   <dialog id="importDialog" class="modal">
     <form method="dialog" class="modal-card">
       <div class="section-head">
@@ -548,6 +605,11 @@
       </div>
     </form>
   </dialog>
+
+<!-- ======================================================
+     APPLICATION SCRIPTS
+     ====================================================== -->
+  
 <script src="pokemon-data.js"></script>
 <script src="oras-data.js"></script>
 <script src="app.js"></script>

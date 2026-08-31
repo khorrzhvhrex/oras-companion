@@ -893,6 +893,10 @@ function pokemonTypes(name) {
   return POKEMON_TYPES[name] || [];
 }
 
+// =========================================================
+// EVOLUTION DISPLAY / PARTY EVOLUTION HELPERS
+// =========================================================
+
 function pokemonEvolutionOptions(name) {
   const description =
     ORAS_EVOLUTIONS[name];
@@ -953,6 +957,10 @@ function pokemonEvolutionOptions(name) {
 function pokemonEvolutionText(name) {
   return ORAS_EVOLUTIONS[name] || "Final form / no ORAS evolution listed";
 }
+
+// =========================================================
+// POKÉMON TYPE DATA LOADING / CACHE
+// =========================================================
 
 function parseCsvLine(line) {
   const values = [];

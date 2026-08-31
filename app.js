@@ -1,3 +1,7 @@
+// =========================================================
+// APP STATE / SAVE SCHEMA
+// =========================================================
+
 const APP_KEY = "alphaSapphireCompanionV1";
 const BACKUP_KEY = "alphaSapphireCompanionPreImport";
 const APP_VERSION = 4;
@@ -28,6 +32,10 @@ let evolvingPartySlot = null;
 
 const $ = sel => document.querySelector(sel);
 const $$ = sel => [...document.querySelectorAll(sel)];
+
+// =========================================================
+// SAVE LOAD / MIGRATION / PERSISTENCE
+// =========================================================
 
 function loadState() {
   try {
@@ -168,6 +176,10 @@ function saveState(message="Saved") {
   render();
 }
 
+// =========================================================
+// JOURNEY / BENCHMARK STATE
+// =========================================================
+
 function currentObjectiveKey(bIndex, oIndex) {
   return `${bIndex}:${oIndex}`;
 }
@@ -187,6 +199,10 @@ function setBenchmarkComplete(index, complete) {
   }
 }
 
+// =========================================================
+// MASTER RENDER
+// =========================================================
+
 function render() {
   renderProgress();
   renderJourney();
@@ -199,6 +215,10 @@ function render() {
   renderAvailabilityReference();
   renderAchievements();
 }
+
+// =========================================================
+// JOURNEY PROGRESS
+// =========================================================
 
 function renderProgress() {
   const done = state.completedBenchmarks.length;
@@ -279,6 +299,10 @@ function renderJourney() {
   });
 }
 
+// =========================================================
+// REVISIT QUEUE
+// =========================================================
+
 function revisitState(index) {
   const manual = state.revisits[index];
   if (manual === "done") return "done";
@@ -313,6 +337,10 @@ function renderRevisits() {
   });
   $("#revisitBadge").textContent = available;
 }
+
+// =========================================================
+// AREA ACCESS / STORY UNLOCKS
+// =========================================================
 
 function hasStoryUnlock(key) {
   const completed = new Set(state.completedBenchmarks);
@@ -419,6 +447,10 @@ function methodUnlocked(method) {
   return false;
 }
 
+// =========================================================
+// OBTAINED SPECIES / PARTY ELIGIBILITY
+// =========================================================
+
 function isSpeciesObtained(name) {
   return !!state.obtainedSpecies[name];
 }
@@ -505,6 +537,10 @@ function isSpeciesCaught(name) {
 function setSpeciesCaught(name, caught) {
   return setSpeciesObtained(name, caught);
 }
+
+// =========================================================
+// AREA COMPLETION / CATCH OBJECTIVE SYNC
+// =========================================================
 
 function areaCurrentCatchesComplete(areaId) {
   const area = ROUTES.find(route => route.id === areaId);
@@ -722,6 +758,10 @@ function dexNavCrownHtml(route) {
   `;
 }
 
+// =========================================================
+// AREA TRACKER RENDERING
+// =========================================================
+
 function renderRoutes() {
   $("#oldRodToggle").checked = !!state.access.oldRod;
   $("#goodRodToggle").checked = !!state.access.goodRod;
@@ -850,6 +890,9 @@ function renderRoutes() {
   }
 }
 
+// =========================================================
+// PARTY / TEAM ANALYSIS
+// =========================================================
 
 function representedTeamTypes() {
   const represented = new Set();
@@ -1041,6 +1084,10 @@ function renderTeamAnalysis() {
   $("#weakAgainst").innerHTML =
     typeListHtml(analysis.weak);
 }
+
+// =========================================================
+// PARTY EVOLUTION
+// =========================================================
 
 function evolvePartyMember(
   slotIndex,
@@ -1268,6 +1315,10 @@ function openEvolutionDialog(
   $("#evolutionDialog")
     .showModal();
 }
+
+// =========================================================
+// PARTY RENDERING
+// =========================================================
 
 function renderParty() {
   let datalist = $("#pokemonSpeciesList");
@@ -1889,6 +1940,10 @@ function renderSpecialAcquisitions() {
   });
 }
 
+// =========================================================
+// ORAS AVAILABILITY REFERENCE
+// =========================================================
+
 function availabilitySpeciesHtml(
   species
 ) {
@@ -2027,6 +2082,11 @@ function renderAvailabilityReference() {
     </details>
   `;
 }
+
+// =========================================================
+// ACHIEVEMENTS
+// =========================================================
+
 function renderAchievements() {
   const list = $("#achievementList");
   list.innerHTML = "";
@@ -2056,10 +2116,18 @@ function renderAchievements() {
   });
 }
 
+// =========================================================
+// GENERAL UTILITIES
+// =========================================================
+
 function escapeHtml(v) {
   return String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 }
 function escapeAttr(v) { return escapeHtml(v); }
+
+// =========================================================
+// SAVE EXPORT / IMPORT
+// =========================================================
 
 function exportSave() {
   const payload = {

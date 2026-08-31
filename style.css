@@ -1336,3 +1336,153 @@ h3{font-size:1.05rem;margin-bottom:0}
     display:none;
   }
 }
+
+/* =========================================================
+   SPECIAL ACQUISITIONS / AVAILABILITY MOBILE CLEANUP
+   ========================================================= */
+
+.special-acquisition-entries {
+  display:grid;
+  gap:10px;
+}
+
+.special-acquisition {
+  display:grid;
+  grid-template-columns:24px minmax(0,1fr);
+  align-items:start;
+  gap:10px;
+  padding:12px;
+}
+
+.special-acquisition > input {
+  grid-column:1;
+  grid-row:1;
+  margin:2px 0 0;
+}
+
+.special-acquisition-copy {
+  grid-column:2;
+  min-width:0;
+}
+
+.special-acquisition-title {
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:6px;
+  line-height:1.25;
+}
+
+.special-acquisition-location {
+  display:block;
+  margin-top:5px;
+  line-height:1.35;
+}
+
+.special-acquisition-condition {
+  display:block;
+  margin-top:5px;
+  line-height:1.45;
+}
+
+
+/* Availability sections */
+
+.availability-content {
+  display:grid;
+  gap:14px;
+}
+
+.availability-block {
+  display:grid;
+  gap:8px;
+  min-width:0;
+}
+
+.availability-block h3 {
+  margin:0;
+}
+
+.availability-block p {
+  margin:0;
+}
+
+
+/* Pokémon availability entries */
+
+.availability-species-list,
+.availability-form-list {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:7px;
+}
+
+.availability-species {
+  display:flex;
+  align-items:center;
+  min-width:0;
+  width:100%;
+  padding:7px 9px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--panel);
+  color:var(--text);
+  font-size:.72rem;
+  font-weight:800;
+  line-height:1.25;
+  overflow-wrap:anywhere;
+}
+
+
+/* No-native-source list is huge, so make it compact */
+
+.availability-block:last-child
+.availability-species-list {
+  grid-template-columns:
+    repeat(3,minmax(0,1fr));
+}
+
+.availability-block:last-child
+.availability-species {
+  padding:6px 7px;
+  font-size:.66rem;
+}
+
+
+/* Phone */
+
+@media(max-width:520px) {
+
+  .availability-species-list,
+  .availability-form-list {
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+  }
+
+  .availability-block:last-child
+  .availability-species-list {
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+  }
+
+  .availability-species {
+    font-size:.7rem;
+  }
+
+  .special-acquisition {
+    padding:11px;
+  }
+}
+
+
+/* Very narrow phones */
+
+@media(max-width:360px) {
+
+  .availability-species-list,
+  .availability-form-list,
+  .availability-block:last-child
+  .availability-species-list {
+    grid-template-columns:1fr;
+  }
+}

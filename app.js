@@ -194,6 +194,8 @@ function render() {
   renderParty();
   renderTeamAnalysis();
   renderDex();
+  renderSpecialAcquisitions();
+  renderAvailabilityReference();
   renderAchievements();
 }
 
@@ -1185,6 +1187,79 @@ function renderParty() {
 // POKEDEX
 // =========================================================
 
+function currentGameVersion() {
+  return state.gameVersion === "OR"
+    ? "OR"
+    : "AS";
+}
+
+
+function exclusiveVersionForSpecies(name) {
+  if (ORAS_VERSION_EXCLUSIVES.OR.includes(name)) {
+    return "OR";
+  }
+
+  if (ORAS_VERSION_EXCLUSIVES.AS.includes(name)) {
+    return "AS";
+  }
+
+  return null;
+}
+
+
+function speciesAvailability(name) {
+  if (ORAS_NO_NATIVE_SOURCE.includes(name)) {
+    return {
+      kind:"external",
+      label:"External"
+    };
+  }
+
+  const exclusiveVersion =
+    exclusiveVersionForSpecies(name);
+
+  if (!exclusiveVersion) {
+    return {
+      kind:"both",
+      label:"ORAS"
+    };
+  }
+
+  if (
+    exclusiveVersion ===
+    currentGameVersion()
+  ) {
+    return {
+      kind:"current-version",
+      label:exclusiveVersion
+    };
+  }
+
+  return {
+    kind:"other-version",
+    label:`${exclusiveVersion} only`
+  };
+}
+
+
+function dexAvailabilityBadgeHtml(name) {
+  const availability =
+    speciesAvailability(name);
+
+  /*
+    Don't clutter every normal ORAS species row.
+  */
+  if (availability.kind === "both") {
+    return "";
+  }
+
+  return `
+    <span class="dex-source-badge ${availability.kind}">
+      ${escapeHtml(availability.label)}
+    </span>
+  `;
+}
+
 function dexOwnedCount(list) {
   return list.filter(name =>
     isSpeciesObtained(name)
@@ -1318,8 +1393,12 @@ function renderDex() {
         ${escapeHtml(entry.name)}
       </span>
 
-      <span class="dex-status">
-        ${entry.obtained ? "Obtained" : "Missing"}
+      <span class="dex-status-stack">
+        <span class="dex-status">
+          ${entry.obtained ? "Obtained" : "Missing"}
+        </span>
+      
+        ${dexAvailabilityBadgeHtml(entry.name)}
       </span>
     `;
 
@@ -1348,6 +1427,313 @@ function renderDex() {
       </div>
     `;
   }
+}
+
+// =========================================================
+// SPECIAL ACQUISITIONS
+// =========================================================
+
+function specialAcquisitionComplete(id) {
+  return !!state.specialAcquisitions[id];
+}
+
+
+function specialAcquisitionsForCurrentVersion() {
+  const version =
+    currentGameVersion();
+
+  return SPECIAL_ACQUISITIONS.filter(item =>
+    item.versions.includes(version)
+  );
+}
+
+
+function setSpecialAcquisition(
+  id,
+  complete
+) {
+  const item =
+    SPECIAL_ACQUISITIONS.find(
+      entry => entry.id === id
+    );
+
+  if (!item) return;
+
+  /*
+    One-time choice groups:
+    starter trios, Route 111 fossil, etc.
+  */
+  if (
+    complete &&
+    item.choiceGroup
+  ) {
+    SPECIAL_ACQUISITIONS
+      .filter(other =>
+        other.choiceGroup ===
+          item.choiceGroup &&
+        other.id !== item.id
+      )
+      .forEach(other => {
+        delete state.specialAcquisitions[
+          other.id
+        ];
+      });
+  }
+
+
+  if (complete) {
+    state.specialAcquisitions[id] = true;
+
+    /*
+      Event completion is allowed to add
+      Pokédex ownership.
+    */
+    setSpeciesObtained(
+      item.species,
+      true
+    );
+  } else {
+    /*
+      Event completion is historical state.
+
+      Deliberately DO NOT remove the species
+      from obtainedSpecies here: the player
+      could also own it through another method.
+    */
+    delete state.specialAcquisitions[id];
+  }
+}
+
+
+function renderSpecialAcquisitions() {
+  const root =
+    $("#specialAcquisitionList");
+
+  if (!root) return;
+
+  root.innerHTML = "";
+
+  const entries =
+    specialAcquisitionsForCurrentVersion();
+
+  Object.entries(
+    SPECIAL_ACQUISITION_GROUPS
+  ).forEach(([group, title]) => {
+    const groupEntries =
+      entries.filter(item =>
+        item.group === group
+      );
+
+    if (!groupEntries.length) return;
+
+    const section =
+      document.createElement("details");
+
+    section.className =
+      "special-acquisition-group";
+
+    section.innerHTML = `
+      <summary>
+        <strong>${escapeHtml(title)}</strong>
+
+        <span class="special-group-count">
+          ${
+            groupEntries.filter(item =>
+              specialAcquisitionComplete(
+                item.id
+              )
+            ).length
+          }
+          /
+          ${groupEntries.length}
+        </span>
+      </summary>
+
+      <div class="special-acquisition-entries"></div>
+    `;
+
+    const list =
+      section.querySelector(
+        ".special-acquisition-entries"
+      );
+
+    groupEntries.forEach(item => {
+      const done =
+        specialAcquisitionComplete(
+          item.id
+        );
+
+      const row =
+        document.createElement("label");
+
+      row.className =
+        `special-acquisition ${done ? "done" : ""}`;
+
+      const choiceText =
+        item.choiceGroup
+          ? `<span class="special-choice-pill">Choose one</span>`
+          : "";
+
+      const versionText =
+        item.versions.length === 1
+          ? `<span class="special-version-pill">${item.versions[0]}</span>`
+          : "";
+
+      row.innerHTML = `
+        <input
+          type="checkbox"
+          ${done ? "checked" : ""}
+        >
+
+        <div class="special-acquisition-copy">
+          <div class="special-acquisition-title">
+            <strong>
+              ${escapeHtml(item.species)}
+            </strong>
+
+            ${choiceText}
+            ${versionText}
+          </div>
+
+          <div class="special-acquisition-location">
+            ${escapeHtml(item.location)}
+          </div>
+
+          <div class="special-acquisition-condition">
+            ${escapeHtml(item.condition)}
+          </div>
+        </div>
+      `;
+
+      row.querySelector("input")
+        .addEventListener(
+          "change",
+          e => {
+            setSpecialAcquisition(
+              item.id,
+              e.target.checked
+            );
+
+            saveState(
+              e.target.checked
+                ? `${item.species} acquisition completed.`
+                : `${item.species} acquisition reopened.`
+            );
+          }
+        );
+
+      list.appendChild(row);
+    });
+
+    root.appendChild(section);
+  });
+}
+
+function availabilitySpeciesHtml(
+  species
+) {
+  return species
+    .map(name =>
+      `<span class="availability-species">${escapeHtml(name)}</span>`
+    )
+    .join("");
+}
+
+
+function renderAvailabilityReference() {
+  const root =
+    $("#availabilityReference");
+
+  if (!root) return;
+
+  const version =
+    currentGameVersion();
+
+  const otherVersion =
+    version === "AS"
+      ? "OR"
+      : "AS";
+
+  const currentForms =
+    ORAS_FORM_EXCLUSIVES[version];
+
+  const otherForms =
+    ORAS_FORM_EXCLUSIVES[otherVersion];
+
+
+  root.innerHTML = `
+    <div class="availability-block">
+      <h3>${version} Native Exclusives</h3>
+
+      <div class="availability-species-list">
+        ${availabilitySpeciesHtml(
+          ORAS_VERSION_EXCLUSIVES[
+            version
+          ]
+        )}
+      </div>
+    </div>
+
+
+    <div class="availability-block">
+      <h3>${otherVersion} Native Exclusives</h3>
+
+      <p class="small muted">
+        Requires trade or another save when playing ${version}.
+      </p>
+
+      <div class="availability-species-list">
+        ${availabilitySpeciesHtml(
+          ORAS_VERSION_EXCLUSIVES[
+            otherVersion
+          ]
+        )}
+      </div>
+    </div>
+
+
+    <div class="availability-block">
+      <h3>Form Exclusives</h3>
+
+      <div class="availability-form-list">
+        ${currentForms.map(item =>
+          `
+            <span class="availability-species">
+              ${escapeHtml(item.species)}
+              — ${escapeHtml(item.form)}
+              (${version})
+            </span>
+          `
+        ).join("")}
+
+        ${otherForms.map(item =>
+          `
+            <span class="availability-species">
+              ${escapeHtml(item.species)}
+              — ${escapeHtml(item.form)}
+              (${otherVersion})
+            </span>
+          `
+        ).join("")}
+      </div>
+    </div>
+
+
+    <div class="availability-block">
+      <h3>No Native ORAS Source</h3>
+
+      <p class="small muted">
+        These Pokémon require an external trade,
+        transfer or applicable event source.
+      </p>
+
+      <div class="availability-species-list">
+        ${availabilitySpeciesHtml(
+          ORAS_NO_NATIVE_SOURCE
+        )}
+      </div>
+    </div>
+  `;
 }
 
 function renderAchievements() {

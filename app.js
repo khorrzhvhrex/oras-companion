@@ -19,6 +19,10 @@ let state = loadState();
 let pendingImport = null;
 const manuallyExpandedAreas = new Set();
 
+let dexMode = "hoenn";
+let dexFilter = "all";
+let dexSearch = "";
+
 const $ = sel => document.querySelector(sel);
 const $$ = sel => [...document.querySelectorAll(sel)];
 
@@ -179,6 +183,7 @@ function render() {
   renderRoutes();
   renderParty();
   renderTeamAnalysis();
+  renderDex();
   renderAchievements();
 }
 
@@ -1165,9 +1170,191 @@ function renderParty() {
     grid.appendChild(slot);
   });
 }
+
+// =========================================================
+// POKEDEX
+// =========================================================
+
+function dexOwnedCount(list) {
+  return list.filter(name =>
+    isSpeciesObtained(name)
+  ).length;
+}
+
+
+function renderDex() {
+  const list = $("#dexList");
+
+  if (!list) return;
+
+  const hoennOwned =
+    dexOwnedCount(HOENN_DEX);
+
+  const hoennRequiredOwned =
+    dexOwnedCount(HOENN_DEX_REQUIRED);
+
+  const nationalOwned =
+    dexOwnedCount(POKEMON_721);
+
+  const nationalRequiredOwned =
+    dexOwnedCount(NATIONAL_DEX_REQUIRED);
+
+
+  $("#hoennDexCount").textContent =
+    `${hoennOwned} / ${HOENN_DEX.length}`;
+
+  $("#hoennDexRequired").textContent =
+    `${hoennRequiredOwned} / ${HOENN_DEX_REQUIRED.length} required`;
+
+  $("#hoennDexBar").style.width =
+    `${hoennOwned / HOENN_DEX.length * 100}%`;
+
+
+  $("#nationalDexCount").textContent =
+    `${nationalOwned} / ${POKEMON_721.length}`;
+
+  $("#nationalDexRequired").textContent =
+    `${nationalRequiredOwned} / ${NATIONAL_DEX_REQUIRED.length} for Shiny Charm`;
+
+  $("#nationalDexBar").style.width =
+    `${nationalOwned / POKEMON_721.length * 100}%`;
+
+
+  $$(".dex-mode-btn").forEach(btn => {
+    btn.classList.toggle(
+      "active",
+      btn.dataset.dexMode === dexMode
+    );
+  });
+
+  $$(".dex-filter-btn").forEach(btn => {
+    btn.classList.toggle(
+      "active",
+      btn.dataset.dexFilter === dexFilter
+    );
+  });
+
+
+  const source =
+    dexMode === "hoenn"
+      ? HOENN_DEX
+      : POKEMON_721;
+
+
+  let entries = source.map((name, index) => ({
+    name,
+    number:index + 1,
+    obtained:isSpeciesObtained(name)
+  }));
+
+
+  if (dexFilter === "obtained") {
+    entries = entries.filter(entry =>
+      entry.obtained
+    );
+  }
+
+  if (dexFilter === "missing") {
+    entries = entries.filter(entry =>
+      !entry.obtained
+    );
+  }
+
+
+  const query =
+    dexSearch.trim().toLowerCase();
+
+  if (query) {
+    entries = entries.filter(entry => {
+      const padded =
+        String(entry.number).padStart(3, "0");
+
+      return (
+        entry.name.toLowerCase().includes(query) ||
+        padded.includes(query) ||
+        String(entry.number) === query
+      );
+    });
+  }
+
+
+  $("#dexVisibleCount").textContent =
+    `${entries.length} Pokémon shown`;
+
+  list.innerHTML = "";
+
+
+  entries.forEach(entry => {
+    const row =
+      document.createElement("label");
+
+    row.className =
+      `dex-entry ${entry.obtained ? "obtained" : ""}`;
+
+    const number =
+      String(entry.number).padStart(3, "0");
+
+    row.innerHTML = `
+      <input
+        type="checkbox"
+        ${entry.obtained ? "checked" : ""}
+      >
+
+      <span class="dex-number">
+        #${number}
+      </span>
+
+      <span class="dex-name">
+        ${escapeHtml(entry.name)}
+      </span>
+
+      <span class="dex-status">
+        ${entry.obtained ? "Obtained" : "Missing"}
+      </span>
+    `;
+
+    row.querySelector("input")
+      .addEventListener("change", e => {
+        setSpeciesObtained(
+          entry.name,
+          e.target.checked
+        );
+
+        saveState(
+          e.target.checked
+            ? `${entry.name} added to Pokédex.`
+            : `${entry.name} removed from Pokédex.`
+        );
+      });
+
+    list.appendChild(row);
+  });
+
+
+  if (!entries.length) {
+    list.innerHTML = `
+      <div class="empty">
+        No Pokémon match this Dex filter.
+      </div>
+    `;
+  }
+}
+
 function renderAchievements() {
   const list = $("#achievementList");
   list.innerHTML = "";
+  const achievementDone =
+    Object.values(state.achievements)
+      .filter(Boolean)
+      .length;
+  
+  const achievementCount =
+    $("#achievementCount");
+  
+  if (achievementCount) {
+    achievementCount.textContent =
+      `${achievementDone} / ${ACHIEVEMENTS.length}`;
+  }
   ACHIEVEMENTS.forEach((text, i) => {
     const done = !!state.achievements[i];
     const label = document.createElement("label");
@@ -1306,6 +1493,34 @@ $("#shoalLowTideToggle").addEventListener("change", e => {
   state.access.shoalLowTide = e.target.checked;
   saveState();
 });
+
+// =========================================================
+// DEX CONTROLS
+// =========================================================
+
+$$(".dex-mode-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    dexMode = btn.dataset.dexMode;
+    renderDex();
+  });
+});
+
+
+$$(".dex-filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    dexFilter = btn.dataset.dexFilter;
+    renderDex();
+  });
+});
+
+
+$("#dexSearch")?.addEventListener(
+  "input",
+  e => {
+    dexSearch = e.target.value;
+    renderDex();
+  }
+);
 
 render();
 

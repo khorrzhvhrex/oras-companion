@@ -1486,3 +1486,106 @@ h3{font-size:1.05rem;margin-bottom:0}
     grid-template-columns:1fr;
   }
 }
+
+/* =========================================================
+   AVAILABILITY MOBILE REWORK
+   ========================================================= */
+
+.availability-category {
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--panel-2);
+}
+
+.availability-category > summary {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  min-height:48px;
+  padding:12px 13px;
+  cursor:pointer;
+  list-style:none;
+  color:var(--text);
+  font-weight:900;
+}
+
+.availability-category > summary::-webkit-details-marker {
+  display:none;
+}
+
+.availability-category-chevron {
+  flex:0 0 auto;
+  color:var(--accent);
+  font-size:1rem;
+  transition:transform .2s ease;
+}
+
+.availability-category[open]
+.availability-category-chevron {
+  transform:rotate(180deg);
+}
+
+.availability-category-body {
+  padding:0 12px 12px;
+  border-top:1px solid var(--line);
+}
+
+.availability-category-body > p {
+  margin:10px 0;
+}
+
+
+/* Desktop / tablet */
+
+.availability-category-body
+.availability-species-list,
+.availability-category-body
+.availability-form-list {
+  display:grid;
+  grid-template-columns:
+    repeat(3,minmax(0,1fr));
+  gap:7px;
+  margin-top:10px;
+}
+
+
+/* Phone */
+
+@media(max-width:520px) {
+
+  .availability-content {
+    gap:9px;
+  }
+
+  .availability-category > summary {
+    min-height:50px;
+    padding:12px;
+    font-size:.9rem;
+  }
+
+  .availability-category-body {
+    padding:0 10px 10px;
+  }
+
+  .availability-category-body
+  .availability-species-list,
+  .availability-category-body
+  .availability-form-list,
+  .availability-category.no-native-category
+  .availability-species-list {
+    grid-template-columns:1fr;
+    gap:6px;
+  }
+
+  .availability-category
+  .availability-species {
+    width:100%;
+    min-height:38px;
+    padding:8px 10px;
+    font-size:.78rem;
+    line-height:1.25;
+    border-radius:10px;
+  }
+}
